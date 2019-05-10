@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.tongzhu.welfare.mapper.ext.MarryLogExtMapper" >
+
+
+  <resultMap id="BaseResultMap" type="com.tongzhu.welfare.model.vo.MarryLogVo" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="user_name" property="userName" jdbcType="VARCHAR" />
+    <result column="other_name" property="otherName" jdbcType="VARCHAR" />
+    <result column="user_id" property="userId" jdbcType="VARCHAR" />
+    <result column="other_id" property="otherId" jdbcType="VARCHAR" />
+    <result column="user_role_id" property="userRoleId" jdbcType="VARCHAR" />
+    <result column="other_role_id" property="otherRoleId" jdbcType="VARCHAR" />
+    <result column="marry_type" property="marryType" jdbcType="INTEGER" />
+    <result column="user_joyful_num" property="userJoyfulNum" jdbcType="INTEGER" />
+    <result column="other_joyful_num" property="otherJoyfulNum" jdbcType="INTEGER" />
+    <result column="begin_time" property="beginTime" jdbcType="TIMESTAMP" />
+    <result column="end_time" property="endTime" jdbcType="TIMESTAMP" />
+    <result column="engagement_id" property="engagementId" jdbcType="VARCHAR" />
+  </resultMap>
+
+   <select id="marryLogVoListForWedding" resultMap="BaseResultMap" parameterType="map">
+    SELECT
+        ml.id,
+        (select user_name FROM tz_game_user_role where ml.user_id = user_id ) as user_name,
+		(select user_name FROM tz_game_user_role where ml.other_id = user_id ) as other_name,
+		(select role_id FROM tz_game_user_role where ml.user_id = user_id ) as user_role_id,
+		(select role_id FROM tz_game_user_role where ml.other_id = user_id ) as other_role_id,
+ 		ml.user_id,
+		ml.other_id, 
+		ml.user_joyful_num, 
+		ml.other_joyful_num, 
+        ml.marry_type,
+        ml.begin_time,
+        ml.end_time,
+        ml.engagement_id
+    FROM
+        tz_marry_log ml 
+        where 
+        ml.begin_time <![CDATA[ <= ]]> #{stopDate,jdbcType=TIMESTAMP}
+        and ml.end_time <![CDATA[ > ]]> #{stopDate,jdbcType=TIMESTAMP}
+        and ml.marry_type = #{marryType,jdbcType=INTEGER}
+    ORDER BY ml.created_time ASC
+  </select> 
+  
+  <select id="marryLogVoList" resultMap="BaseResultMap" parameterType="map">
+    SELECT
+        ml.id,
+        (select user_name FROM tz_game_user_role where ml.user_id = user_id ) as user_name,
+		(select user_name FROM tz_game_user_role where ml.other_id = user_id ) as other_name,
+		(select role_id FROM tz_game_user_role where ml.user_id = user_id ) as user_role_id,
+		(select role_id FROM tz_game_user_role where ml.other_id = user_id ) as other_role_id,
+ 		ml.user_id,
+		ml.other_id, 
+		ml.user_joyful_num, 
+		ml.other_joyful_num, 
+        ml.marry_type,
+        ml.begin_time,
+        ml.end_time,
+        ml.engagement_id
+    FROM
+        tz_marry_log ml 
+        where 
+        ml.begin_time <![CDATA[ <= ]]> #{stopDate,jdbcType=TIMESTAMP}
+        and ml.end_time <![CDATA[ > ]]> #{stopDate,jdbcType=TIMESTAMP}
+    ORDER BY ml.created_time ASC
+  </select>
+  
+    <select id="marryLogVoListByUserId" resultMap="BaseResultMap" parameterType="map">
+    SELECT
+        ml.id,
+        (select user_name FROM tz_game_user_role where ml.user_id = user_id ) as user_name,
+		(select user_name FROM tz_game_user_role where ml.other_id = user_id ) as other_name,
+		(select role_id FROM tz_game_user_role where ml.user_id = user_id ) as user_role_id,
+		(select role_id FROM tz_game_user_role where ml.other_id = user_id ) as other_role_id,
+ 		ml.user_id,
+		ml.other_id, 
+        ml.marry_type,
+        ml.user_joyful_num, 
+		ml.other_joyful_num, 
+        ml.begin_time,
+        ml.end_time,
+        ml.engagement_id
+    FROM
+        tz_marry_log ml 
+        where 
+        ml.begin_time <![CDATA[ <= ]]> #{stopDate,jdbcType=TIMESTAMP}
+        and ml.end_time <![CDATA[ > ]]> #{stopDate,jdbcType=TIMESTAMP}
+        and (ml.user_id = #{userId,jdbcType=VARCHAR} or ml.other_id = #{userId,jdbcType=VARCHAR})
+    ORDER BY ml.created_time ASC
+  </select>
+  
+  <select id="getMarryLogVoById" resultMap="BaseResultMap" parameterType="map">
+    SELECT
+        ml.id,
+        (select user_name FROM tz_game_user_role where ml.user_id = user_id ) as user_name,
+		(select user_name FROM tz_game_user_role where ml.other_id = user_id ) as other_name,
+		(select role_id FROM tz_game_user_role where ml.user_id = user_id ) as user_role_id,
+		(select role_id FROM tz_game_user_role where ml.other_id = user_id ) as other_role_id,
+ 		ml.user_id,
+		ml.other_id, 
+        ml.marry_type,
+   		ml.user_joyful_num, 
+		ml.other_joyful_num, 
+        ml.begin_time,
+        ml.end_time,
+        ml.engagement_id
+    FROM
+        tz_marry_log ml 
+        where 
+		ml.id = #{marryId,jdbcType=VARCHAR}
+  </select>
+
+</mapper>

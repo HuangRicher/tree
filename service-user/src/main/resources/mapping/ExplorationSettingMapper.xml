@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.tongzhu.user.mapper.ExplorationSettingMapper" >
+  <resultMap id="BaseResultMap" type="com.tongzhu.user.model.ExplorationSetting" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="exploration_id" property="explorationId" jdbcType="INTEGER" />
+    <result column="pass_id" property="passId" jdbcType="INTEGER" />
+    <result column="first_exp" property="firstExp" jdbcType="INTEGER" />
+    <result column="nex_exp" property="nexExp" jdbcType="INTEGER" />
+    <result column="treasure_box" property="treasureBox" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, exploration_id, pass_id, first_exp, nex_exp, treasure_box
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.tongzhu.user.model.ExplorationSettingExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from tz_game_exploration_setting
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from tz_game_exploration_setting
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from tz_game_exploration_setting
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.tongzhu.user.model.ExplorationSettingExample" >
+    delete from tz_game_exploration_setting
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.tongzhu.user.model.ExplorationSetting" >
+    insert into tz_game_exploration_setting (id, exploration_id, pass_id, 
+      first_exp, nex_exp, treasure_box
+      )
+    values (#{id,jdbcType=VARCHAR}, #{explorationId,jdbcType=INTEGER}, #{passId,jdbcType=INTEGER}, 
+      #{firstExp,jdbcType=INTEGER}, #{nexExp,jdbcType=INTEGER}, #{treasureBox,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.tongzhu.user.model.ExplorationSetting" >
+    insert into tz_game_exploration_setting
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="explorationId != null" >
+        exploration_id,
+      </if>
+      <if test="passId != null" >
+        pass_id,
+      </if>
+      <if test="firstExp != null" >
+        first_exp,
+      </if>
+      <if test="nexExp != null" >
+        nex_exp,
+      </if>
+      <if test="treasureBox != null" >
+        treasure_box,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="explorationId != null" >
+        #{explorationId,jdbcType=INTEGER},
+      </if>
+      <if test="passId != null" >
+        #{passId,jdbcType=INTEGER},
+      </if>
+      <if test="firstExp != null" >
+        #{firstExp,jdbcType=INTEGER},
+      </if>
+      <if test="nexExp != null" >
+        #{nexExp,jdbcType=INTEGER},
+      </if>
+      <if test="treasureBox != null" >
+        #{treasureBox,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.tongzhu.user.model.ExplorationSettingExample" resultType="java.lang.Integer" >
+    select count(*) from tz_game_exploration_setting
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update tz_game_exploration_setting
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=VARCHAR},
+      </if>
+      <if test="record.explorationId != null" >
+        exploration_id = #{record.explorationId,jdbcType=INTEGER},
+      </if>
+      <if test="record.passId != null" >
+        pass_id = #{record.passId,jdbcType=INTEGER},
+      </if>
+      <if test="record.firstExp != null" >
+        first_exp = #{record.firstExp,jdbcType=INTEGER},
+      </if>
+      <if test="record.nexExp != null" >
+        nex_exp = #{record.nexExp,jdbcType=INTEGER},
+      </if>
+      <if test="record.treasureBox != null" >
+        treasure_box = #{record.treasureBox,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update tz_game_exploration_setting
+    set id = #{record.id,jdbcType=VARCHAR},
+      exploration_id = #{record.explorationId,jdbcType=INTEGER},
+      pass_id = #{record.passId,jdbcType=INTEGER},
+      first_exp = #{record.firstExp,jdbcType=INTEGER},
+      nex_exp = #{record.nexExp,jdbcType=INTEGER},
+      treasure_box = #{record.treasureBox,jdbcType=INTEGER}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.tongzhu.user.model.ExplorationSetting" >
+    update tz_game_exploration_setting
+    <set >
+      <if test="explorationId != null" >
+        exploration_id = #{explorationId,jdbcType=INTEGER},
+      </if>
+      <if test="passId != null" >
+        pass_id = #{passId,jdbcType=INTEGER},
+      </if>
+      <if test="firstExp != null" >
+        first_exp = #{firstExp,jdbcType=INTEGER},
+      </if>
+      <if test="nexExp != null" >
+        nex_exp = #{nexExp,jdbcType=INTEGER},
+      </if>
+      <if test="treasureBox != null" >
+        treasure_box = #{treasureBox,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.tongzhu.user.model.ExplorationSetting" >
+    update tz_game_exploration_setting
+    set exploration_id = #{explorationId,jdbcType=INTEGER},
+      pass_id = #{passId,jdbcType=INTEGER},
+      first_exp = #{firstExp,jdbcType=INTEGER},
+      nex_exp = #{nexExp,jdbcType=INTEGER},
+      treasure_box = #{treasureBox,jdbcType=INTEGER}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

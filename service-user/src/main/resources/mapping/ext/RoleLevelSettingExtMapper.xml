@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.tongzhu.user.mapper.ext.RoleLevelSettingExtMapper" >
+
+
+  <insert id="batchInsert" parameterType="java.util.List" >
+    insert into tz_games_role_level_setting (level, next_level, exp, 
+      ws_hp, ws_ph_atk, ws_mf_atk, 
+      ws_ph_def, ws_mf_def, ws_accuracy, 
+      ws_miss, ws_critical, ws_dcritical, 
+      ck_hp, ck_ph_atk, ck_mf_atk, 
+      ck_ph_def, ck_mf_def, ck_accuracy, 
+      ck_miss, ck_critical, ck_dcritical, 
+      gj_hp, gj_ph_atk, gj_mf_atk, 
+      gj_ph_def, gj_mf_def, gj_accuracy, 
+      gj_miss, gj_critical, gj_dcritical, 
+      fs_hp, fs_ph_atk, fs_mf_atk, 
+      fs_ph_def, fs_mf_def, fs_accuracy, 
+      fs_miss, fs_critical, fs_dcritical
+      )
+    values
+    <foreach collection="list" index="index" item="item" separator=",">
+      (
+      #{item.level,jdbcType=INTEGER},
+      #{item.nextLevel,jdbcType=INTEGER},
+      #{item.exp,jdbcType=BIGINT},
+      #{item.wsHp,jdbcType=INTEGER},
+      #{item.wsPhAtk,jdbcType=INTEGER},
+      #{item.wsMfAtk,jdbcType=INTEGER},
+      #{item.wsPhDef,jdbcType=INTEGER},
+      #{item.wsMfDef,jdbcType=INTEGER},
+      #{item.wsAccuracy,jdbcType=INTEGER},
+      #{item.wsMiss,jdbcType=INTEGER},
+      #{item.wsCritical,jdbcType=INTEGER},
+      #{item.wsDcritical,jdbcType=INTEGER},
+      #{item.ckHp,jdbcType=INTEGER},
+      #{item.ckPhAtk,jdbcType=INTEGER},
+      #{item.ckMfAtk,jdbcType=INTEGER},
+      #{item.ckPhDef,jdbcType=INTEGER},
+      #{item.ckMfDef,jdbcType=INTEGER},
+      #{item.ckAccuracy,jdbcType=INTEGER},
+      #{item.ckMiss,jdbcType=INTEGER},
+      #{item.ckCritical,jdbcType=INTEGER},
+      #{item.ckDcritical,jdbcType=INTEGER},
+      #{item.gjHp,jdbcType=INTEGER},
+      #{item.gjPhAtk,jdbcType=INTEGER},
+      #{item.gjMfAtk,jdbcType=INTEGER},
+      #{item.gjPhDef,jdbcType=INTEGER},
+      #{item.gjMfDef,jdbcType=INTEGER},
+      #{item.gjAccuracy,jdbcType=INTEGER},
+      #{item.gjMiss,jdbcType=INTEGER},
+      #{item.gjCritical,jdbcType=INTEGER},
+      #{item.gjDcritical,jdbcType=INTEGER},
+      #{item.fsHp,jdbcType=INTEGER},
+      #{item.fsPhAtk,jdbcType=INTEGER},
+      #{item.fsMfAtk,jdbcType=INTEGER},
+      #{item.fsPhDef,jdbcType=INTEGER},
+      #{item.fsMfDef,jdbcType=INTEGER},
+      #{item.fsAccuracy,jdbcType=INTEGER},
+      #{item.fsMiss,jdbcType=INTEGER},
+      #{item.fsCritical,jdbcType=INTEGER},
+      #{item.fsDcritical,jdbcType=INTEGER}
+      )
+    </foreach>
+
+  </insert>
+
+</mapper>

@@ -1,0 +1,401 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.tongzhu.welfare.mapper.BuildingUserMapper" >
+  <resultMap id="BaseResultMap" type="com.tongzhu.welfare.model.BuildingUser" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="user_id" property="userId" jdbcType="VARCHAR" />
+    <result column="building_id" property="buildingId" jdbcType="INTEGER" />
+    <result column="building_name" property="buildingName" jdbcType="VARCHAR" />
+    <result column="building_grade" property="buildingGrade" jdbcType="INTEGER" />
+    <result column="building_status" property="buildingStatus" jdbcType="INTEGER" />
+    <result column="building_gold" property="buildingGold" jdbcType="INTEGER" />
+    <result column="building_upgrade" property="buildingUpgrade" jdbcType="INTEGER" />
+    <result column="building_detailed" property="buildingDetailed" jdbcType="VARCHAR" />
+    <result column="building_type" property="buildingType" jdbcType="INTEGER" />
+    <result column="biulding_output_min" property="biuldingOutputMin" jdbcType="INTEGER" />
+    <result column="building_output_max" property="buildingOutputMax" jdbcType="INTEGER" />
+    <result column="building_output_rate" property="buildingOutputRate" jdbcType="INTEGER" />
+    <result column="output_gold" property="outputGold" jdbcType="INTEGER" />
+    <result column="created_time" property="createdTime" jdbcType="TIMESTAMP" />
+    <result column="update_end_time" property="updateEndTime" jdbcType="TIMESTAMP" />
+    <result column="building_open" property="buildingOpen" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, user_id, building_id, building_name, building_grade, building_status, building_gold, 
+    building_upgrade, building_detailed, building_type, biulding_output_min, building_output_max, 
+    building_output_rate, output_gold, created_time, update_end_time, building_open
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.tongzhu.welfare.model.BuildingUserExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from tz_building_user
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from tz_building_user
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from tz_building_user
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.tongzhu.welfare.model.BuildingUserExample" >
+    delete from tz_building_user
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.tongzhu.welfare.model.BuildingUser" >
+    insert into tz_building_user (id, user_id, building_id, 
+      building_name, building_grade, building_status, 
+      building_gold, building_upgrade, building_detailed, 
+      building_type, biulding_output_min, building_output_max, 
+      building_output_rate, output_gold, created_time, 
+      update_end_time, building_open)
+    values (#{id,jdbcType=INTEGER}, #{userId,jdbcType=VARCHAR}, #{buildingId,jdbcType=INTEGER}, 
+      #{buildingName,jdbcType=VARCHAR}, #{buildingGrade,jdbcType=INTEGER}, #{buildingStatus,jdbcType=INTEGER}, 
+      #{buildingGold,jdbcType=INTEGER}, #{buildingUpgrade,jdbcType=INTEGER}, #{buildingDetailed,jdbcType=VARCHAR}, 
+      #{buildingType,jdbcType=INTEGER}, #{biuldingOutputMin,jdbcType=INTEGER}, #{buildingOutputMax,jdbcType=INTEGER}, 
+      #{buildingOutputRate,jdbcType=INTEGER}, #{outputGold,jdbcType=INTEGER}, #{createdTime,jdbcType=TIMESTAMP}, 
+      #{updateEndTime,jdbcType=TIMESTAMP}, #{buildingOpen,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.tongzhu.welfare.model.BuildingUser" >
+    insert into tz_building_user
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="buildingId != null" >
+        building_id,
+      </if>
+      <if test="buildingName != null" >
+        building_name,
+      </if>
+      <if test="buildingGrade != null" >
+        building_grade,
+      </if>
+      <if test="buildingStatus != null" >
+        building_status,
+      </if>
+      <if test="buildingGold != null" >
+        building_gold,
+      </if>
+      <if test="buildingUpgrade != null" >
+        building_upgrade,
+      </if>
+      <if test="buildingDetailed != null" >
+        building_detailed,
+      </if>
+      <if test="buildingType != null" >
+        building_type,
+      </if>
+      <if test="biuldingOutputMin != null" >
+        biulding_output_min,
+      </if>
+      <if test="buildingOutputMax != null" >
+        building_output_max,
+      </if>
+      <if test="buildingOutputRate != null" >
+        building_output_rate,
+      </if>
+      <if test="outputGold != null" >
+        output_gold,
+      </if>
+      <if test="createdTime != null" >
+        created_time,
+      </if>
+      <if test="updateEndTime != null" >
+        update_end_time,
+      </if>
+      <if test="buildingOpen != null" >
+        building_open,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="buildingId != null" >
+        #{buildingId,jdbcType=INTEGER},
+      </if>
+      <if test="buildingName != null" >
+        #{buildingName,jdbcType=VARCHAR},
+      </if>
+      <if test="buildingGrade != null" >
+        #{buildingGrade,jdbcType=INTEGER},
+      </if>
+      <if test="buildingStatus != null" >
+        #{buildingStatus,jdbcType=INTEGER},
+      </if>
+      <if test="buildingGold != null" >
+        #{buildingGold,jdbcType=INTEGER},
+      </if>
+      <if test="buildingUpgrade != null" >
+        #{buildingUpgrade,jdbcType=INTEGER},
+      </if>
+      <if test="buildingDetailed != null" >
+        #{buildingDetailed,jdbcType=VARCHAR},
+      </if>
+      <if test="buildingType != null" >
+        #{buildingType,jdbcType=INTEGER},
+      </if>
+      <if test="biuldingOutputMin != null" >
+        #{biuldingOutputMin,jdbcType=INTEGER},
+      </if>
+      <if test="buildingOutputMax != null" >
+        #{buildingOutputMax,jdbcType=INTEGER},
+      </if>
+      <if test="buildingOutputRate != null" >
+        #{buildingOutputRate,jdbcType=INTEGER},
+      </if>
+      <if test="outputGold != null" >
+        #{outputGold,jdbcType=INTEGER},
+      </if>
+      <if test="createdTime != null" >
+        #{createdTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateEndTime != null" >
+        #{updateEndTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="buildingOpen != null" >
+        #{buildingOpen,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.tongzhu.welfare.model.BuildingUserExample" resultType="java.lang.Integer" >
+    select count(*) from tz_building_user
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update tz_building_user
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.userId != null" >
+        user_id = #{record.userId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.buildingId != null" >
+        building_id = #{record.buildingId,jdbcType=INTEGER},
+      </if>
+      <if test="record.buildingName != null" >
+        building_name = #{record.buildingName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.buildingGrade != null" >
+        building_grade = #{record.buildingGrade,jdbcType=INTEGER},
+      </if>
+      <if test="record.buildingStatus != null" >
+        building_status = #{record.buildingStatus,jdbcType=INTEGER},
+      </if>
+      <if test="record.buildingGold != null" >
+        building_gold = #{record.buildingGold,jdbcType=INTEGER},
+      </if>
+      <if test="record.buildingUpgrade != null" >
+        building_upgrade = #{record.buildingUpgrade,jdbcType=INTEGER},
+      </if>
+      <if test="record.buildingDetailed != null" >
+        building_detailed = #{record.buildingDetailed,jdbcType=VARCHAR},
+      </if>
+      <if test="record.buildingType != null" >
+        building_type = #{record.buildingType,jdbcType=INTEGER},
+      </if>
+      <if test="record.biuldingOutputMin != null" >
+        biulding_output_min = #{record.biuldingOutputMin,jdbcType=INTEGER},
+      </if>
+      <if test="record.buildingOutputMax != null" >
+        building_output_max = #{record.buildingOutputMax,jdbcType=INTEGER},
+      </if>
+      <if test="record.buildingOutputRate != null" >
+        building_output_rate = #{record.buildingOutputRate,jdbcType=INTEGER},
+      </if>
+      <if test="record.outputGold != null" >
+        output_gold = #{record.outputGold,jdbcType=INTEGER},
+      </if>
+      <if test="record.createdTime != null" >
+        created_time = #{record.createdTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateEndTime != null" >
+        update_end_time = #{record.updateEndTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.buildingOpen != null" >
+        building_open = #{record.buildingOpen,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update tz_building_user
+    set id = #{record.id,jdbcType=INTEGER},
+      user_id = #{record.userId,jdbcType=VARCHAR},
+      building_id = #{record.buildingId,jdbcType=INTEGER},
+      building_name = #{record.buildingName,jdbcType=VARCHAR},
+      building_grade = #{record.buildingGrade,jdbcType=INTEGER},
+      building_status = #{record.buildingStatus,jdbcType=INTEGER},
+      building_gold = #{record.buildingGold,jdbcType=INTEGER},
+      building_upgrade = #{record.buildingUpgrade,jdbcType=INTEGER},
+      building_detailed = #{record.buildingDetailed,jdbcType=VARCHAR},
+      building_type = #{record.buildingType,jdbcType=INTEGER},
+      biulding_output_min = #{record.biuldingOutputMin,jdbcType=INTEGER},
+      building_output_max = #{record.buildingOutputMax,jdbcType=INTEGER},
+      building_output_rate = #{record.buildingOutputRate,jdbcType=INTEGER},
+      output_gold = #{record.outputGold,jdbcType=INTEGER},
+      created_time = #{record.createdTime,jdbcType=TIMESTAMP},
+      update_end_time = #{record.updateEndTime,jdbcType=TIMESTAMP},
+      building_open = #{record.buildingOpen,jdbcType=INTEGER}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.tongzhu.welfare.model.BuildingUser" >
+    update tz_building_user
+    <set >
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="buildingId != null" >
+        building_id = #{buildingId,jdbcType=INTEGER},
+      </if>
+      <if test="buildingName != null" >
+        building_name = #{buildingName,jdbcType=VARCHAR},
+      </if>
+      <if test="buildingGrade != null" >
+        building_grade = #{buildingGrade,jdbcType=INTEGER},
+      </if>
+      <if test="buildingStatus != null" >
+        building_status = #{buildingStatus,jdbcType=INTEGER},
+      </if>
+      <if test="buildingGold != null" >
+        building_gold = #{buildingGold,jdbcType=INTEGER},
+      </if>
+      <if test="buildingUpgrade != null" >
+        building_upgrade = #{buildingUpgrade,jdbcType=INTEGER},
+      </if>
+      <if test="buildingDetailed != null" >
+        building_detailed = #{buildingDetailed,jdbcType=VARCHAR},
+      </if>
+      <if test="buildingType != null" >
+        building_type = #{buildingType,jdbcType=INTEGER},
+      </if>
+      <if test="biuldingOutputMin != null" >
+        biulding_output_min = #{biuldingOutputMin,jdbcType=INTEGER},
+      </if>
+      <if test="buildingOutputMax != null" >
+        building_output_max = #{buildingOutputMax,jdbcType=INTEGER},
+      </if>
+      <if test="buildingOutputRate != null" >
+        building_output_rate = #{buildingOutputRate,jdbcType=INTEGER},
+      </if>
+      <if test="outputGold != null" >
+        output_gold = #{outputGold,jdbcType=INTEGER},
+      </if>
+      <if test="createdTime != null" >
+        created_time = #{createdTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateEndTime != null" >
+        update_end_time = #{updateEndTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="buildingOpen != null" >
+        building_open = #{buildingOpen,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.tongzhu.welfare.model.BuildingUser" >
+    update tz_building_user
+    set user_id = #{userId,jdbcType=VARCHAR},
+      building_id = #{buildingId,jdbcType=INTEGER},
+      building_name = #{buildingName,jdbcType=VARCHAR},
+      building_grade = #{buildingGrade,jdbcType=INTEGER},
+      building_status = #{buildingStatus,jdbcType=INTEGER},
+      building_gold = #{buildingGold,jdbcType=INTEGER},
+      building_upgrade = #{buildingUpgrade,jdbcType=INTEGER},
+      building_detailed = #{buildingDetailed,jdbcType=VARCHAR},
+      building_type = #{buildingType,jdbcType=INTEGER},
+      biulding_output_min = #{biuldingOutputMin,jdbcType=INTEGER},
+      building_output_max = #{buildingOutputMax,jdbcType=INTEGER},
+      building_output_rate = #{buildingOutputRate,jdbcType=INTEGER},
+      output_gold = #{outputGold,jdbcType=INTEGER},
+      created_time = #{createdTime,jdbcType=TIMESTAMP},
+      update_end_time = #{updateEndTime,jdbcType=TIMESTAMP},
+      building_open = #{buildingOpen,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.tongzhu.user.mapper.ext.UserMailSingleExtMapper">
+    <resultMap id="BaseResultMap" type="com.tongzhu.user.service.vo.UserMailSingleVO">
+        <id column="id" property="id" jdbcType="VARCHAR"/>
+        <result column="receiver_id" property="receiverId" jdbcType="VARCHAR"/>
+        <result column="receiverName" property="receiverName" jdbcType="VARCHAR"/>
+        <result column="sender_id" property="senderId" jdbcType="VARCHAR"/>
+        <result column="senderName" property="senderName" jdbcType="VARCHAR"/>
+        <result column="send_time" property="sendTime" jdbcType="TIMESTAMP"/>
+        <result column="expire_time" property="expireTime" jdbcType="TIMESTAMP"/>
+        <result column="type" property="type" jdbcType="INTEGER"/>
+        <result column="title" property="title" jdbcType="VARCHAR"/>
+        <result column="content" property="content" jdbcType="VARCHAR"/>
+        <result column="accessory" property="accessory" jdbcType="VARCHAR"/>
+        <result column="read_" property="read" jdbcType="INTEGER"/>
+        <result column="receive" property="receive" jdbcType="INTEGER"/>
+        <result column="swift_address" property="swiftAddress" jdbcType="INTEGER"/>
+        <result column="mailType" property="mailType" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <select id="selectUserMailSingleVOList" resultMap="BaseResultMap" parameterType="map">
+          SELECT
+          *
+          FROM
+          (
+          SELECT
+          tums.id,
+          tums.receiver_id,
+          tums.sender_id,
+          tums.send_time,
+          tums.expire_time,
+          tums.type,
+          tums.title,
+          tums.content,
+          tums.accessory,
+          tums.read_,
+          tums.receive,
+          tums.swift_address,
+          tu.`name` AS receiverName,
+          (
+          SELECT
+          `name`
+          FROM
+          tz_user t
+          WHERE
+          t.user_id = tums.sender_id
+          ) AS senderName,
+          1 mailType
+          FROM
+          tz_user_mail_single tums
+          JOIN tz_user tu ON tums.receiver_id = tu.user_id
+          WHERE
+          tums.receiver_id = #{userId} AND (tums.expire_time <![CDATA[  >= ]]> NOW()
+          OR tums.receive = #{receive})
+          UNION ALL
+          SELECT
+          tumad.mailAll_id,
+          tumad.receiver_id,
+          NULL sender_id,
+          tuma.creation_time,
+          tuma.expire_time,
+          NULL type,
+          tuma.title,
+          tuma.content,
+          tuma.accessory,
+          tumad.read_,
+          tumad.receive,
+          tuma.swift_address,
+          tu. NAME,
+          NULL senderName,
+          0 mailType
+          FROM
+          tz_user_mail_all tuma
+          JOIN tz_user_mail_all_details tumad ON tuma.id = tumad.mailAll_id
+          JOIN tz_user tu ON tumad.receiver_id = tu.user_id
+          WHERE
+          tumad.`status` = #{status} AND tumad.receiver_id = #{userId}
+          AND (
+          tuma.expire_time <![CDATA[ >= ]]> NOW()
+          OR tumad.receive = #{receive})
+          ) mail
+          ORDER BY
+          mail.send_time DESC
+  </select>
+
+    <select id="userMailMessage" resultType="int" parameterType="map">
+          SELECT
+          count(1)
+          FROM
+          (
+          SELECT
+          1
+          FROM
+          tz_user_mail_single tums
+          JOIN tz_user tu ON tums.receiver_id = tu.user_id
+          WHERE
+          tums.receiver_id = #{userId} AND  tums.receive = #{receive}
+          UNION ALL
+          SELECT
+          1
+          FROM
+          tz_user_mail_all tuma
+          JOIN tz_user_mail_all_details tumad ON tuma.id = tumad.mailAll_id
+          JOIN tz_user tu ON tumad.receiver_id = tu.user_id
+          WHERE
+          tumad.`status` = #{status} AND tumad.receiver_id = #{userId}
+          AND tumad.receive = #{receive}
+          ) mail
+  </select>
+
+    <update id="updateMailAll" parameterType="map">
+        UPDATE tz_user_mail_all_details
+        SET `read_` = #{read},
+         `receive` = #{receive}
+
+        WHERE
+            `receiver_id` = #{userId}
+    </update>
+
+    <update id="updateMailSingle" parameterType="map">
+        UPDATE `tz_user_mail_single`
+        SET
+      `read_` = #{read},
+         `receive` = #{receive}
+        WHERE
+            receiver_id = #{userId} AND (expire_time <![CDATA[  >= ]]> NOW())
+    </update>
+</mapper>

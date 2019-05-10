@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.tongzhu.fishing.mapper.ext.DialInfoExtMapper" >
+  <resultMap id="BaseResultMap" type="com.tongzhu.fishing.model.DialInfo" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="probability" property="probability" jdbcType="INTEGER" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="update_date" property="updateDate" jdbcType="TIMESTAMP" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="award" property="award" jdbcType="VARCHAR" />
+    <result column="count" property="count" jdbcType="INTEGER" />
+    <result column="for_heavy" property="forHeavy" jdbcType="INTEGER" />
+  </resultMap>
+
+  <select id="getForHeavySum" resultType="java.lang.Integer" parameterType="map">
+        SELECT
+            SUM(for_heavy)
+        FROM
+            tz_dial_info tdi
+        WHERE
+            tdi.id  IN (
+                SELECT
+                    tdur.dial_id
+                FROM
+                    tz_dial_user_record tdur
+                WHERE
+                    tdur.dial_id = tdi.id
+                AND tdur.user_id = #{userId}
+                AND tdur.count >= tdi.count
+                AND TO_DAYS(tdur.update_date) = TO_DAYS(now())
+            ) AND tdi.count != 0
+
+  </select>
+
+  <select id="getDialInfoList" resultMap="BaseResultMap" parameterType="map">
+        SELECT
+            *
+        FROM
+            tz_dial_info tdi
+        WHERE
+            tdi.id NOT IN (
+                SELECT
+                    tdur.dial_id
+                FROM
+                    tz_dial_user_record tdur
+                WHERE
+                    tdur.dial_id = tdi.id
+                AND tdur.user_id = #{userId}
+                AND tdur.count >= tdi.count
+                AND TO_DAYS(tdur.update_date) = TO_DAYS(now())
+            )
+        OR tdi.count = 0
+  </select>
+
+</mapper>

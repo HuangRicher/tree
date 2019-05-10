@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.tongzhu.user.mapper.ext.ExplorationBindExtMapper" >
+  <resultMap id="BaseResultMap" type="com.tongzhu.user.model.ExplorationBind" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="user_id" property="userId" jdbcType="VARCHAR" />
+    <result column="exploration_id" property="explorationId" jdbcType="INTEGER" />
+    <result column="status_" property="status" jdbcType="INTEGER" />
+  </resultMap>
+  <insert id="batchInsert" parameterType="java.util.List" >
+    insert into tz_game_exploration_bind (id, user_id, exploration_id, 
+      status_)
+    values
+    <foreach collection="list" item="item" index="index" separator=",">
+      (
+      #{item.id,jdbcType=VARCHAR},
+      #{item.userId,jdbcType=VARCHAR},
+      #{item.explorationId,jdbcType=INTEGER},
+      #{item.status,jdbcType=INTEGER}
+      )
+    </foreach>
+  </insert>
+</mapper>

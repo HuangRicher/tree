@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.tongzhu.usergoods.mapper.ext.ArsenalInfoExtMapper">
+  <resultMap id="ArsenalInfoVO" type="com.tongzhu.usergoods.mapper.vo.ArsenalInfoVO" >
+    <result column="id" property="id" jdbcType="VARCHAR"/>
+    <result column="user_id" property="userId" jdbcType="VARCHAR"/>
+    <result column="goods_id" property="goodsId" jdbcType="INTEGER"/>
+    <result column="amount" property="amount" jdbcType="INTEGER"/>
+    <result column="surplusDate" property="surplusDate" jdbcType="TIMESTAMP"/>
+    <result column="gainDate" property="gainDate" jdbcType="TIMESTAMP"/>
+    <result column="status" property="status" jdbcType="INTEGER"/>
+    <result column="setting_position" property="settingPosition" jdbcType="INTEGER"/>
+    <result column="type" property="type" jdbcType="INTEGER"/>
+    <result column="equipmentId" property="equipmentId" jdbcType="INTEGER"/>
+    <result column="name" property="name" jdbcType="VARCHAR"/>
+    <result column="quality" property="quality" jdbcType="INTEGER"/>
+    <result column="fighting_capacity" property="fightingCapacity" jdbcType="DOUBLE"/>
+    <result column="level" property="level" jdbcType="INTEGER"/>
+    <result column="sex" property="sex" jdbcType="INTEGER"/>
+    <result column="description" property="description" jdbcType="VARCHAR"/>
+    <result column="acquiring_way" property="acquiringWay" jdbcType="VARCHAR"/>
+    <result column="expiration_time" property="expirationTime" jdbcType="TIMESTAMP"/>
+    <result column="vitality" property="vitality" jdbcType="DOUBLE"/>
+    <result column="attack" property="attack" jdbcType="DOUBLE"/>
+    <result column="spell_attacks" property="spellAttacks" jdbcType="DOUBLE"/>
+    <result column="pdef" property="pdef" jdbcType="DOUBLE"/>
+    <result column="magdef" property="magdef" jdbcType="DOUBLE"/>
+    <result column="crit" property="crit" jdbcType="DOUBLE"/>
+    <result column="dodge" property="dodge" jdbcType="DOUBLE"/>
+    <result column="hit_rate" property="hitRate" jdbcType="DOUBLE"/>
+    <result column="defense_crit" property="defenseCrit" jdbcType="DOUBLE"/>
+    <result column="conversion_prop_id" property="conversionPropId" jdbcType="INTEGER"/>
+    <result column="conversion_amount" property="conversionAmount" jdbcType="INTEGER"/>
+    <result column="iconid" property="iconid" jdbcType="VARCHAR"/>
+    <result column="storage" property="storage" jdbcType="INTEGER"/>
+    <result column="binding" property="binding" jdbcType="INTEGER"/>
+    <result column="deal" property="deal" jdbcType="INTEGER"/>
+    <result column="sell" property="sell" jdbcType="INTEGER"/>
+    <result column="destroy" property="destroy" jdbcType="INTEGER"/>
+    <result column="inlay" property="inlay" jdbcType="INTEGER"/>
+    <result column="original" property="original" jdbcType="INTEGER"/>
+    <result column="guardians_male" property="guardiansMale" jdbcType="VARCHAR" />
+    <result column="guardians_female" property="guardiansFemale" jdbcType="VARCHAR" />
+    <result column="assassin_male" property="assassinMale" jdbcType="VARCHAR" />
+    <result column="assassin_female" property="assassinFemale" jdbcType="VARCHAR" />
+    <result column="crafts_male" property="craftsMale" jdbcType="VARCHAR" />
+    <result column="crafts_female" property="craftsFemale" jdbcType="VARCHAR" />
+    <result column="master_male" property="masterMale" jdbcType="VARCHAR" />
+    <result column="master_female" property="masterFemale" jdbcType="VARCHAR" />
+    <result column="arsenalType" property="arsenalType" jdbcType="VARCHAR" />
+    <result column="profession" property="profession" jdbcType="VARCHAR" />
+    <result column="time" property="time" jdbcType="VARCHAR" />
+    <result column="enchantlvl" property="enchantlvl" jdbcType="INTEGER" />
+    <result column="gem_rhombus" property="gemRhombus" jdbcType="VARCHAR" />
+    <result column="gem_roundness" property="gemRoundness" jdbcType="VARCHAR" />
+    <result column="gem_hexagon" property="gemHexagon" jdbcType="VARCHAR" />
+  </resultMap>
+
+    <resultMap id="BaseResultMap" type="com.tongzhu.usergoods.model.ArsenalInfo" >
+        <id column="intensify_id" property="intensifyId" jdbcType="VARCHAR" />
+        <result column="id" property="id" jdbcType="INTEGER" />
+        <result column="name" property="name" jdbcType="VARCHAR" />
+        <result column="type" property="type" jdbcType="INTEGER" />
+        <result column="profession" property="profession" jdbcType="VARCHAR" />
+        <result column="quality" property="quality" jdbcType="INTEGER" />
+        <result column="fighting_capacity" property="fightingCapacity" jdbcType="DOUBLE" />
+        <result column="level" property="level" jdbcType="INTEGER" />
+        <result column="sex" property="sex" jdbcType="INTEGER" />
+        <result column="description" property="description" jdbcType="VARCHAR" />
+        <result column="acquiring_way" property="acquiringWay" jdbcType="VARCHAR" />
+        <result column="expiration_time" property="expirationTime" jdbcType="TIMESTAMP" />
+        <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+        <result column="update_date" property="updateDate" jdbcType="TIMESTAMP" />
+        <result column="vitality" property="vitality" jdbcType="DOUBLE" />
+        <result column="attack" property="attack" jdbcType="DOUBLE" />
+        <result column="spell_attacks" property="spellAttacks" jdbcType="DOUBLE" />
+        <result column="pdef" property="pdef" jdbcType="DOUBLE" />
+        <result column="magdef" property="magdef" jdbcType="DOUBLE" />
+        <result column="crit" property="crit" jdbcType="DOUBLE" />
+        <result column="dodge" property="dodge" jdbcType="DOUBLE" />
+        <result column="hit_rate" property="hitRate" jdbcType="DOUBLE" />
+        <result column="defense_crit" property="defenseCrit" jdbcType="DOUBLE" />
+        <result column="conversion_prop_id" property="conversionPropId" jdbcType="INTEGER" />
+        <result column="conversion_amount" property="conversionAmount" jdbcType="INTEGER" />
+        <result column="iconid" property="iconid" jdbcType="VARCHAR" />
+        <result column="role" property="role" jdbcType="VARCHAR" />
+        <result column="suit_id" property="suitId" jdbcType="INTEGER" />
+        <result column="suit_name" property="suitName" jdbcType="VARCHAR" />
+        <result column="log_record" property="logRecord" jdbcType="INTEGER" />
+        <result column="time" property="time" jdbcType="INTEGER" />
+        <result column="storage" property="storage" jdbcType="INTEGER" />
+        <result column="binding" property="binding" jdbcType="INTEGER" />
+        <result column="deal" property="deal" jdbcType="INTEGER" />
+        <result column="sell" property="sell" jdbcType="INTEGER" />
+        <result column="destroy" property="destroy" jdbcType="INTEGER" />
+        <result column="inlay" property="inlay" jdbcType="INTEGER" />
+        <result column="original" property="original" jdbcType="INTEGER" />
+        <result column="guardians_male" property="guardiansMale" jdbcType="VARCHAR" />
+        <result column="guardians_female" property="guardiansFemale" jdbcType="VARCHAR" />
+        <result column="assassin_male" property="assassinMale" jdbcType="VARCHAR" />
+        <result column="assassin_female" property="assassinFemale" jdbcType="VARCHAR" />
+        <result column="crafts_male" property="craftsMale" jdbcType="VARCHAR" />
+        <result column="crafts_female" property="craftsFemale" jdbcType="VARCHAR" />
+        <result column="master_male" property="masterMale" jdbcType="VARCHAR" />
+        <result column="master_female" property="masterFemale" jdbcType="VARCHAR" />
+        <result column="enchantlvl" property="enchantlvl" jdbcType="INTEGER" />
+        <result column="vitality_intensify" property="vitalityIntensify" jdbcType="DOUBLE" />
+        <result column="attack_intensify" property="attackIntensify" jdbcType="DOUBLE" />
+        <result column="spell_attacks_intensify" property="spellAttacksIntensify" jdbcType="DOUBLE" />
+        <result column="pdef_intensify" property="pdefIntensify" jdbcType="DOUBLE" />
+        <result column="magdef_intensify" property="magdefIntensify" jdbcType="DOUBLE" />
+        <result column="crit_intensify" property="critIntensify" jdbcType="DOUBLE" />
+        <result column="dodge_intensify" property="dodgeIntensify" jdbcType="DOUBLE" />
+        <result column="hit_rate_intensify" property="hitRateIntensify" jdbcType="DOUBLE" />
+        <result column="defense_crit_intensify" property="defenseCritIntensify" jdbcType="DOUBLE" />
+        <result column="gem_rhombus" property="gemRhombus" jdbcType="VARCHAR" />
+        <result column="gem_roundness" property="gemRoundness" jdbcType="VARCHAR" />
+        <result column="gem_hexagon" property="gemHexagon" jdbcType="VARCHAR" />
+        <result column="vitality_gem" property="vitalityGem" jdbcType="DOUBLE" />
+        <result column="attack_gem" property="attackGem" jdbcType="DOUBLE" />
+        <result column="spell_attacks_gem" property="spellAttacksGem" jdbcType="DOUBLE" />
+        <result column="pdef_gem" property="pdefGem" jdbcType="DOUBLE" />
+        <result column="magdef_gem" property="magdefGem" jdbcType="DOUBLE" />
+        <result column="crit_gem" property="critGem" jdbcType="DOUBLE" />
+        <result column="dodge_gem" property="dodgeGem" jdbcType="DOUBLE" />
+        <result column="hit_rate_gem" property="hitRateGem" jdbcType="DOUBLE" />
+        <result column="defense_crit_gem" property="defenseCritGem" jdbcType="DOUBLE" />
+        <result column="upgrade" property="upgrade" jdbcType="INTEGER" />
+    </resultMap>
+
+  <select id="queryWeaponList" resultMap="ArsenalInfoVO" parameterType="map">
+    SELECT
+        tug.id,
+        tug.user_id,
+        tug.goods_id,
+        tug.amount,
+        tug.surplus_date surplusDate,
+        tug.create_date gainDate,
+        tug.`status`,
+        tug.setting_position,
+        tug.type,
+        tei.id equipmentId,
+        tei.`name`,
+        tei.quality,
+        tei.fighting_capacity,
+        tei.`level`,
+        tei.sex,
+        tei.description,
+        tei.acquiring_way,
+        tei.expiration_time,
+        tei.vitality,
+        tei.attack,
+        tei.spell_attacks,
+        tei.pdef,
+        tei.magdef,
+        tei.crit,
+        tei.dodge,
+        tei.hit_rate,
+        tei.defense_crit,
+        tei.conversion_prop_id,
+        tei.conversion_amount,
+        tei.iconid,
+        tei.`storage`,
+        tei.binding,
+        tei.deal,
+        tei.sell,
+        tei.destroy,
+        tei.inlay,
+        tei.original,
+        tei.guardians_male,
+        tei.guardians_female,
+        tei.assassin_male,
+        tei.assassin_female,
+        tei.crafts_male,
+        tei.crafts_female,
+        tei.master_male,
+        tei.master_female,
+        tei.type arsenalType,
+        tei.profession,
+        tei.time,
+        tei.enchantlvl,
+        tei.gem_rhombus,
+        tei.gem_roundness,
+        tei.gem_hexagon
+        FROM
+            tz_user_goods tug
+        JOIN tz_arsenal_info tei ON tug.goods_id = tei.intensify_id
+        WHERE
+            tug.user_id =#{userId}
+        AND tug.`status` = 0 AND tug.amount > 0
+        <if test="settingPosition != null">
+        AND tug.setting_position = #{settingPosition}
+        </if>
+      ORDER BY `setting_position`
+  </select>
+
+ <select id="findUserAllNotGetWeaponList" resultMap="BaseResultMap" parameterType="map">
+    SELECT
+     tai.id,
+     tai.intensify_id,
+     tai.`name`,
+     tai.profession,
+     tai.quality
+    FROM
+        tz_arsenal_info tai
+    WHERE
+        (
+            tai.profession = #{profession}
+            OR tai.profession = 0
+        )
+    AND tai.quality = 1
+    AND tai.original=0
+    AND tai.intensify_id NOT IN (
+        SELECT
+            tug.goods_id
+        FROM
+            tz_user_goods tug
+        WHERE
+            tug.user_id = #{userId}
+        AND tug.`status` = 0
+        AND tug.amount > 0
+        AND tug.type = 3
+    )
+  </select>
+
+</mapper>

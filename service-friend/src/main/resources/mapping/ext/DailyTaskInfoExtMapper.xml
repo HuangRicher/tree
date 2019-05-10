@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.tongzhu.friend.mapper.ext.DailyTaskInfoExtMapper" >
+
+
+  <select id="getUserLiveness" parameterType="map" resultType="java.lang.Integer" >
+    SELECT
+	IFNULL(
+		(
+			SELECT
+				SUM(tdti.liveness)
+			FROM
+				tz_daily_task_info tdti
+			JOIN tz_daily_task_record tdtr ON tdtr.daily_task_id = tdti.id
+			WHERE
+				tdtr.user_id = #{userId}
+			AND tdtr.receive_award = #{receiveAward}
+		),
+		0
+	) sum
+  </select>
+
+
+
+</mapper>

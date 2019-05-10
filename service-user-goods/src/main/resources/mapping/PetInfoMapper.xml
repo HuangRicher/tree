@@ -1,0 +1,560 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.tongzhu.usergoods.mapper.PetInfoMapper" >
+  <resultMap id="BaseResultMap" type="com.tongzhu.usergoods.model.PetInfo" >
+    <id column="pet_id" property="petId" jdbcType="VARCHAR" />
+    <result column="id" property="id" jdbcType="INTEGER" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="quality" property="quality" jdbcType="INTEGER" />
+    <result column="icon" property="icon" jdbcType="VARCHAR" />
+    <result column="overdue" property="overdue" jdbcType="INTEGER" />
+    <result column="time" property="time" jdbcType="INTEGER" />
+    <result column="vitality" property="vitality" jdbcType="DOUBLE" />
+    <result column="attack" property="attack" jdbcType="DOUBLE" />
+    <result column="spell_attacks" property="spellAttacks" jdbcType="DOUBLE" />
+    <result column="pdef" property="pdef" jdbcType="DOUBLE" />
+    <result column="magdef" property="magdef" jdbcType="DOUBLE" />
+    <result column="crit" property="crit" jdbcType="DOUBLE" />
+    <result column="dodge" property="dodge" jdbcType="DOUBLE" />
+    <result column="hit_rate" property="hitRate" jdbcType="DOUBLE" />
+    <result column="defense_crit" property="defenseCrit" jdbcType="DOUBLE" />
+    <result column="fighting_capacity" property="fightingCapacity" jdbcType="DOUBLE" />
+    <result column="level" property="level" jdbcType="INTEGER" />
+    <result column="vitality_addition" property="vitalityAddition" jdbcType="DOUBLE" />
+    <result column="attack_addition" property="attackAddition" jdbcType="DOUBLE" />
+    <result column="spell_attacks_addition" property="spellAttacksAddition" jdbcType="DOUBLE" />
+    <result column="pdef_addition" property="pdefAddition" jdbcType="DOUBLE" />
+    <result column="magdef_addition" property="magdefAddition" jdbcType="DOUBLE" />
+    <result column="crit_addition" property="critAddition" jdbcType="DOUBLE" />
+    <result column="dodge_addition" property="dodgeAddition" jdbcType="DOUBLE" />
+    <result column="hit_rate_addition" property="hitRateAddition" jdbcType="DOUBLE" />
+    <result column="defense_crit_addition" property="defenseCritAddition" jdbcType="DOUBLE" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    pet_id, id, name, quality, icon, overdue, time, vitality, attack, spell_attacks, 
+    pdef, magdef, crit, dodge, hit_rate, defense_crit, fighting_capacity, level, vitality_addition, 
+    attack_addition, spell_attacks_addition, pdef_addition, magdef_addition, crit_addition, 
+    dodge_addition, hit_rate_addition, defense_crit_addition
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.tongzhu.usergoods.model.PetInfoExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from tz_pet_info
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from tz_pet_info
+    where pet_id = #{petId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from tz_pet_info
+    where pet_id = #{petId,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.tongzhu.usergoods.model.PetInfoExample" >
+    delete from tz_pet_info
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.tongzhu.usergoods.model.PetInfo" >
+    insert into tz_pet_info (pet_id, id, name, 
+      quality, icon, overdue, 
+      time, vitality, attack, 
+      spell_attacks, pdef, magdef, 
+      crit, dodge, hit_rate, 
+      defense_crit, fighting_capacity, level, 
+      vitality_addition, attack_addition, spell_attacks_addition, 
+      pdef_addition, magdef_addition, crit_addition, 
+      dodge_addition, hit_rate_addition, defense_crit_addition
+      )
+    values (#{petId,jdbcType=VARCHAR}, #{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, 
+      #{quality,jdbcType=INTEGER}, #{icon,jdbcType=VARCHAR}, #{overdue,jdbcType=INTEGER}, 
+      #{time,jdbcType=INTEGER}, #{vitality,jdbcType=DOUBLE}, #{attack,jdbcType=DOUBLE}, 
+      #{spellAttacks,jdbcType=DOUBLE}, #{pdef,jdbcType=DOUBLE}, #{magdef,jdbcType=DOUBLE}, 
+      #{crit,jdbcType=DOUBLE}, #{dodge,jdbcType=DOUBLE}, #{hitRate,jdbcType=DOUBLE}, 
+      #{defenseCrit,jdbcType=DOUBLE}, #{fightingCapacity,jdbcType=DOUBLE}, #{level,jdbcType=INTEGER}, 
+      #{vitalityAddition,jdbcType=DOUBLE}, #{attackAddition,jdbcType=DOUBLE}, #{spellAttacksAddition,jdbcType=DOUBLE}, 
+      #{pdefAddition,jdbcType=DOUBLE}, #{magdefAddition,jdbcType=DOUBLE}, #{critAddition,jdbcType=DOUBLE}, 
+      #{dodgeAddition,jdbcType=DOUBLE}, #{hitRateAddition,jdbcType=DOUBLE}, #{defenseCritAddition,jdbcType=DOUBLE}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.tongzhu.usergoods.model.PetInfo" >
+    insert into tz_pet_info
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="petId != null" >
+        pet_id,
+      </if>
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="quality != null" >
+        quality,
+      </if>
+      <if test="icon != null" >
+        icon,
+      </if>
+      <if test="overdue != null" >
+        overdue,
+      </if>
+      <if test="time != null" >
+        time,
+      </if>
+      <if test="vitality != null" >
+        vitality,
+      </if>
+      <if test="attack != null" >
+        attack,
+      </if>
+      <if test="spellAttacks != null" >
+        spell_attacks,
+      </if>
+      <if test="pdef != null" >
+        pdef,
+      </if>
+      <if test="magdef != null" >
+        magdef,
+      </if>
+      <if test="crit != null" >
+        crit,
+      </if>
+      <if test="dodge != null" >
+        dodge,
+      </if>
+      <if test="hitRate != null" >
+        hit_rate,
+      </if>
+      <if test="defenseCrit != null" >
+        defense_crit,
+      </if>
+      <if test="fightingCapacity != null" >
+        fighting_capacity,
+      </if>
+      <if test="level != null" >
+        level,
+      </if>
+      <if test="vitalityAddition != null" >
+        vitality_addition,
+      </if>
+      <if test="attackAddition != null" >
+        attack_addition,
+      </if>
+      <if test="spellAttacksAddition != null" >
+        spell_attacks_addition,
+      </if>
+      <if test="pdefAddition != null" >
+        pdef_addition,
+      </if>
+      <if test="magdefAddition != null" >
+        magdef_addition,
+      </if>
+      <if test="critAddition != null" >
+        crit_addition,
+      </if>
+      <if test="dodgeAddition != null" >
+        dodge_addition,
+      </if>
+      <if test="hitRateAddition != null" >
+        hit_rate_addition,
+      </if>
+      <if test="defenseCritAddition != null" >
+        defense_crit_addition,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="petId != null" >
+        #{petId,jdbcType=VARCHAR},
+      </if>
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="quality != null" >
+        #{quality,jdbcType=INTEGER},
+      </if>
+      <if test="icon != null" >
+        #{icon,jdbcType=VARCHAR},
+      </if>
+      <if test="overdue != null" >
+        #{overdue,jdbcType=INTEGER},
+      </if>
+      <if test="time != null" >
+        #{time,jdbcType=INTEGER},
+      </if>
+      <if test="vitality != null" >
+        #{vitality,jdbcType=DOUBLE},
+      </if>
+      <if test="attack != null" >
+        #{attack,jdbcType=DOUBLE},
+      </if>
+      <if test="spellAttacks != null" >
+        #{spellAttacks,jdbcType=DOUBLE},
+      </if>
+      <if test="pdef != null" >
+        #{pdef,jdbcType=DOUBLE},
+      </if>
+      <if test="magdef != null" >
+        #{magdef,jdbcType=DOUBLE},
+      </if>
+      <if test="crit != null" >
+        #{crit,jdbcType=DOUBLE},
+      </if>
+      <if test="dodge != null" >
+        #{dodge,jdbcType=DOUBLE},
+      </if>
+      <if test="hitRate != null" >
+        #{hitRate,jdbcType=DOUBLE},
+      </if>
+      <if test="defenseCrit != null" >
+        #{defenseCrit,jdbcType=DOUBLE},
+      </if>
+      <if test="fightingCapacity != null" >
+        #{fightingCapacity,jdbcType=DOUBLE},
+      </if>
+      <if test="level != null" >
+        #{level,jdbcType=INTEGER},
+      </if>
+      <if test="vitalityAddition != null" >
+        #{vitalityAddition,jdbcType=DOUBLE},
+      </if>
+      <if test="attackAddition != null" >
+        #{attackAddition,jdbcType=DOUBLE},
+      </if>
+      <if test="spellAttacksAddition != null" >
+        #{spellAttacksAddition,jdbcType=DOUBLE},
+      </if>
+      <if test="pdefAddition != null" >
+        #{pdefAddition,jdbcType=DOUBLE},
+      </if>
+      <if test="magdefAddition != null" >
+        #{magdefAddition,jdbcType=DOUBLE},
+      </if>
+      <if test="critAddition != null" >
+        #{critAddition,jdbcType=DOUBLE},
+      </if>
+      <if test="dodgeAddition != null" >
+        #{dodgeAddition,jdbcType=DOUBLE},
+      </if>
+      <if test="hitRateAddition != null" >
+        #{hitRateAddition,jdbcType=DOUBLE},
+      </if>
+      <if test="defenseCritAddition != null" >
+        #{defenseCritAddition,jdbcType=DOUBLE},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.tongzhu.usergoods.model.PetInfoExample" resultType="java.lang.Integer" >
+    select count(*) from tz_pet_info
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update tz_pet_info
+    <set >
+      <if test="record.petId != null" >
+        pet_id = #{record.petId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.name != null" >
+        name = #{record.name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.quality != null" >
+        quality = #{record.quality,jdbcType=INTEGER},
+      </if>
+      <if test="record.icon != null" >
+        icon = #{record.icon,jdbcType=VARCHAR},
+      </if>
+      <if test="record.overdue != null" >
+        overdue = #{record.overdue,jdbcType=INTEGER},
+      </if>
+      <if test="record.time != null" >
+        time = #{record.time,jdbcType=INTEGER},
+      </if>
+      <if test="record.vitality != null" >
+        vitality = #{record.vitality,jdbcType=DOUBLE},
+      </if>
+      <if test="record.attack != null" >
+        attack = #{record.attack,jdbcType=DOUBLE},
+      </if>
+      <if test="record.spellAttacks != null" >
+        spell_attacks = #{record.spellAttacks,jdbcType=DOUBLE},
+      </if>
+      <if test="record.pdef != null" >
+        pdef = #{record.pdef,jdbcType=DOUBLE},
+      </if>
+      <if test="record.magdef != null" >
+        magdef = #{record.magdef,jdbcType=DOUBLE},
+      </if>
+      <if test="record.crit != null" >
+        crit = #{record.crit,jdbcType=DOUBLE},
+      </if>
+      <if test="record.dodge != null" >
+        dodge = #{record.dodge,jdbcType=DOUBLE},
+      </if>
+      <if test="record.hitRate != null" >
+        hit_rate = #{record.hitRate,jdbcType=DOUBLE},
+      </if>
+      <if test="record.defenseCrit != null" >
+        defense_crit = #{record.defenseCrit,jdbcType=DOUBLE},
+      </if>
+      <if test="record.fightingCapacity != null" >
+        fighting_capacity = #{record.fightingCapacity,jdbcType=DOUBLE},
+      </if>
+      <if test="record.level != null" >
+        level = #{record.level,jdbcType=INTEGER},
+      </if>
+      <if test="record.vitalityAddition != null" >
+        vitality_addition = #{record.vitalityAddition,jdbcType=DOUBLE},
+      </if>
+      <if test="record.attackAddition != null" >
+        attack_addition = #{record.attackAddition,jdbcType=DOUBLE},
+      </if>
+      <if test="record.spellAttacksAddition != null" >
+        spell_attacks_addition = #{record.spellAttacksAddition,jdbcType=DOUBLE},
+      </if>
+      <if test="record.pdefAddition != null" >
+        pdef_addition = #{record.pdefAddition,jdbcType=DOUBLE},
+      </if>
+      <if test="record.magdefAddition != null" >
+        magdef_addition = #{record.magdefAddition,jdbcType=DOUBLE},
+      </if>
+      <if test="record.critAddition != null" >
+        crit_addition = #{record.critAddition,jdbcType=DOUBLE},
+      </if>
+      <if test="record.dodgeAddition != null" >
+        dodge_addition = #{record.dodgeAddition,jdbcType=DOUBLE},
+      </if>
+      <if test="record.hitRateAddition != null" >
+        hit_rate_addition = #{record.hitRateAddition,jdbcType=DOUBLE},
+      </if>
+      <if test="record.defenseCritAddition != null" >
+        defense_crit_addition = #{record.defenseCritAddition,jdbcType=DOUBLE},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update tz_pet_info
+    set pet_id = #{record.petId,jdbcType=VARCHAR},
+      id = #{record.id,jdbcType=INTEGER},
+      name = #{record.name,jdbcType=VARCHAR},
+      quality = #{record.quality,jdbcType=INTEGER},
+      icon = #{record.icon,jdbcType=VARCHAR},
+      overdue = #{record.overdue,jdbcType=INTEGER},
+      time = #{record.time,jdbcType=INTEGER},
+      vitality = #{record.vitality,jdbcType=DOUBLE},
+      attack = #{record.attack,jdbcType=DOUBLE},
+      spell_attacks = #{record.spellAttacks,jdbcType=DOUBLE},
+      pdef = #{record.pdef,jdbcType=DOUBLE},
+      magdef = #{record.magdef,jdbcType=DOUBLE},
+      crit = #{record.crit,jdbcType=DOUBLE},
+      dodge = #{record.dodge,jdbcType=DOUBLE},
+      hit_rate = #{record.hitRate,jdbcType=DOUBLE},
+      defense_crit = #{record.defenseCrit,jdbcType=DOUBLE},
+      fighting_capacity = #{record.fightingCapacity,jdbcType=DOUBLE},
+      level = #{record.level,jdbcType=INTEGER},
+      vitality_addition = #{record.vitalityAddition,jdbcType=DOUBLE},
+      attack_addition = #{record.attackAddition,jdbcType=DOUBLE},
+      spell_attacks_addition = #{record.spellAttacksAddition,jdbcType=DOUBLE},
+      pdef_addition = #{record.pdefAddition,jdbcType=DOUBLE},
+      magdef_addition = #{record.magdefAddition,jdbcType=DOUBLE},
+      crit_addition = #{record.critAddition,jdbcType=DOUBLE},
+      dodge_addition = #{record.dodgeAddition,jdbcType=DOUBLE},
+      hit_rate_addition = #{record.hitRateAddition,jdbcType=DOUBLE},
+      defense_crit_addition = #{record.defenseCritAddition,jdbcType=DOUBLE}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.tongzhu.usergoods.model.PetInfo" >
+    update tz_pet_info
+    <set >
+      <if test="id != null" >
+        id = #{id,jdbcType=INTEGER},
+      </if>
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="quality != null" >
+        quality = #{quality,jdbcType=INTEGER},
+      </if>
+      <if test="icon != null" >
+        icon = #{icon,jdbcType=VARCHAR},
+      </if>
+      <if test="overdue != null" >
+        overdue = #{overdue,jdbcType=INTEGER},
+      </if>
+      <if test="time != null" >
+        time = #{time,jdbcType=INTEGER},
+      </if>
+      <if test="vitality != null" >
+        vitality = #{vitality,jdbcType=DOUBLE},
+      </if>
+      <if test="attack != null" >
+        attack = #{attack,jdbcType=DOUBLE},
+      </if>
+      <if test="spellAttacks != null" >
+        spell_attacks = #{spellAttacks,jdbcType=DOUBLE},
+      </if>
+      <if test="pdef != null" >
+        pdef = #{pdef,jdbcType=DOUBLE},
+      </if>
+      <if test="magdef != null" >
+        magdef = #{magdef,jdbcType=DOUBLE},
+      </if>
+      <if test="crit != null" >
+        crit = #{crit,jdbcType=DOUBLE},
+      </if>
+      <if test="dodge != null" >
+        dodge = #{dodge,jdbcType=DOUBLE},
+      </if>
+      <if test="hitRate != null" >
+        hit_rate = #{hitRate,jdbcType=DOUBLE},
+      </if>
+      <if test="defenseCrit != null" >
+        defense_crit = #{defenseCrit,jdbcType=DOUBLE},
+      </if>
+      <if test="fightingCapacity != null" >
+        fighting_capacity = #{fightingCapacity,jdbcType=DOUBLE},
+      </if>
+      <if test="level != null" >
+        level = #{level,jdbcType=INTEGER},
+      </if>
+      <if test="vitalityAddition != null" >
+        vitality_addition = #{vitalityAddition,jdbcType=DOUBLE},
+      </if>
+      <if test="attackAddition != null" >
+        attack_addition = #{attackAddition,jdbcType=DOUBLE},
+      </if>
+      <if test="spellAttacksAddition != null" >
+        spell_attacks_addition = #{spellAttacksAddition,jdbcType=DOUBLE},
+      </if>
+      <if test="pdefAddition != null" >
+        pdef_addition = #{pdefAddition,jdbcType=DOUBLE},
+      </if>
+      <if test="magdefAddition != null" >
+        magdef_addition = #{magdefAddition,jdbcType=DOUBLE},
+      </if>
+      <if test="critAddition != null" >
+        crit_addition = #{critAddition,jdbcType=DOUBLE},
+      </if>
+      <if test="dodgeAddition != null" >
+        dodge_addition = #{dodgeAddition,jdbcType=DOUBLE},
+      </if>
+      <if test="hitRateAddition != null" >
+        hit_rate_addition = #{hitRateAddition,jdbcType=DOUBLE},
+      </if>
+      <if test="defenseCritAddition != null" >
+        defense_crit_addition = #{defenseCritAddition,jdbcType=DOUBLE},
+      </if>
+    </set>
+    where pet_id = #{petId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.tongzhu.usergoods.model.PetInfo" >
+    update tz_pet_info
+    set id = #{id,jdbcType=INTEGER},
+      name = #{name,jdbcType=VARCHAR},
+      quality = #{quality,jdbcType=INTEGER},
+      icon = #{icon,jdbcType=VARCHAR},
+      overdue = #{overdue,jdbcType=INTEGER},
+      time = #{time,jdbcType=INTEGER},
+      vitality = #{vitality,jdbcType=DOUBLE},
+      attack = #{attack,jdbcType=DOUBLE},
+      spell_attacks = #{spellAttacks,jdbcType=DOUBLE},
+      pdef = #{pdef,jdbcType=DOUBLE},
+      magdef = #{magdef,jdbcType=DOUBLE},
+      crit = #{crit,jdbcType=DOUBLE},
+      dodge = #{dodge,jdbcType=DOUBLE},
+      hit_rate = #{hitRate,jdbcType=DOUBLE},
+      defense_crit = #{defenseCrit,jdbcType=DOUBLE},
+      fighting_capacity = #{fightingCapacity,jdbcType=DOUBLE},
+      level = #{level,jdbcType=INTEGER},
+      vitality_addition = #{vitalityAddition,jdbcType=DOUBLE},
+      attack_addition = #{attackAddition,jdbcType=DOUBLE},
+      spell_attacks_addition = #{spellAttacksAddition,jdbcType=DOUBLE},
+      pdef_addition = #{pdefAddition,jdbcType=DOUBLE},
+      magdef_addition = #{magdefAddition,jdbcType=DOUBLE},
+      crit_addition = #{critAddition,jdbcType=DOUBLE},
+      dodge_addition = #{dodgeAddition,jdbcType=DOUBLE},
+      hit_rate_addition = #{hitRateAddition,jdbcType=DOUBLE},
+      defense_crit_addition = #{defenseCritAddition,jdbcType=DOUBLE}
+    where pet_id = #{petId,jdbcType=VARCHAR}
+  </update>
+</mapper>

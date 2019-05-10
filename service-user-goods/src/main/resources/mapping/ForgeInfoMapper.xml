@@ -1,0 +1,338 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.tongzhu.usergoods.mapper.ForgeInfoMapper" >
+  <resultMap id="BaseResultMap" type="com.tongzhu.usergoods.model.ForgeInfo" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="enchantlvl" property="enchantlvl" jdbcType="INTEGER" />
+    <result column="success_rate" property="successRate" jdbcType="DOUBLE" />
+    <result column="strong_fossil" property="strongFossil" jdbcType="VARCHAR" />
+    <result column="strong_fossil_number" property="strongFossilNumber" jdbcType="INTEGER" />
+    <result column="consume" property="consume" jdbcType="VARCHAR" />
+    <result column="consume_amount" property="consumeAmount" jdbcType="INTEGER" />
+    <result column="refund_consume" property="refundConsume" jdbcType="INTEGER" />
+    <result column="safeguard" property="safeguard" jdbcType="VARCHAR" />
+    <result column="safeguard_number" property="safeguardNumber" jdbcType="INTEGER" />
+    <result column="succeed" property="succeed" jdbcType="INTEGER" />
+    <result column="failure" property="failure" jdbcType="INTEGER" />
+    <result column="reinforce_scale" property="reinforceScale" jdbcType="DOUBLE" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, enchantlvl, success_rate, strong_fossil, strong_fossil_number, consume, consume_amount, 
+    refund_consume, safeguard, safeguard_number, succeed, failure, reinforce_scale
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.tongzhu.usergoods.model.ForgeInfoExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from tz_forge_info
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from tz_forge_info
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from tz_forge_info
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.tongzhu.usergoods.model.ForgeInfoExample" >
+    delete from tz_forge_info
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.tongzhu.usergoods.model.ForgeInfo" >
+    insert into tz_forge_info (id, enchantlvl, success_rate, 
+      strong_fossil, strong_fossil_number, consume, 
+      consume_amount, refund_consume, safeguard, 
+      safeguard_number, succeed, failure, 
+      reinforce_scale)
+    values (#{id,jdbcType=INTEGER}, #{enchantlvl,jdbcType=INTEGER}, #{successRate,jdbcType=DOUBLE}, 
+      #{strongFossil,jdbcType=VARCHAR}, #{strongFossilNumber,jdbcType=INTEGER}, #{consume,jdbcType=VARCHAR}, 
+      #{consumeAmount,jdbcType=INTEGER}, #{refundConsume,jdbcType=INTEGER}, #{safeguard,jdbcType=VARCHAR}, 
+      #{safeguardNumber,jdbcType=INTEGER}, #{succeed,jdbcType=INTEGER}, #{failure,jdbcType=INTEGER}, 
+      #{reinforceScale,jdbcType=DOUBLE})
+  </insert>
+  <insert id="insertSelective" parameterType="com.tongzhu.usergoods.model.ForgeInfo" >
+    insert into tz_forge_info
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="enchantlvl != null" >
+        enchantlvl,
+      </if>
+      <if test="successRate != null" >
+        success_rate,
+      </if>
+      <if test="strongFossil != null" >
+        strong_fossil,
+      </if>
+      <if test="strongFossilNumber != null" >
+        strong_fossil_number,
+      </if>
+      <if test="consume != null" >
+        consume,
+      </if>
+      <if test="consumeAmount != null" >
+        consume_amount,
+      </if>
+      <if test="refundConsume != null" >
+        refund_consume,
+      </if>
+      <if test="safeguard != null" >
+        safeguard,
+      </if>
+      <if test="safeguardNumber != null" >
+        safeguard_number,
+      </if>
+      <if test="succeed != null" >
+        succeed,
+      </if>
+      <if test="failure != null" >
+        failure,
+      </if>
+      <if test="reinforceScale != null" >
+        reinforce_scale,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="enchantlvl != null" >
+        #{enchantlvl,jdbcType=INTEGER},
+      </if>
+      <if test="successRate != null" >
+        #{successRate,jdbcType=DOUBLE},
+      </if>
+      <if test="strongFossil != null" >
+        #{strongFossil,jdbcType=VARCHAR},
+      </if>
+      <if test="strongFossilNumber != null" >
+        #{strongFossilNumber,jdbcType=INTEGER},
+      </if>
+      <if test="consume != null" >
+        #{consume,jdbcType=VARCHAR},
+      </if>
+      <if test="consumeAmount != null" >
+        #{consumeAmount,jdbcType=INTEGER},
+      </if>
+      <if test="refundConsume != null" >
+        #{refundConsume,jdbcType=INTEGER},
+      </if>
+      <if test="safeguard != null" >
+        #{safeguard,jdbcType=VARCHAR},
+      </if>
+      <if test="safeguardNumber != null" >
+        #{safeguardNumber,jdbcType=INTEGER},
+      </if>
+      <if test="succeed != null" >
+        #{succeed,jdbcType=INTEGER},
+      </if>
+      <if test="failure != null" >
+        #{failure,jdbcType=INTEGER},
+      </if>
+      <if test="reinforceScale != null" >
+        #{reinforceScale,jdbcType=DOUBLE},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.tongzhu.usergoods.model.ForgeInfoExample" resultType="java.lang.Integer" >
+    select count(*) from tz_forge_info
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update tz_forge_info
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.enchantlvl != null" >
+        enchantlvl = #{record.enchantlvl,jdbcType=INTEGER},
+      </if>
+      <if test="record.successRate != null" >
+        success_rate = #{record.successRate,jdbcType=DOUBLE},
+      </if>
+      <if test="record.strongFossil != null" >
+        strong_fossil = #{record.strongFossil,jdbcType=VARCHAR},
+      </if>
+      <if test="record.strongFossilNumber != null" >
+        strong_fossil_number = #{record.strongFossilNumber,jdbcType=INTEGER},
+      </if>
+      <if test="record.consume != null" >
+        consume = #{record.consume,jdbcType=VARCHAR},
+      </if>
+      <if test="record.consumeAmount != null" >
+        consume_amount = #{record.consumeAmount,jdbcType=INTEGER},
+      </if>
+      <if test="record.refundConsume != null" >
+        refund_consume = #{record.refundConsume,jdbcType=INTEGER},
+      </if>
+      <if test="record.safeguard != null" >
+        safeguard = #{record.safeguard,jdbcType=VARCHAR},
+      </if>
+      <if test="record.safeguardNumber != null" >
+        safeguard_number = #{record.safeguardNumber,jdbcType=INTEGER},
+      </if>
+      <if test="record.succeed != null" >
+        succeed = #{record.succeed,jdbcType=INTEGER},
+      </if>
+      <if test="record.failure != null" >
+        failure = #{record.failure,jdbcType=INTEGER},
+      </if>
+      <if test="record.reinforceScale != null" >
+        reinforce_scale = #{record.reinforceScale,jdbcType=DOUBLE},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update tz_forge_info
+    set id = #{record.id,jdbcType=INTEGER},
+      enchantlvl = #{record.enchantlvl,jdbcType=INTEGER},
+      success_rate = #{record.successRate,jdbcType=DOUBLE},
+      strong_fossil = #{record.strongFossil,jdbcType=VARCHAR},
+      strong_fossil_number = #{record.strongFossilNumber,jdbcType=INTEGER},
+      consume = #{record.consume,jdbcType=VARCHAR},
+      consume_amount = #{record.consumeAmount,jdbcType=INTEGER},
+      refund_consume = #{record.refundConsume,jdbcType=INTEGER},
+      safeguard = #{record.safeguard,jdbcType=VARCHAR},
+      safeguard_number = #{record.safeguardNumber,jdbcType=INTEGER},
+      succeed = #{record.succeed,jdbcType=INTEGER},
+      failure = #{record.failure,jdbcType=INTEGER},
+      reinforce_scale = #{record.reinforceScale,jdbcType=DOUBLE}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.tongzhu.usergoods.model.ForgeInfo" >
+    update tz_forge_info
+    <set >
+      <if test="enchantlvl != null" >
+        enchantlvl = #{enchantlvl,jdbcType=INTEGER},
+      </if>
+      <if test="successRate != null" >
+        success_rate = #{successRate,jdbcType=DOUBLE},
+      </if>
+      <if test="strongFossil != null" >
+        strong_fossil = #{strongFossil,jdbcType=VARCHAR},
+      </if>
+      <if test="strongFossilNumber != null" >
+        strong_fossil_number = #{strongFossilNumber,jdbcType=INTEGER},
+      </if>
+      <if test="consume != null" >
+        consume = #{consume,jdbcType=VARCHAR},
+      </if>
+      <if test="consumeAmount != null" >
+        consume_amount = #{consumeAmount,jdbcType=INTEGER},
+      </if>
+      <if test="refundConsume != null" >
+        refund_consume = #{refundConsume,jdbcType=INTEGER},
+      </if>
+      <if test="safeguard != null" >
+        safeguard = #{safeguard,jdbcType=VARCHAR},
+      </if>
+      <if test="safeguardNumber != null" >
+        safeguard_number = #{safeguardNumber,jdbcType=INTEGER},
+      </if>
+      <if test="succeed != null" >
+        succeed = #{succeed,jdbcType=INTEGER},
+      </if>
+      <if test="failure != null" >
+        failure = #{failure,jdbcType=INTEGER},
+      </if>
+      <if test="reinforceScale != null" >
+        reinforce_scale = #{reinforceScale,jdbcType=DOUBLE},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.tongzhu.usergoods.model.ForgeInfo" >
+    update tz_forge_info
+    set enchantlvl = #{enchantlvl,jdbcType=INTEGER},
+      success_rate = #{successRate,jdbcType=DOUBLE},
+      strong_fossil = #{strongFossil,jdbcType=VARCHAR},
+      strong_fossil_number = #{strongFossilNumber,jdbcType=INTEGER},
+      consume = #{consume,jdbcType=VARCHAR},
+      consume_amount = #{consumeAmount,jdbcType=INTEGER},
+      refund_consume = #{refundConsume,jdbcType=INTEGER},
+      safeguard = #{safeguard,jdbcType=VARCHAR},
+      safeguard_number = #{safeguardNumber,jdbcType=INTEGER},
+      succeed = #{succeed,jdbcType=INTEGER},
+      failure = #{failure,jdbcType=INTEGER},
+      reinforce_scale = #{reinforceScale,jdbcType=DOUBLE}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

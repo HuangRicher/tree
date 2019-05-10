@@ -1,0 +1,270 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.tongzhu.welfare.mapper.LoveSettingMapper" >
+  <resultMap id="BaseResultMap" type="com.tongzhu.welfare.model.LoveSetting" >
+    <result column="grade" property="grade" jdbcType="INTEGER" />
+    <result column="love_num" property="loveNum" jdbcType="INTEGER" />
+    <result column="vitality" property="vitality" jdbcType="INTEGER" />
+    <result column="attack" property="attack" jdbcType="INTEGER" />
+    <result column="pdef" property="pdef" jdbcType="INTEGER" />
+    <result column="magdef" property="magdef" jdbcType="INTEGER" />
+    <result column="crit" property="crit" jdbcType="INTEGER" />
+    <result column="dodge" property="dodge" jdbcType="INTEGER" />
+    <result column="hit_rate" property="hitRate" jdbcType="INTEGER" />
+    <result column="defense_crit" property="defenseCrit" jdbcType="INTEGER" />
+    <result column="pdre" property="pdre" jdbcType="INTEGER" />
+    <result column="magdre" property="magdre" jdbcType="INTEGER" />
+    <result column="spell_attacks" property="spellAttacks" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    grade, love_num, vitality, attack, pdef, magdef, crit, dodge, hit_rate, defense_crit, 
+    pdre, magdre, spell_attacks
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.tongzhu.welfare.model.LoveSettingExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from tz_love_setting
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <delete id="deleteByExample" parameterType="com.tongzhu.welfare.model.LoveSettingExample" >
+    delete from tz_love_setting
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.tongzhu.welfare.model.LoveSetting" >
+    insert into tz_love_setting (grade, love_num, vitality, 
+      attack, pdef, magdef, 
+      crit, dodge, hit_rate, 
+      defense_crit, pdre, magdre, 
+      spell_attacks)
+    values (#{grade,jdbcType=INTEGER}, #{loveNum,jdbcType=INTEGER}, #{vitality,jdbcType=INTEGER}, 
+      #{attack,jdbcType=INTEGER}, #{pdef,jdbcType=INTEGER}, #{magdef,jdbcType=INTEGER}, 
+      #{crit,jdbcType=INTEGER}, #{dodge,jdbcType=INTEGER}, #{hitRate,jdbcType=INTEGER}, 
+      #{defenseCrit,jdbcType=INTEGER}, #{pdre,jdbcType=INTEGER}, #{magdre,jdbcType=INTEGER}, 
+      #{spellAttacks,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.tongzhu.welfare.model.LoveSetting" >
+    insert into tz_love_setting
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="grade != null" >
+        grade,
+      </if>
+      <if test="loveNum != null" >
+        love_num,
+      </if>
+      <if test="vitality != null" >
+        vitality,
+      </if>
+      <if test="attack != null" >
+        attack,
+      </if>
+      <if test="pdef != null" >
+        pdef,
+      </if>
+      <if test="magdef != null" >
+        magdef,
+      </if>
+      <if test="crit != null" >
+        crit,
+      </if>
+      <if test="dodge != null" >
+        dodge,
+      </if>
+      <if test="hitRate != null" >
+        hit_rate,
+      </if>
+      <if test="defenseCrit != null" >
+        defense_crit,
+      </if>
+      <if test="pdre != null" >
+        pdre,
+      </if>
+      <if test="magdre != null" >
+        magdre,
+      </if>
+      <if test="spellAttacks != null" >
+        spell_attacks,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="grade != null" >
+        #{grade,jdbcType=INTEGER},
+      </if>
+      <if test="loveNum != null" >
+        #{loveNum,jdbcType=INTEGER},
+      </if>
+      <if test="vitality != null" >
+        #{vitality,jdbcType=INTEGER},
+      </if>
+      <if test="attack != null" >
+        #{attack,jdbcType=INTEGER},
+      </if>
+      <if test="pdef != null" >
+        #{pdef,jdbcType=INTEGER},
+      </if>
+      <if test="magdef != null" >
+        #{magdef,jdbcType=INTEGER},
+      </if>
+      <if test="crit != null" >
+        #{crit,jdbcType=INTEGER},
+      </if>
+      <if test="dodge != null" >
+        #{dodge,jdbcType=INTEGER},
+      </if>
+      <if test="hitRate != null" >
+        #{hitRate,jdbcType=INTEGER},
+      </if>
+      <if test="defenseCrit != null" >
+        #{defenseCrit,jdbcType=INTEGER},
+      </if>
+      <if test="pdre != null" >
+        #{pdre,jdbcType=INTEGER},
+      </if>
+      <if test="magdre != null" >
+        #{magdre,jdbcType=INTEGER},
+      </if>
+      <if test="spellAttacks != null" >
+        #{spellAttacks,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.tongzhu.welfare.model.LoveSettingExample" resultType="java.lang.Integer" >
+    select count(*) from tz_love_setting
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update tz_love_setting
+    <set >
+      <if test="record.grade != null" >
+        grade = #{record.grade,jdbcType=INTEGER},
+      </if>
+      <if test="record.loveNum != null" >
+        love_num = #{record.loveNum,jdbcType=INTEGER},
+      </if>
+      <if test="record.vitality != null" >
+        vitality = #{record.vitality,jdbcType=INTEGER},
+      </if>
+      <if test="record.attack != null" >
+        attack = #{record.attack,jdbcType=INTEGER},
+      </if>
+      <if test="record.pdef != null" >
+        pdef = #{record.pdef,jdbcType=INTEGER},
+      </if>
+      <if test="record.magdef != null" >
+        magdef = #{record.magdef,jdbcType=INTEGER},
+      </if>
+      <if test="record.crit != null" >
+        crit = #{record.crit,jdbcType=INTEGER},
+      </if>
+      <if test="record.dodge != null" >
+        dodge = #{record.dodge,jdbcType=INTEGER},
+      </if>
+      <if test="record.hitRate != null" >
+        hit_rate = #{record.hitRate,jdbcType=INTEGER},
+      </if>
+      <if test="record.defenseCrit != null" >
+        defense_crit = #{record.defenseCrit,jdbcType=INTEGER},
+      </if>
+      <if test="record.pdre != null" >
+        pdre = #{record.pdre,jdbcType=INTEGER},
+      </if>
+      <if test="record.magdre != null" >
+        magdre = #{record.magdre,jdbcType=INTEGER},
+      </if>
+      <if test="record.spellAttacks != null" >
+        spell_attacks = #{record.spellAttacks,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update tz_love_setting
+    set grade = #{record.grade,jdbcType=INTEGER},
+      love_num = #{record.loveNum,jdbcType=INTEGER},
+      vitality = #{record.vitality,jdbcType=INTEGER},
+      attack = #{record.attack,jdbcType=INTEGER},
+      pdef = #{record.pdef,jdbcType=INTEGER},
+      magdef = #{record.magdef,jdbcType=INTEGER},
+      crit = #{record.crit,jdbcType=INTEGER},
+      dodge = #{record.dodge,jdbcType=INTEGER},
+      hit_rate = #{record.hitRate,jdbcType=INTEGER},
+      defense_crit = #{record.defenseCrit,jdbcType=INTEGER},
+      pdre = #{record.pdre,jdbcType=INTEGER},
+      magdre = #{record.magdre,jdbcType=INTEGER},
+      spell_attacks = #{record.spellAttacks,jdbcType=INTEGER}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+</mapper>

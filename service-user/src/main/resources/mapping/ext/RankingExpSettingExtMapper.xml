@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.tongzhu.user.mapper.ext.RankingExpSettingExtMapper" >
+  <resultMap id="BaseResultMap" type="com.tongzhu.user.model.RankingExpSetting" >
+    <id column="role_level" property="roleLevel" jdbcType="INTEGER" />
+    <result column="win_exp" property="winExp" jdbcType="INTEGER" />
+    <result column="fail_exp" property="failExp" jdbcType="INTEGER" />
+  </resultMap>
+
+  <insert id="batchInsert" parameterType="java.util.List" >
+    insert into tz_game_fight_ranking_exp_setting (role_level, win_exp, fail_exp)
+    values
+    <foreach collection="list" index="index" item="item" separator=",">
+      (
+      #{item.roleLevel,jdbcType=INTEGER},
+      #{item.winExp,jdbcType=INTEGER},
+      #{item.failExp,jdbcType=INTEGER}
+      )
+    </foreach>
+
+  </insert>
+
+</mapper>

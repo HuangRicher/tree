@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.tongzhu.user.mapper.FightRankingSettingMapper" >
+  <resultMap id="BaseResultMap" type="com.tongzhu.user.model.FightRankingSetting" >
+    <result column="rank_id" property="rankId" jdbcType="INTEGER" />
+    <result column="grade" property="grade" jdbcType="INTEGER" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="max_rank" property="maxRank" jdbcType="INTEGER" />
+    <result column="min_rank" property="minRank" jdbcType="INTEGER" />
+    <result column="first_rank" property="firstRank" jdbcType="INTEGER" />
+    <result column="award_money_day" property="awardMoneyDay" jdbcType="INTEGER" />
+    <result column="award_money_season" property="awardMoneySeason" jdbcType="INTEGER" />
+    <result column="award_honor_season" property="awardHonorSeason" jdbcType="INTEGER" />
+    <result column="after_rank_id" property="afterRankId" jdbcType="INTEGER" />
+    <result column="after_grade" property="afterGrade" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    rank_id, grade, name, max_rank, min_rank, first_rank, award_money_day, award_money_season, 
+    award_honor_season, after_rank_id, after_grade
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.tongzhu.user.model.FightRankingSettingExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from tz_game_fight_ranking_setting
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <delete id="deleteByExample" parameterType="com.tongzhu.user.model.FightRankingSettingExample" >
+    delete from tz_game_fight_ranking_setting
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.tongzhu.user.model.FightRankingSetting" >
+    insert into tz_game_fight_ranking_setting (rank_id, grade, name, 
+      max_rank, min_rank, first_rank, 
+      award_money_day, award_money_season, award_honor_season, 
+      after_rank_id, after_grade)
+    values (#{rankId,jdbcType=INTEGER}, #{grade,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, 
+      #{maxRank,jdbcType=INTEGER}, #{minRank,jdbcType=INTEGER}, #{firstRank,jdbcType=INTEGER}, 
+      #{awardMoneyDay,jdbcType=INTEGER}, #{awardMoneySeason,jdbcType=INTEGER}, #{awardHonorSeason,jdbcType=INTEGER}, 
+      #{afterRankId,jdbcType=INTEGER}, #{afterGrade,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.tongzhu.user.model.FightRankingSetting" >
+    insert into tz_game_fight_ranking_setting
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="rankId != null" >
+        rank_id,
+      </if>
+      <if test="grade != null" >
+        grade,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="maxRank != null" >
+        max_rank,
+      </if>
+      <if test="minRank != null" >
+        min_rank,
+      </if>
+      <if test="firstRank != null" >
+        first_rank,
+      </if>
+      <if test="awardMoneyDay != null" >
+        award_money_day,
+      </if>
+      <if test="awardMoneySeason != null" >
+        award_money_season,
+      </if>
+      <if test="awardHonorSeason != null" >
+        award_honor_season,
+      </if>
+      <if test="afterRankId != null" >
+        after_rank_id,
+      </if>
+      <if test="afterGrade != null" >
+        after_grade,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="rankId != null" >
+        #{rankId,jdbcType=INTEGER},
+      </if>
+      <if test="grade != null" >
+        #{grade,jdbcType=INTEGER},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="maxRank != null" >
+        #{maxRank,jdbcType=INTEGER},
+      </if>
+      <if test="minRank != null" >
+        #{minRank,jdbcType=INTEGER},
+      </if>
+      <if test="firstRank != null" >
+        #{firstRank,jdbcType=INTEGER},
+      </if>
+      <if test="awardMoneyDay != null" >
+        #{awardMoneyDay,jdbcType=INTEGER},
+      </if>
+      <if test="awardMoneySeason != null" >
+        #{awardMoneySeason,jdbcType=INTEGER},
+      </if>
+      <if test="awardHonorSeason != null" >
+        #{awardHonorSeason,jdbcType=INTEGER},
+      </if>
+      <if test="afterRankId != null" >
+        #{afterRankId,jdbcType=INTEGER},
+      </if>
+      <if test="afterGrade != null" >
+        #{afterGrade,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.tongzhu.user.model.FightRankingSettingExample" resultType="java.lang.Integer" >
+    select count(*) from tz_game_fight_ranking_setting
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update tz_game_fight_ranking_setting
+    <set >
+      <if test="record.rankId != null" >
+        rank_id = #{record.rankId,jdbcType=INTEGER},
+      </if>
+      <if test="record.grade != null" >
+        grade = #{record.grade,jdbcType=INTEGER},
+      </if>
+      <if test="record.name != null" >
+        name = #{record.name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.maxRank != null" >
+        max_rank = #{record.maxRank,jdbcType=INTEGER},
+      </if>
+      <if test="record.minRank != null" >
+        min_rank = #{record.minRank,jdbcType=INTEGER},
+      </if>
+      <if test="record.firstRank != null" >
+        first_rank = #{record.firstRank,jdbcType=INTEGER},
+      </if>
+      <if test="record.awardMoneyDay != null" >
+        award_money_day = #{record.awardMoneyDay,jdbcType=INTEGER},
+      </if>
+      <if test="record.awardMoneySeason != null" >
+        award_money_season = #{record.awardMoneySeason,jdbcType=INTEGER},
+      </if>
+      <if test="record.awardHonorSeason != null" >
+        award_honor_season = #{record.awardHonorSeason,jdbcType=INTEGER},
+      </if>
+      <if test="record.afterRankId != null" >
+        after_rank_id = #{record.afterRankId,jdbcType=INTEGER},
+      </if>
+      <if test="record.afterGrade != null" >
+        after_grade = #{record.afterGrade,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update tz_game_fight_ranking_setting
+    set rank_id = #{record.rankId,jdbcType=INTEGER},
+      grade = #{record.grade,jdbcType=INTEGER},
+      name = #{record.name,jdbcType=VARCHAR},
+      max_rank = #{record.maxRank,jdbcType=INTEGER},
+      min_rank = #{record.minRank,jdbcType=INTEGER},
+      first_rank = #{record.firstRank,jdbcType=INTEGER},
+      award_money_day = #{record.awardMoneyDay,jdbcType=INTEGER},
+      award_money_season = #{record.awardMoneySeason,jdbcType=INTEGER},
+      award_honor_season = #{record.awardHonorSeason,jdbcType=INTEGER},
+      after_rank_id = #{record.afterRankId,jdbcType=INTEGER},
+      after_grade = #{record.afterGrade,jdbcType=INTEGER}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+</mapper>

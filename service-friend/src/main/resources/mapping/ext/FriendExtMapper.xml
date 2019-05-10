@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.tongzhu.friend.mapper.ext.FriendExtMapper" >
+    <resultMap id="AmountResultMap" type="com.tongzhu.friend.mapper.vo.FriendVO" >
+        <id column="id" property="id" jdbcType="VARCHAR" />
+        <result column="user_id" property="userId" jdbcType="VARCHAR" />
+        <result column="friends_id" property="friendsId" jdbcType="VARCHAR" />
+        <result column="type" property="type" jdbcType="INTEGER" />
+        <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+        <result column="update_date" property="updateDate" jdbcType="TIMESTAMP" />
+        <result column="status_" property="status" jdbcType="INTEGER" />
+        <result column="amount" property="amount" jdbcType="INTEGER" />
+    </resultMap>
+
+    <resultMap id="FriendResultMap" type="com.tongzhu.friend.mapper.vo.FriendDO" >
+        <result column="intimacy" property="intimacy" jdbcType="INTEGER" />
+        <result column="user_id" property="userId" jdbcType="VARCHAR" />
+        <result column="name" property="name" jdbcType="VARCHAR" />
+        <result column="portrait_url" property="portraitUrl" jdbcType="VARCHAR" />
+        <result column="sex" property="sex" jdbcType="INTEGER" />
+        <result column="status_" property="status" jdbcType="INTEGER" />
+        <result column="role_id" property="roleId" jdbcType="INTEGER" />
+        <result column="role_level" property="roleLevel" jdbcType="INTEGER" />
+        <result column="spouse" property="spouse" jdbcType="VARCHAR" />
+        <result column="fight_status" property="fightStatus" jdbcType="INTEGER" />
+    </resultMap>
+
+    <resultMap id="BaseResultMap" type="com.tongzhu.friend.model.Friend" >
+        <id column="id" property="id" jdbcType="VARCHAR" />
+        <result column="user_id" property="userId" jdbcType="VARCHAR" />
+        <result column="friends_id" property="friendsId" jdbcType="VARCHAR" />
+        <result column="type" property="type" jdbcType="INTEGER" />
+        <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+        <result column="update_date" property="updateDate" jdbcType="TIMESTAMP" />
+        <result column="status_" property="status" jdbcType="INTEGER" />
+    </resultMap>
+
+    <select id="selectFriends" resultMap="AmountResultMap" parameterType="map">
+        SELECT id,user_id,friends_id,`type`,create_date,update_date,status_,amount FROM (
+        (
+        SELECT friend.* ,us.selling_price amount FROM tz_user_friends friend
+        LEFT JOIN tz_user us ON friend.friends_id=us.user_id
+        WHERE friend.status_=#{status,jdbcType=INTEGER} AND friend.user_id=#{userId,jdbcType=VARCHAR})
+        UNION
+        (
+        SELECT friend.*,us.selling_price amount  FROM tz_user_friends friend
+        LEFT JOIN tz_user us ON friend.user_id=us.user_id
+        WHERE friend.status_=#{status,jdbcType=INTEGER} AND friend.friends_id=#{userId,jdbcType=VARCHAR})
+        ) friends ORDER BY amount DESC
+    </select>
+
+    <select id="selectFriendsOrderByDate" resultMap="AmountResultMap" parameterType="map">
+        SELECT f.*,u.selling_price amount FROM  tz_user_friends f LEFT JOIN tz_user u ON f.user_id=u.user_id
+        WHERE f.friends_id=#{userId,jdbcType=VARCHAR} AND f.status_=#{status,jdbcType=INTEGER} order by f.create_date DESC
+    </select>
+
+    <select id="selectFriendsForBuyByRand" resultMap="BaseResultMap" parameterType="map">
+        SELECT * FROM tz_user_friends WHERE (user_id=#{userId,jdbcType=VARCHAR} OR friends_id=#{userId,jdbcType=VARCHAR})  AND status_=#{status,jdbcType=INTEGER} AND user_id IN (
+
+            SELECT user_id FROM tz_user WHERE selling_price &lt;=#{sellingPrice,jdbcType=INTEGER} AND user_id NOT IN(
+                SELECT worker_id FROM tz_tree_house_room
+                WHERE worker_id IS NOT NULL AND ((protect_end_date IS NOT NULL OR protect_end_date &gt;#{protectEndDate,jdbcType=TIMESTAMP})
+                OR user_id=#{userId,jdbcType=VARCHAR})
+                UNION
+                SELECT user_id FROM tz_user_exchange_record
+                WHERE exchange_date=#{exchangeDate,jdbcType=TIMESTAMP}
+                AND exchange_count &gt;=#{exchangeCount,jdbcType=INTEGER}
+                )
+
+        ) ORDER BY RAND() LIMIT #{count,jdbcType=INTEGER}
+    </select>
+
+    <select id="checkIsMyFriend" resultMap="BaseResultMap" parameterType="map">
+        SELECT * FROM `tz_user_friends` fd LEFT JOIN `tz_user` us ON fd.`user_id`=us.`user_id`
+        WHERE fd.`status_`=1 AND fd.`friends_id`=#{userId,jdbcType=VARCHAR} AND (fd.user_id=#{searchUser,jdbcType=VARCHAR} OR us.`name`=#{searchUser,jdbcType=VARCHAR})
+        UNION
+        SELECT * FROM `tz_user_friends` fd LEFT JOIN `tz_user` us ON fd.`friends_id`=us.`user_id`
+        WHERE fd.`status_`=1 AND fd.`user_id`=#{userId,jdbcType=VARCHAR} AND (fd.`friends_id`=#{searchUser,jdbcType=VARCHAR} OR us.`name`=#{searchUser,jdbcType=VARCHAR})
+    </select>
+
+    <select id="selectMyFriendList" parameterType="map" resultMap="FriendResultMap">
+        SELECT ffd.fid as id,ffd.intimacy,ffd.fight_status,ffd.user_id,ffd.name,ffd.portrait_url,ffd.status_,ffd.sex,ur.role_id,ur.role_level,ur.spouse FROM (
+        SELECT fd.id as fid,fd.intimacy,fd.fight_status,us.* FROM (
+        SELECT id,friends_id AS user_id,intimacy,fight_status FROM `tz_user_friends` WHERE user_id=#{userId,jdbcType=VARCHAR} AND status_=1
+        UNION
+        SELECT id,user_id,intimacy,fight_status FROM `tz_user_friends` WHERE friends_id=#{userId,jdbcType=VARCHAR} AND status_=1
+        ) fd LEFT JOIN tz_user us ON fd.user_id=us.user_id
+        ) ffd LEFT JOIN `tz_game_user_role` ur ON ffd.user_id=ur.user_id  order by ffd.intimacy desc
+    </select>
+
+    <select id="selectFriendListToConfirm" resultMap="FriendResultMap" parameterType="map">
+        SELECT fd.user_id,us.`name`,us.portrait_url,us.sex,us.grade as role_level,us.role_id FROM `tz_user_friends` fd LEFT JOIN `tz_user` us ON fd.user_id=us.user_id
+        WHERE fd.friends_id=#{userId,jdbcType=VARCHAR} AND fd.status_=0
+    </select>
+</mapper>

@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.tongzhu.welfare.mapper.LoveClassSettingMapper" >
+  <resultMap id="BaseResultMap" type="com.tongzhu.welfare.model.LoveClassSetting" >
+    <result column="grade" property="grade" jdbcType="INTEGER" />
+    <result column="property1" property="property1" jdbcType="INTEGER" />
+    <result column="property2" property="property2" jdbcType="INTEGER" />
+    <result column="property3" property="property3" jdbcType="INTEGER" />
+    <result column="property4" property="property4" jdbcType="INTEGER" />
+    <result column="property5" property="property5" jdbcType="INTEGER" />
+    <result column="property6" property="property6" jdbcType="INTEGER" />
+    <result column="property7" property="property7" jdbcType="INTEGER" />
+    <result column="property8" property="property8" jdbcType="INTEGER" />
+    <result column="property9" property="property9" jdbcType="INTEGER" />
+    <result column="property10" property="property10" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    grade, property1, property2, property3, property4, property5, property6, property7, 
+    property8, property9, property10
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.tongzhu.welfare.model.LoveClassSettingExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from tz_love_class_setting
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <delete id="deleteByExample" parameterType="com.tongzhu.welfare.model.LoveClassSettingExample" >
+    delete from tz_love_class_setting
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.tongzhu.welfare.model.LoveClassSetting" >
+    insert into tz_love_class_setting (grade, property1, property2, 
+      property3, property4, property5, 
+      property6, property7, property8, 
+      property9, property10)
+    values (#{grade,jdbcType=INTEGER}, #{property1,jdbcType=INTEGER}, #{property2,jdbcType=INTEGER}, 
+      #{property3,jdbcType=INTEGER}, #{property4,jdbcType=INTEGER}, #{property5,jdbcType=INTEGER}, 
+      #{property6,jdbcType=INTEGER}, #{property7,jdbcType=INTEGER}, #{property8,jdbcType=INTEGER}, 
+      #{property9,jdbcType=INTEGER}, #{property10,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.tongzhu.welfare.model.LoveClassSetting" >
+    insert into tz_love_class_setting
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="grade != null" >
+        grade,
+      </if>
+      <if test="property1 != null" >
+        property1,
+      </if>
+      <if test="property2 != null" >
+        property2,
+      </if>
+      <if test="property3 != null" >
+        property3,
+      </if>
+      <if test="property4 != null" >
+        property4,
+      </if>
+      <if test="property5 != null" >
+        property5,
+      </if>
+      <if test="property6 != null" >
+        property6,
+      </if>
+      <if test="property7 != null" >
+        property7,
+      </if>
+      <if test="property8 != null" >
+        property8,
+      </if>
+      <if test="property9 != null" >
+        property9,
+      </if>
+      <if test="property10 != null" >
+        property10,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="grade != null" >
+        #{grade,jdbcType=INTEGER},
+      </if>
+      <if test="property1 != null" >
+        #{property1,jdbcType=INTEGER},
+      </if>
+      <if test="property2 != null" >
+        #{property2,jdbcType=INTEGER},
+      </if>
+      <if test="property3 != null" >
+        #{property3,jdbcType=INTEGER},
+      </if>
+      <if test="property4 != null" >
+        #{property4,jdbcType=INTEGER},
+      </if>
+      <if test="property5 != null" >
+        #{property5,jdbcType=INTEGER},
+      </if>
+      <if test="property6 != null" >
+        #{property6,jdbcType=INTEGER},
+      </if>
+      <if test="property7 != null" >
+        #{property7,jdbcType=INTEGER},
+      </if>
+      <if test="property8 != null" >
+        #{property8,jdbcType=INTEGER},
+      </if>
+      <if test="property9 != null" >
+        #{property9,jdbcType=INTEGER},
+      </if>
+      <if test="property10 != null" >
+        #{property10,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.tongzhu.welfare.model.LoveClassSettingExample" resultType="java.lang.Integer" >
+    select count(*) from tz_love_class_setting
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update tz_love_class_setting
+    <set >
+      <if test="record.grade != null" >
+        grade = #{record.grade,jdbcType=INTEGER},
+      </if>
+      <if test="record.property1 != null" >
+        property1 = #{record.property1,jdbcType=INTEGER},
+      </if>
+      <if test="record.property2 != null" >
+        property2 = #{record.property2,jdbcType=INTEGER},
+      </if>
+      <if test="record.property3 != null" >
+        property3 = #{record.property3,jdbcType=INTEGER},
+      </if>
+      <if test="record.property4 != null" >
+        property4 = #{record.property4,jdbcType=INTEGER},
+      </if>
+      <if test="record.property5 != null" >
+        property5 = #{record.property5,jdbcType=INTEGER},
+      </if>
+      <if test="record.property6 != null" >
+        property6 = #{record.property6,jdbcType=INTEGER},
+      </if>
+      <if test="record.property7 != null" >
+        property7 = #{record.property7,jdbcType=INTEGER},
+      </if>
+      <if test="record.property8 != null" >
+        property8 = #{record.property8,jdbcType=INTEGER},
+      </if>
+      <if test="record.property9 != null" >
+        property9 = #{record.property9,jdbcType=INTEGER},
+      </if>
+      <if test="record.property10 != null" >
+        property10 = #{record.property10,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update tz_love_class_setting
+    set grade = #{record.grade,jdbcType=INTEGER},
+      property1 = #{record.property1,jdbcType=INTEGER},
+      property2 = #{record.property2,jdbcType=INTEGER},
+      property3 = #{record.property3,jdbcType=INTEGER},
+      property4 = #{record.property4,jdbcType=INTEGER},
+      property5 = #{record.property5,jdbcType=INTEGER},
+      property6 = #{record.property6,jdbcType=INTEGER},
+      property7 = #{record.property7,jdbcType=INTEGER},
+      property8 = #{record.property8,jdbcType=INTEGER},
+      property9 = #{record.property9,jdbcType=INTEGER},
+      property10 = #{record.property10,jdbcType=INTEGER}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+</mapper>

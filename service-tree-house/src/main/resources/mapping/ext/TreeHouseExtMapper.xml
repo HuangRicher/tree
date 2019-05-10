@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.tongzhu.treehouse.mapper.ext.TreeHouseExtMapper" >
+
+  <update id="updateTressHouseCulture" parameterType="map" >
+    update tz_tree_house
+    set culture_value =culture_value+ #{cultureValue,jdbcType=INTEGER}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+
+  <update id="updateTressHouseFlourishingRateByUserId" parameterType="map" >
+    update tz_tree_house
+    set flourishing_rate =flourishing_rate+ #{flourishingRate,jdbcType=INTEGER}
+    where user_id = #{userId,jdbcType=VARCHAR}
+  </update>
+
+  <update id="updateTressHouseFlourishingRateByTreeHouseId" parameterType="map" >
+    update tz_tree_house
+    set flourishing_rate =flourishing_rate+ #{flourishingRate,jdbcType=INTEGER}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+
+  <update id="updateTreeHouseAmbienceCount" parameterType="map">
+    UPDATE `tz_tree_house` SET ambience_count=ambience_count+#{ambienceCount,jdbcType=INTEGER}
+    WHERE user_id=#{treeHouseId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateTreeHouseAmusementCount" parameterType="map">
+    UPDATE `tz_tree_house` SET amusement_count=amusement_count+#{amuseCount,jdbcType=INTEGER}
+    WHERE user_id=#{treeHouseId,jdbcType=VARCHAR}
+  </update>
+
+  <delete id="deleteMaxRoomIdByUserId" parameterType="map">
+    DELETE  FROM tz_tree_house_room
+    WHERE user_id=${userId,jdbcType=VARCHAR}
+    AND room_id IN (
+    SELECT room_id FROM (
+    SELECT MAX(room_id) room_id FROM tz_tree_house_room where user_id=${userId,jdbcType=VARCHAR} ) rooms
+    )
+  </delete>
+
+</mapper>

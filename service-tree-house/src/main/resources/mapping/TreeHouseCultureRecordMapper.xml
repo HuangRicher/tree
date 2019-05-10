@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.tongzhu.treehouse.mapper.TreeHouseCultureRecordMapper" >
+  <resultMap id="BaseResultMap" type="com.tongzhu.treehouse.model.TreeHouseCultureRecord" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="user_id" property="userId" jdbcType="VARCHAR" />
+    <result column="tree_house_id" property="treeHouseId" jdbcType="VARCHAR" />
+    <result column="level_" property="level" jdbcType="INTEGER" />
+    <result column="count_" property="count" jdbcType="INTEGER" />
+    <result column="type_" property="type" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, user_id, tree_house_id, level_, count_, type_
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.tongzhu.treehouse.model.TreeHouseCultureRecordExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from tz_tree_house_culture_record
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from tz_tree_house_culture_record
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from tz_tree_house_culture_record
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.tongzhu.treehouse.model.TreeHouseCultureRecordExample" >
+    delete from tz_tree_house_culture_record
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.tongzhu.treehouse.model.TreeHouseCultureRecord" >
+    insert into tz_tree_house_culture_record (id, user_id, tree_house_id, 
+      level_, count_, type_)
+    values (#{id,jdbcType=VARCHAR}, #{userId,jdbcType=VARCHAR}, #{treeHouseId,jdbcType=VARCHAR}, 
+      #{level,jdbcType=INTEGER}, #{count,jdbcType=INTEGER}, #{type,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.tongzhu.treehouse.model.TreeHouseCultureRecord" >
+    insert into tz_tree_house_culture_record
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="treeHouseId != null" >
+        tree_house_id,
+      </if>
+      <if test="level != null" >
+        level_,
+      </if>
+      <if test="count != null" >
+        count_,
+      </if>
+      <if test="type != null" >
+        type_,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="treeHouseId != null" >
+        #{treeHouseId,jdbcType=VARCHAR},
+      </if>
+      <if test="level != null" >
+        #{level,jdbcType=INTEGER},
+      </if>
+      <if test="count != null" >
+        #{count,jdbcType=INTEGER},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.tongzhu.treehouse.model.TreeHouseCultureRecordExample" resultType="java.lang.Integer" >
+    select count(*) from tz_tree_house_culture_record
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update tz_tree_house_culture_record
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userId != null" >
+        user_id = #{record.userId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.treeHouseId != null" >
+        tree_house_id = #{record.treeHouseId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.level != null" >
+        level_ = #{record.level,jdbcType=INTEGER},
+      </if>
+      <if test="record.count != null" >
+        count_ = #{record.count,jdbcType=INTEGER},
+      </if>
+      <if test="record.type != null" >
+        type_ = #{record.type,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update tz_tree_house_culture_record
+    set id = #{record.id,jdbcType=VARCHAR},
+      user_id = #{record.userId,jdbcType=VARCHAR},
+      tree_house_id = #{record.treeHouseId,jdbcType=VARCHAR},
+      level_ = #{record.level,jdbcType=INTEGER},
+      count_ = #{record.count,jdbcType=INTEGER},
+      type_ = #{record.type,jdbcType=INTEGER}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.tongzhu.treehouse.model.TreeHouseCultureRecord" >
+    update tz_tree_house_culture_record
+    <set >
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="treeHouseId != null" >
+        tree_house_id = #{treeHouseId,jdbcType=VARCHAR},
+      </if>
+      <if test="level != null" >
+        level_ = #{level,jdbcType=INTEGER},
+      </if>
+      <if test="count != null" >
+        count_ = #{count,jdbcType=INTEGER},
+      </if>
+      <if test="type != null" >
+        type_ = #{type,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.tongzhu.treehouse.model.TreeHouseCultureRecord" >
+    update tz_tree_house_culture_record
+    set user_id = #{userId,jdbcType=VARCHAR},
+      tree_house_id = #{treeHouseId,jdbcType=VARCHAR},
+      level_ = #{level,jdbcType=INTEGER},
+      count_ = #{count,jdbcType=INTEGER},
+      type_ = #{type,jdbcType=INTEGER}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

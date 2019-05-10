@@ -1,0 +1,75 @@
+feign-service:
+  user: user-test
+  user-goods: user-goods-test
+  tree-house: tree-house-test
+  message: message-test
+server:
+  port: 9098
+  tomcat:
+    max-threads: 500
+spring:
+  jackson:
+    serialization:
+      write-dates-as-timestamps: true
+  datasource:
+    type: com.zaxxer.hikari.HikariDataSource
+    url: jdbc:mysql://10.66.225.229:3306/tongzhu_treehouse_test?useUnicode=true&characterEncoding=utf8&useSSL=false
+    username: root
+    password: rP3Za18k3Mw18gDJ
+    hikari:
+      data-source-properties:
+        cachePrepStmts: true
+        prepStmtCacheSize: 250
+        prepStmtCacheSqlLimit: 2048
+        useServerPrepStmts: true
+        maxLifetime: 1800000
+        idleTimeout: 600000
+  application:
+    name: friend-test
+  redis:
+    database: 6
+    host: 10.66.170.87
+    port: 6379
+    password: 6^xAq@MWLlM!RSVP
+    lettuce:
+      shutdown-timeout: 30000ms
+      pool:
+        max-active: 10
+        max-wait: -1ms
+        max-idle: 0
+mybatis:
+  configuration:
+    map-underscore-to-camel-case: true
+    use-generated-keys: true
+  type-aliases-package: com.tongzhu.friend.model
+  mapper-locations: classpath:mapping/**/*Mapper.xml
+
+#pagehelper分页工具
+pagehelper:
+  helperDialect: mysql
+  reasonable: true
+  supportMethodsArguments: true
+  params: count=countSql
+eureka:
+  instance:
+    prefer-ip-address: true
+    ip-address: 10.141.25.60
+    leaseRenewalIntervalInSeconds: 1
+    leaseExpirationDurationInSeconds: 2
+  client:
+    serviceUrl:
+      defaultZone: http://10.141.25.60:8761/eureka/
+#logging:
+#  level:
+#    com.tongzhu.friend.mapper : debug
+ribbon:
+  ReadTimeout: 60000
+  ConnectTimeout: 60000
+  SocketTimeout: 60000
+#feign:
+#  hystrix:
+#    enabled: false
+## tx-manager 配置
+tx-lcn:
+  client:
+    manager-address: 10.141.25.60:8070

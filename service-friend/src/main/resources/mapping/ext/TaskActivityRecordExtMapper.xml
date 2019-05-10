@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.tongzhu.friend.mapper.ext.TaskActivityRecordExtMapper">
+    <resultMap id="TaskActivitVO" type="com.tongzhu.friend.service.vo.TaskActivityVO">
+        <id column="id" property="id" jdbcType="VARCHAR"/>
+        <result column="liveness" property="liveness" jdbcType="INTEGER"/>
+        <result column="award" property="award" jdbcType="VARCHAR"/>
+        <result column="user_id" property="userId" jdbcType="VARCHAR"/>
+        <result column="activity_rewards_id" property="activityRewardsId" jdbcType="INTEGER"/>
+        <result column="status" property="status" jdbcType="INTEGER"/>
+        <result column="performance" property="performance" jdbcType="INTEGER"/>
+        <result column="update_date" property="updateDate" jdbcType="TIMESTAMP" />
+    </resultMap>
+
+    <resultMap id="BaseResultMap" type="com.tongzhu.friend.model.TaskActivityRecord" >
+        <id column="id" property="id" jdbcType="VARCHAR" />
+        <result column="user_id" property="userId" jdbcType="VARCHAR" />
+        <result column="activity_rewards_id" property="activityRewardsId" jdbcType="INTEGER" />
+        <result column="status" property="status" jdbcType="INTEGER" />
+        <result column="performance" property="performance" jdbcType="INTEGER" />
+        <result column="update_date" property="updateDate" jdbcType="TIMESTAMP" />
+    </resultMap>
+
+    <select id="getTaskActivityRecordList" resultMap="TaskActivitVO" parameterType="map">
+        SELECT
+        ttar.id,
+        ttar.user_id,
+        ttar.activity_rewards_id,
+        ttar.`status`,
+        ttar.performance,
+        ttar.update_date,
+        ar.liveness,
+        ar.award
+        FROM
+        tz_task_activity_record ttar
+        JOIN tz_task_activity_rewards ar ON ttar.activity_rewards_id = ar.id
+        WHERE
+        ttar.user_id = #{userId}
+        <if test="liveness != null">
+            AND ar.liveness <![CDATA[<=]]> #{liveness}
+        </if>
+    </select>
+    <select id="getTaskActivityRecordListByLiveness" resultMap="BaseResultMap" parameterType="map">
+        SELECT
+        ttar.id,
+        ttar.user_id,
+        ttar.activity_rewards_id,
+        ttar.`status`,
+        ttar.performance,
+        ttar.update_date,
+        ar.liveness,
+        ar.award
+        FROM
+        tz_task_activity_record ttar
+        JOIN tz_task_activity_rewards ar ON ttar.activity_rewards_id = ar.id
+        WHERE
+        ttar.user_id = #{userId}
+        <if test="liveness != null">
+            AND ar.liveness <![CDATA[<=]]> #{liveness}
+        </if>
+    </select>
+
+</mapper>

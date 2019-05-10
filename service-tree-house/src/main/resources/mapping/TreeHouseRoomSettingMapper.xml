@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.tongzhu.treehouse.mapper.TreeHouseRoomSettingMapper" >
+  <resultMap id="BaseResultMap" type="com.tongzhu.treehouse.model.TreeHouseRoomSetting" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="worker_count" property="workerCount" jdbcType="INTEGER" />
+    <result column="experience_min" property="experienceMin" jdbcType="INTEGER" />
+    <result column="experience_max" property="experienceMax" jdbcType="INTEGER" />
+    <result column="flourishing_rate" property="flourishingRate" jdbcType="INTEGER" />
+    <result column="day_use" property="dayUse" jdbcType="INTEGER" />
+    <result column="consume_goods" property="consumeGoods" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, worker_count, experience_min, experience_max, flourishing_rate, day_use, consume_goods
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.tongzhu.treehouse.model.TreeHouseRoomSettingExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from tz_tree_house_room_setting
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from tz_tree_house_room_setting
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from tz_tree_house_room_setting
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.tongzhu.treehouse.model.TreeHouseRoomSettingExample" >
+    delete from tz_tree_house_room_setting
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.tongzhu.treehouse.model.TreeHouseRoomSetting" >
+    insert into tz_tree_house_room_setting (id, worker_count, experience_min, 
+      experience_max, flourishing_rate, day_use, 
+      consume_goods)
+    values (#{id,jdbcType=INTEGER}, #{workerCount,jdbcType=INTEGER}, #{experienceMin,jdbcType=INTEGER}, 
+      #{experienceMax,jdbcType=INTEGER}, #{flourishingRate,jdbcType=INTEGER}, #{dayUse,jdbcType=INTEGER}, 
+      #{consumeGoods,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.tongzhu.treehouse.model.TreeHouseRoomSetting" >
+    insert into tz_tree_house_room_setting
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="workerCount != null" >
+        worker_count,
+      </if>
+      <if test="experienceMin != null" >
+        experience_min,
+      </if>
+      <if test="experienceMax != null" >
+        experience_max,
+      </if>
+      <if test="flourishingRate != null" >
+        flourishing_rate,
+      </if>
+      <if test="dayUse != null" >
+        day_use,
+      </if>
+      <if test="consumeGoods != null" >
+        consume_goods,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="workerCount != null" >
+        #{workerCount,jdbcType=INTEGER},
+      </if>
+      <if test="experienceMin != null" >
+        #{experienceMin,jdbcType=INTEGER},
+      </if>
+      <if test="experienceMax != null" >
+        #{experienceMax,jdbcType=INTEGER},
+      </if>
+      <if test="flourishingRate != null" >
+        #{flourishingRate,jdbcType=INTEGER},
+      </if>
+      <if test="dayUse != null" >
+        #{dayUse,jdbcType=INTEGER},
+      </if>
+      <if test="consumeGoods != null" >
+        #{consumeGoods,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.tongzhu.treehouse.model.TreeHouseRoomSettingExample" resultType="java.lang.Integer" >
+    select count(*) from tz_tree_house_room_setting
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update tz_tree_house_room_setting
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.workerCount != null" >
+        worker_count = #{record.workerCount,jdbcType=INTEGER},
+      </if>
+      <if test="record.experienceMin != null" >
+        experience_min = #{record.experienceMin,jdbcType=INTEGER},
+      </if>
+      <if test="record.experienceMax != null" >
+        experience_max = #{record.experienceMax,jdbcType=INTEGER},
+      </if>
+      <if test="record.flourishingRate != null" >
+        flourishing_rate = #{record.flourishingRate,jdbcType=INTEGER},
+      </if>
+      <if test="record.dayUse != null" >
+        day_use = #{record.dayUse,jdbcType=INTEGER},
+      </if>
+      <if test="record.consumeGoods != null" >
+        consume_goods = #{record.consumeGoods,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update tz_tree_house_room_setting
+    set id = #{record.id,jdbcType=INTEGER},
+      worker_count = #{record.workerCount,jdbcType=INTEGER},
+      experience_min = #{record.experienceMin,jdbcType=INTEGER},
+      experience_max = #{record.experienceMax,jdbcType=INTEGER},
+      flourishing_rate = #{record.flourishingRate,jdbcType=INTEGER},
+      day_use = #{record.dayUse,jdbcType=INTEGER},
+      consume_goods = #{record.consumeGoods,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.tongzhu.treehouse.model.TreeHouseRoomSetting" >
+    update tz_tree_house_room_setting
+    <set >
+      <if test="workerCount != null" >
+        worker_count = #{workerCount,jdbcType=INTEGER},
+      </if>
+      <if test="experienceMin != null" >
+        experience_min = #{experienceMin,jdbcType=INTEGER},
+      </if>
+      <if test="experienceMax != null" >
+        experience_max = #{experienceMax,jdbcType=INTEGER},
+      </if>
+      <if test="flourishingRate != null" >
+        flourishing_rate = #{flourishingRate,jdbcType=INTEGER},
+      </if>
+      <if test="dayUse != null" >
+        day_use = #{dayUse,jdbcType=INTEGER},
+      </if>
+      <if test="consumeGoods != null" >
+        consume_goods = #{consumeGoods,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.tongzhu.treehouse.model.TreeHouseRoomSetting" >
+    update tz_tree_house_room_setting
+    set worker_count = #{workerCount,jdbcType=INTEGER},
+      experience_min = #{experienceMin,jdbcType=INTEGER},
+      experience_max = #{experienceMax,jdbcType=INTEGER},
+      flourishing_rate = #{flourishingRate,jdbcType=INTEGER},
+      day_use = #{dayUse,jdbcType=INTEGER},
+      consume_goods = #{consumeGoods,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

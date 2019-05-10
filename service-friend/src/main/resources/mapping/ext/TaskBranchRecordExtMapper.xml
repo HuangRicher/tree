@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.tongzhu.friend.mapper.ext.TaskBranchRecordExtMapper" >
+  <resultMap id="BaseResultMap" type="com.tongzhu.friend.model.TaskBranchRecord" >
+    <id column="task_id" property="taskId" jdbcType="INTEGER" />
+    <id column="user_id" property="userId" jdbcType="VARCHAR" />
+    <result column="progress" property="progress" jdbcType="INTEGER" />
+    <result column="goal" property="goal" jdbcType="INTEGER" />
+    <result column="finish_date" property="finishDate" jdbcType="TIMESTAMP" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="receive_award" property="receiveAward" jdbcType="INTEGER" />
+  </resultMap>
+
+  <select id="getTaskBranchRecordUndoneList" resultMap="BaseResultMap" parameterType="map">
+
+    SELECT
+	*
+    FROM
+        tz_task_branch_record ttbr
+    WHERE
+        ttbr.task_id NOT IN (
+            SELECT
+                ttb.id
+            FROM
+                tz_task_branch_record ttbr
+            JOIN tz_task_branch ttb ON ttb.front = ttbr.task_id
+            WHERE
+                ttbr.user_id = #{userId}
+            AND ttbr.receive_award = #{taskReceive}
+        )
+    AND ttbr.user_id = #{userId}
+    AND ttbr.receive_award = #{taskReceive}
+  </select>
+
+
+</mapper>

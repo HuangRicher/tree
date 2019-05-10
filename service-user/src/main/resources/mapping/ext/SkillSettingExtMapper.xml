@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.tongzhu.user.mapper.ext.SkillSettingExtMapper" >
+  <resultMap id="BaseResultMap" type="com.tongzhu.user.model.SkillSetting" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="skill_id" property="skillId" jdbcType="INTEGER" />
+    <result column="role_level" property="roleLevel" jdbcType="INTEGER" />
+    <result column="skill_level" property="skillLevel" jdbcType="INTEGER" />
+    <result column="consume_money" property="consumeMoney" jdbcType="INTEGER" />
+    <result column="consume_experience" property="consumeExperience" jdbcType="INTEGER" />
+    <result column="cooling_time" property="coolingTime" jdbcType="INTEGER" />
+    <result column="pro" property="pro" jdbcType="VARCHAR" />
+  </resultMap>
+
+  <select id="selectUserSkillSettings" resultMap="BaseResultMap" parameterType="map" >
+    SELECT s1.* FROM tz_game_user_skill sk,tz_game_skill_setting s1
+    WHERE sk.user_id=#{userId,jdbcType=VARCHAR} AND sk.skill_id=s1.`skill_id` AND sk.level=s1.`skill_level`
+  </select>
+
+  <select id="selectSkillSettingBySkillIdAndLevel" resultMap="BaseResultMap" parameterType="java.util.List">
+    <foreach collection ="list" item="setting" index= "index" separator =" ">
+      <if test="index==0">
+        SELECT * FROM tz_game_skill_setting WHERE skill_id=#{setting.skillId} AND skill_level=#{setting.skillLevel}
+      </if>
+      <if test="index>0">
+        UNION
+        SELECT * FROM tz_game_skill_setting WHERE skill_id=#{setting.skillId} AND skill_level=#{setting.skillLevel}
+      </if>
+    </foreach>
+  </select>
+
+  <insert id="batchInsert" parameterType="java.util.List" >
+    insert into tz_game_skill_setting (id, skill_id, role_level,
+      skill_level, consume_money, consume_experience,
+      cooling_time, pro)
+    values
+    <foreach collection="list" item="item" index="index" separator=",">
+      (
+      #{item.id,jdbcType=INTEGER},
+      #{item.skillId,jdbcType=INTEGER},
+      #{item.roleLevel,jdbcType=INTEGER},
+      #{item.skillLevel,jdbcType=INTEGER},
+      #{item.consumeMoney,jdbcType=INTEGER},
+      #{item.consumeExperience,jdbcType=INTEGER},
+      #{item.coolingTime,jdbcType=INTEGER},
+      #{item.pro,jdbcType=VARCHAR}
+      )
+    </foreach>
+
+  </insert>
+</mapper>

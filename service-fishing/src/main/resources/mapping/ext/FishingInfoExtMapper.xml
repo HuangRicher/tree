@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.tongzhu.fishing.mapper.ext.FishingInfoExtMapper" >
+  <resultMap id="BaseResultMap" type="com.tongzhu.fishing.model.FishingInfo" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="user_id" property="userId" jdbcType="VARCHAR" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="multiple" property="multiple" jdbcType="INTEGER" />
+    <result column="number_fishing_sum" property="numberFishingSum" jdbcType="INTEGER" />
+    <result column="number_fishing_today" property="numberFishingToday" jdbcType="INTEGER" />
+  </resultMap>
+
+  <sql id="Base_Column_List" >
+    id, user_id, update_time, multiple, number_fishing_sum, number_fishing_today
+  </sql>
+
+  <select id="selectByUserId" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select
+    <include refid="Base_Column_List" />
+    from tz_fishing_info
+    where user_id = #{id,jdbcType=INTEGER}
+  </select>
+
+</mapper>

@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.tongzhu.usergoods.mapper.ext.UserPetExtMapper">
+
+    <resultMap id="BaseResultMap" type="com.tongzhu.usergoods.mapper.vo.PetVO">
+        <id column="pet_id" property="petId" jdbcType="VARCHAR"/>
+        <result column="id" property="id" jdbcType="INTEGER"/>
+        <result column="vitality" property="vitality" jdbcType="DOUBLE"/>
+        <result column="attack" property="attack" jdbcType="DOUBLE"/>
+        <result column="spell_attacks" property="spellAttacks" jdbcType="DOUBLE"/>
+        <result column="pdef" property="pdef" jdbcType="DOUBLE"/>
+        <result column="magdef" property="magdef" jdbcType="DOUBLE"/>
+        <result column="crit" property="crit" jdbcType="DOUBLE"/>
+        <result column="dodge" property="dodge" jdbcType="DOUBLE"/>
+        <result column="hit_rate" property="hitRate" jdbcType="DOUBLE"/>
+        <result column="defense_crit" property="defenseCrit" jdbcType="DOUBLE"/>
+        <result column="fighting_capacity" property="fightingCapacity" jdbcType="DOUBLE"/>
+        <result column="level" property="level" jdbcType="INTEGER"/>
+        <result column="follow" property="follow" jdbcType="INTEGER"/>
+        <result column="exp" property="exp" jdbcType="INTEGER"/>
+        <result column="upgradeExp" property="upgradeExp" jdbcType="INTEGER"/>
+        <result column="expiration_time" property="expirationTime" jdbcType="TIMESTAMP"/>
+        <result column="pet_name" property="petName" jdbcType="VARCHAR"/>
+        <result column="update_date_name" property="updateDateName" jdbcType="TIMESTAMP"/>
+        <result column="vitality_addition" property="vitalityAddition" jdbcType="DOUBLE" />
+        <result column="attack_addition" property="attackAddition" jdbcType="DOUBLE" />
+        <result column="spell_attacks_addition" property="spellAttacksAddition" jdbcType="DOUBLE" />
+        <result column="pdef_addition" property="pdefAddition" jdbcType="DOUBLE" />
+        <result column="magdef_addition" property="magdefAddition" jdbcType="DOUBLE" />
+        <result column="crit_addition" property="critAddition" jdbcType="DOUBLE" />
+        <result column="dodge_addition" property="dodgeAddition" jdbcType="DOUBLE" />
+        <result column="hit_rate_addition" property="hitRateAddition" jdbcType="DOUBLE" />
+        <result column="defense_crit_addition" property="defenseCritAddition" jdbcType="DOUBLE" />
+    </resultMap>
+
+
+    <resultMap id="UserPet" type="com.tongzhu.usergoods.model.UserPet">
+        <id column="id" property="id" jdbcType="VARCHAR"/>
+        <result column="user_id" property="userId" jdbcType="VARCHAR"/>
+        <result column="pet_id" property="petId" jdbcType="VARCHAR"/>
+        <result column="expiration_time" property="expirationTime" jdbcType="TIMESTAMP"/>
+        <result column="follow" property="follow" jdbcType="INTEGER"/>
+        <result column="exp" property="exp" jdbcType="INTEGER"/>
+        <result column="create_date" property="createDate" jdbcType="TIMESTAMP"/>
+        <result column="pet_name" property="petName" jdbcType="VARCHAR"/>
+        <result column="update_date_name" property="updateDateName" jdbcType="TIMESTAMP"/>
+        <result column="spill_exp" property="spillExp" jdbcType="INTEGER"/>
+    </resultMap>
+
+
+    <select id="getUsetPetByUserIdAndPetId" resultMap="BaseResultMap" parameterType="map">
+       SELECT
+            tpi.id,
+            tpi.pet_id,
+            tpi.vitality,
+            tpi.attack,
+            tpi.spell_attacks,
+            tpi.spell_attacks,
+            tpi.pdef,
+            tpi.magdef,
+            tpi.crit,
+            tpi.dodge,
+            tpi.hit_rate,
+            tpi.defense_crit,
+            tpi.fighting_capacity,
+            tpi.`level`,
+            tpi.vitality_addition,
+            tpi.attack_addition,
+            tpi.spell_attacks_addition,
+            tpi.pdef_addition,
+            tpi.magdef_addition,
+            tpi.crit_addition,
+            tpi.dodge_addition,
+            tpi.hit_rate_addition,
+            tpi.defense_crit_addition,
+            tup.follow,
+            tup.exp,
+            tpli.exp upgradeExp,
+            tup.expiration_time,
+            tup.pet_name,
+            tup.update_date_name
+        FROM
+            tz_user_pet tup
+        JOIN tz_pet_info tpi ON tup.pet_id = tpi.pet_id
+        LEFT JOIN tz_pet_level_info tpli ON tpi.`level` = tpli.level_
+        WHERE tup.user_id = #{userId} AND tup.pet_id = #{intensifyId};
+  </select>
+
+
+    <select id="getPetVOByUserIdAndFollow" resultMap="BaseResultMap" parameterType="map">
+       SELECT
+            tpi.id,
+            tpi.pet_id,
+            tpi.vitality,
+            tpi.attack,
+            tpi.spell_attacks,
+            tpi.spell_attacks,
+            tpi.pdef,
+            tpi.magdef,
+            tpi.crit,
+            tpi.dodge,
+            tpi.hit_rate,
+            tpi.defense_crit,
+            tpi.fighting_capacity,
+            tpi.`level`,
+            tup.follow,
+            tup.exp,
+            tpli.exp upgradeExp,
+            tup.expiration_time
+        FROM
+            tz_user_pet tup
+        JOIN tz_pet_info tpi ON tup.pet_id = tpi.pet_id
+        JOIN tz_pet_level_info tpli ON tpi.`level` = tpli.level_
+        WHERE tup.user_id = #{userId} AND tup.follow = #{follow};
+  </select>
+
+    <select id="getUserPetByUserIdAnId" resultMap="UserPet" parameterType="map">
+        SELECT
+            *
+        FROM
+            tz_pet_info tpi
+        JOIN tz_user_pet tup ON tpi.pet_id = tup.pet_id
+        WHERE
+            tup.user_id = #{userId}
+        AND tpi.id = #{id}
+</select>
+
+    <select id="getPetLevelPet" resultType="int" parameterType="map">
+        SELECT
+        SUM(exp)
+        FROM
+        tz_pet_level_info
+        WHERE
+        tz_pet_level_info.level_ <![CDATA[ >=  ]]>  #{minLevel} AND
+        tz_pet_level_info.level_ <![CDATA[ <= ]]>  #{maxLevel}
+    </select>
+
+
+</mapper>

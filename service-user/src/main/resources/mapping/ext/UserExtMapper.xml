@@ -1,0 +1,253 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.tongzhu.user.mapper.ext.UserExtMapper" >
+    <resultMap id="BaseResultMap" type="com.tongzhu.user.model.User" >
+        <id column="id" property="id" jdbcType="VARCHAR" />
+        <result column="user_id" property="userId" jdbcType="VARCHAR" />
+        <result column="name" property="name" jdbcType="VARCHAR" />
+        <result column="portrait_url" property="portraitUrl" jdbcType="VARCHAR" />
+        <result column="grade" property="grade" jdbcType="INTEGER" />
+        <result column="selling_price" property="sellingPrice" jdbcType="INTEGER" />
+        <result column="autograph" property="autograph" jdbcType="VARCHAR" />
+        <result column="lottery" property="lottery" jdbcType="INTEGER" />
+        <result column="vip" property="vip" jdbcType="INTEGER" />
+        <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+        <result column="update_date" property="updateDate" jdbcType="TIMESTAMP" />
+        <result column="role_id" property="roleId" jdbcType="INTEGER" />
+        <result column="status_" property="status" jdbcType="INTEGER" />
+        <result column="login_date" property="loginDate" jdbcType="TIMESTAMP" />
+        <result column="open_id" property="openId" jdbcType="VARCHAR" />
+        <result column="sex" property="sex" jdbcType="INTEGER" />
+        <result column="province" property="province" jdbcType="VARCHAR" />
+        <result column="city" property="city" jdbcType="VARCHAR" />
+        <result column="country" property="country" jdbcType="VARCHAR" />
+        <result column="union_id" property="unionId" jdbcType="VARCHAR" />
+
+    </resultMap>
+
+    <resultMap id="RankingResultMap" type="com.tongzhu.user.mapper.vo.UserRankingVO" >
+        <id column="id" property="id" jdbcType="VARCHAR" />
+        <result column="user_id" property="userId" jdbcType="VARCHAR" />
+        <result column="name" property="name" jdbcType="VARCHAR" />
+        <result column="portrait_url" property="portraitUrl" jdbcType="VARCHAR" />
+        <result column="grade" property="grade" jdbcType="INTEGER" />
+        <result column="selling_price" property="sellingPrice" jdbcType="INTEGER" />
+        <result column="autograph" property="autograph" jdbcType="VARCHAR" />
+        <result column="lottery" property="lottery" jdbcType="INTEGER" />
+        <result column="vip" property="vip" jdbcType="INTEGER" />
+        <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+        <result column="update_date" property="updateDate" jdbcType="TIMESTAMP" />
+        <result column="role_id" property="roleId" jdbcType="INTEGER" />
+        <result column="status_" property="status" jdbcType="INTEGER" />
+        <result column="login_date" property="loginDate" jdbcType="TIMESTAMP" />
+        <result column="open_id" property="openId" jdbcType="VARCHAR" />
+        <result column="sex" property="sex" jdbcType="INTEGER" />
+        <result column="province" property="province" jdbcType="VARCHAR" />
+        <result column="city" property="city" jdbcType="VARCHAR" />
+        <result column="country" property="country" jdbcType="VARCHAR" />
+        <result column="union_id" property="unionId" jdbcType="VARCHAR" />
+        <result column="serial_no" property="serialNo" jdbcType="INTEGER"/>
+        <result column="amount" property="amount" jdbcType="INTEGER"/>
+        <result column="role_level" property="roleLevel" jdbcType="INTEGER" />
+        <result column="charm_num" property="charmNum" jdbcType="INTEGER" />
+        <result column="always_fighting" property="alwaysFighting" jdbcType="INTEGER" />
+    </resultMap>
+
+    <select id="selectUserForBuyByRand" resultMap="BaseResultMap" parameterType="map" >
+        SELECT id, users.user_id, `name`, portrait_url, grade, selling_price, autograph, lottery, vip, create_date, update_date, role_id, status_, login_date
+        FROM tz_user users
+        LEFT JOIN (
+        SELECT worker_id AS user_id FROM tz_tree_house_room WHERE worker_id IS NOT NULL AND (protect_end_date IS NOT NULL AND protect_end_date &gt;#{protectEndDate,jdbcType=TIMESTAMP})
+        UNION
+        SELECT user_id FROM tz_user_exchange_record WHERE exchange_date=#{exchangeDate,jdbcType=TIMESTAMP} AND exchange_count &gt;=#{exchangeCount,jdbcType=INTEGER}
+        UNION
+        SELECT friends_id AS user_id FROM tz_user_friends WHERE user_id=#{userId,jdbcType=VARCHAR}
+        UNION
+        SELECT user_id FROM tz_user_friends WHERE friends_id=#{userId,jdbcType=VARCHAR}
+        UNION
+        SELECT #{userId,jdbcType=VARCHAR} AS user_id
+        ) uu ON users.`user_id`=uu.user_id
+        WHERE uu.user_id IS NULL AND (users.selling_price BETWEEN #{minSellingPrice,jdbcType=INTEGER} AND #{maxSellingPrice,jdbcType=INTEGER})
+        ORDER BY RAND() LIMIT #{count,jdbcType=INTEGER}
+    </select>
+
+    <select id="selectFriendsForBuyByRand" resultMap="BaseResultMap" parameterType="map">
+        SELECT us.* FROM (
+            SELECT friends_id AS user_id FROM tz_user_friends uf  LEFT JOIN (
+                SELECT worker_id AS user_id FROM tz_tree_house_room WHERE worker_id IS NOT NULL AND (protect_end_date &lt;#{protectEndDate,jdbcType=TIMESTAMP})
+                UNION
+                SELECT user_id FROM tz_user_exchange_record WHERE exchange_date=#{exchangeDate,jdbcType=TIMESTAMP} AND exchange_count &gt;=#{exchangeCount,jdbcType=INTEGER}
+            )um ON uf.`friends_id`=um.user_id WHERE uf.user_id=#{userId,jdbcType=VARCHAR} AND uf.status_=#{status,jdbcType=INTEGER} AND um.user_id IS NULL
+            UNION
+            SELECT uf.user_id FROM tz_user_friends uf  LEFT JOIN (
+                SELECT worker_id AS user_id FROM tz_tree_house_room WHERE worker_id IS NOT NULL AND (protect_end_date &lt;#{protectEndDate,jdbcType=TIMESTAMP})
+                UNION
+                SELECT user_id FROM tz_user_exchange_record WHERE exchange_date=#{exchangeDate,jdbcType=TIMESTAMP} AND exchange_count &gt;=#{exchangeCount,jdbcType=INTEGER}
+            ) um ON uf.user_id=um.user_id WHERE uf.friends_id=#{userId,jdbcType=VARCHAR} AND uf.status_=#{status,jdbcType=INTEGER} AND um.user_id IS NULL
+        ) uu
+        LEFT JOIN tz_user us ON uu.user_id=us.user_id WHERE us.selling_price &lt;=#{sellingPrice,jdbcType=INTEGER}
+        ORDER BY RAND() LIMIT #{count,jdbcType=INTEGER};
+    </select>
+
+    <select id="selectForSellingPriceRanklingList" resultMap="RankingResultMap" parameterType="map">
+        SELECT (@i:=@i+1) AS serial_no,u.* FROM tz_user u,(SELECT @i:=0) tt ORDER BY u.selling_price DESC LIMIT #{count,jdbcType=INTEGER}
+    </select>
+
+    <select id="selectForMoneyRanklingList" resultMap="RankingResultMap" parameterType="map">
+        SELECT (@i:=@i+1) AS serial_no,us.* FROM (
+          SELECT u.*,g.amount FROM tz_user u LEFT JOIN tz_user_goods g ON u.user_id=g.user_id AND g.goods_id=#{userId,jdbcType=VARCHAR} ORDER BY g.amount DESC LIMIT #{count,jdbcType=INTEGER}
+        ) us,(SELECT   @i:=0) t2
+    </select>
+
+    <select id="findForRankingListAboutRoleLevel" resultMap="RankingResultMap" parameterType="map">
+
+        SELECT
+            (@i :=@i + 1) AS serial_no,
+            us.*
+        FROM
+            (
+                SELECT
+                    tu.user_id,
+                    tu.`name`,
+                    tu.portrait_url,
+                    tgur.role_level,
+                    tu.sex
+                FROM
+                    tz_user tu
+                JOIN tz_game_user_role tgur ON tu.user_id = tgur.user_id
+                  WHERE  tu.user_id NOT IN (1,2,3,4,5,6,7,8,9)
+                ORDER BY
+                    tgur.role_level DESC,
+                    tu.create_date ASC
+                LIMIT #{count,jdbcType=INTEGER}
+            ) us,
+            (SELECT @i := 0) AS it
+    </select>
+
+
+    <select id="findForRankingListAboutCharmNum" resultMap="RankingResultMap" parameterType="map">
+        SELECT
+            (@i :=@i + 1) AS serial_no,
+            us.*
+        FROM
+            (
+                SELECT
+                    tu.user_id,
+                    tu.`name`,
+                    tu.portrait_url,
+                    tgur.charm_num,
+                    tu.sex
+                FROM
+                    tz_user tu
+                JOIN tz_game_user_role tgur ON tu.user_id = tgur.user_id
+              WHERE  tu.user_id NOT IN (1,2,3,4,5,6,7,8,9)
+                ORDER BY
+                    tgur.charm_num DESC,
+                    tu.create_date ASC
+                LIMIT #{count,jdbcType=INTEGER}
+            ) us,
+            (SELECT @i := 0) AS it
+    </select>
+
+     <select id="findForRankingListAboutAlwaysFighting" resultMap="RankingResultMap" parameterType="map">
+        SELECT
+            (@i :=@i + 1) AS serial_no,
+            us.*
+        FROM
+            (
+                SELECT
+                    tu.user_id,
+                    tu.`name`,
+                    tu.portrait_url,
+                    tuae.always_fighting,
+                    tu.sex
+                FROM
+                    tz_user tu
+                JOIN tz_user_adorn_equip tuae ON tu.user_id = tuae.user_id
+                WHERE  tu.user_id NOT IN (1,2,3,4,5,6,7,8,9)
+                ORDER BY
+                    tuae.always_fighting DESC,
+                    tu.create_date ASC
+                LIMIT #{count,jdbcType=INTEGER}
+            ) us,
+            (SELECT @i := 0) AS it
+    </select>
+
+    <select id="selectByUserIdOrName" parameterType="map" resultMap="BaseResultMap">
+        SELECT * FROM `tz_user` WHERE user_id=#{searchName,jdbcType=VARCHAR} OR `name`=#{searchName,jdbcType=VARCHAR}
+    </select>
+
+    <select id="selectRecommendFriends" resultMap="BaseResultMap" parameterType="map">
+        SELECT uu.user_id,uu.name,uu.portrait_url,uu.grade,uu.role_id,uu.sex FROM (
+            SELECT us.* FROM tz_user us LEFT JOIN (
+            SELECT user_id FROM tz_user_friends WHERE friends_id=#{userId,jdbcType=VARCHAR}
+            UNION
+            SELECT friends_id AS user_id FROM tz_user_friends WHERE user_id=#{userId,jdbcType=VARCHAR}
+            UNION
+            SELECT #{userId,jdbcType=VARCHAR} AS user_id
+            ) ufd ON us.user_id=ufd.user_id WHERE us.`role_id` IS NOT NULL AND ufd.user_id IS NULL
+        ) uu LEFT JOIN `tz_game_user_role` usrl ON uu.user_id=usrl.user_id WHERE usrl.role_level=#{roleLevel,jdbcType=INTEGER}
+        AND uu.sex=#{sex,jdbcType=INTEGER} ORDER BY RAND() LIMIT #{count,jdbcType=INTEGER}
+    </select>
+
+    <select id="recommendFriendByOppositeSex" resultMap="BaseResultMap" parameterType="map">
+        SELECT uu.user_id,uu.name,uu.portrait_url,uu.grade,uu.role_id,uu.sex FROM (
+            SELECT us.* FROM tz_user us LEFT JOIN (
+            SELECT user_id FROM tz_user_friends WHERE friends_id=#{userId,jdbcType=VARCHAR}
+            UNION
+            SELECT friends_id AS user_id FROM tz_user_friends WHERE user_id=#{userId,jdbcType=VARCHAR}
+            UNION
+            SELECT #{userId,jdbcType=VARCHAR} AS user_id
+            ) ufd ON us.user_id=ufd.user_id WHERE us.sex=#{sex,jdbcType=INTEGER} AND us.`role_id` IS NOT NULL AND ufd.user_id IS NULL LIMIT 1
+        ) uu LEFT JOIN `tz_game_user_role` usrl ON uu.user_id=usrl.user_id
+    </select>
+    <select id="selectRecommendFriendsOther" resultMap="BaseResultMap" parameterType="map">
+        SELECT uu.user_id,uu.name,uu.portrait_url,uu.grade,uu.role_id,uu.sex FROM (
+            SELECT us.* FROM tz_user us LEFT JOIN (
+            SELECT user_id FROM tz_user_friends WHERE friends_id=#{userId,jdbcType=VARCHAR}
+            UNION
+            SELECT friends_id AS user_id FROM tz_user_friends WHERE user_id=#{userId,jdbcType=VARCHAR}
+            UNION
+            SELECT #{userId,jdbcType=VARCHAR} AS user_id
+            ) ufd ON us.user_id=ufd.user_id WHERE us.`role_id` IS NOT NULL AND ufd.user_id IS NULL
+        ) uu LEFT JOIN `tz_game_user_role` usrl ON uu.user_id=usrl.user_id WHERE uu.sex=#{sex,jdbcType=INTEGER}
+        AND usrl.role_level BETWEEN #{roleLevelMin,jdbcType=INTEGER} AND #{roleLevelMax,jdbcType=INTEGER}
+        ORDER BY RAND() LIMIT #{count,jdbcType=INTEGER}
+    </select>
+
+    <select id="findForRankingListAboutPet" resultMap="RankingResultMap" parameterType="map">
+         SELECT
+            (@i :=@i + 1) AS serial_no,
+            us.*
+        FROM
+            (
+                SELECT
+                    tup.user_id,
+                    tup.count amount,
+                    tu.`name`,
+                    tu.portrait_url,
+                    tu.sex
+                FROM
+                    tz_user tu
+                JOIN (
+                    SELECT
+                        SUM(1) count,
+                        user_id
+                    FROM
+                        tz_user_pet
+
+                    GROUP BY
+                        user_id
+                ) tup ON tu.user_id = tup.user_id
+                WHERE  tu.user_id NOT IN (1,2,3,4,5,6,7,8,9)
+                ORDER BY
+                    tup.count DESC  LIMIT #{count,jdbcType=INTEGER}
+            ) us,
+            (SELECT @i := 0) AS it
+    </select>
+
+    <select id="selectOneForFightRankingByRand" resultMap="BaseResultMap" parameterType="map">
+        SELECT * FROM tz_user us LEFT JOIN `tz_game_fight_ranking` rank ON us.user_id=rank.user_id
+        WHERE us.user_id IS NOT NULL AND rank.user_id IS NULL  and us.user_id !=#{userId,jdbcType=VARCHAR} ORDER BY RAND() LIMIT 1
+    </select>
+</mapper>

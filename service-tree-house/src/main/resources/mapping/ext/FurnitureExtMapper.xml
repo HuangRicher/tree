@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.tongzhu.treehouse.mapper.ext.FurnitureExtMapper" >
+  <resultMap id="BaseResultMap" type="com.tongzhu.treehouse.model.Furniture" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="name_" property="name" jdbcType="VARCHAR" />
+    <result column="useable_time" property="useableTime" jdbcType="INTEGER" />
+    <result column="type_" property="type" jdbcType="INTEGER" />
+    <result column="location_" property="location" jdbcType="INTEGER" />
+    <result column="output_rate" property="outputRate" jdbcType="INTEGER" />
+    <result column="output_value" property="outputValue" jdbcType="INTEGER" />
+  </resultMap>
+
+  <insert id="batchInsert" parameterType="java.util.List" >
+    insert into tz_furniture (id, name_,category_id, useable_time,
+      type_, location_, output_rate, 
+      output_value)
+    values
+    <foreach collection="list" separator="," index="index" item="item">
+      (
+      #{item.id,jdbcType=VARCHAR},
+      #{item.name,jdbcType=VARCHAR},
+      #{item.categoryId,jdbcType=VARCHAR},
+      #{item.useableTime,jdbcType=INTEGER},
+      #{item.type,jdbcType=INTEGER},
+      #{item.location,jdbcType=INTEGER},
+      #{item.outputRate,jdbcType=INTEGER},
+      #{item.outputValue,jdbcType=INTEGER}
+      )
+    </foreach>
+  </insert>
+</mapper>

@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.tongzhu.usergoods.mapper.CompoundInfoMapper" >
+  <resultMap id="BaseResultMap" type="com.tongzhu.usergoods.model.CompoundInfo" >
+    <id column="basic_items" property="basicItems" jdbcType="VARCHAR" />
+    <id column="composite" property="composite" jdbcType="VARCHAR" />
+    <result column="basic_items_amount" property="basicItemsAmount" jdbcType="INTEGER" />
+    <result column="composite_type" property="compositeType" jdbcType="INTEGER" />
+    <result column="composite_amount" property="compositeAmount" jdbcType="INTEGER" />
+    <result column="cost" property="cost" jdbcType="VARCHAR" />
+    <result column="cost_amount" property="costAmount" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    basic_items, composite, basic_items_amount, composite_type, composite_amount, cost, 
+    cost_amount
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.tongzhu.usergoods.model.CompoundInfoExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from tz_compound_info
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.tongzhu.usergoods.model.CompoundInfoKey" >
+    select 
+    <include refid="Base_Column_List" />
+    from tz_compound_info
+    where basic_items = #{basicItems,jdbcType=VARCHAR}
+      and composite = #{composite,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="com.tongzhu.usergoods.model.CompoundInfoKey" >
+    delete from tz_compound_info
+    where basic_items = #{basicItems,jdbcType=VARCHAR}
+      and composite = #{composite,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.tongzhu.usergoods.model.CompoundInfoExample" >
+    delete from tz_compound_info
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.tongzhu.usergoods.model.CompoundInfo" >
+    insert into tz_compound_info (basic_items, composite, basic_items_amount, 
+      composite_type, composite_amount, cost, 
+      cost_amount)
+    values (#{basicItems,jdbcType=VARCHAR}, #{composite,jdbcType=VARCHAR}, #{basicItemsAmount,jdbcType=INTEGER}, 
+      #{compositeType,jdbcType=INTEGER}, #{compositeAmount,jdbcType=INTEGER}, #{cost,jdbcType=VARCHAR}, 
+      #{costAmount,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.tongzhu.usergoods.model.CompoundInfo" >
+    insert into tz_compound_info
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="basicItems != null" >
+        basic_items,
+      </if>
+      <if test="composite != null" >
+        composite,
+      </if>
+      <if test="basicItemsAmount != null" >
+        basic_items_amount,
+      </if>
+      <if test="compositeType != null" >
+        composite_type,
+      </if>
+      <if test="compositeAmount != null" >
+        composite_amount,
+      </if>
+      <if test="cost != null" >
+        cost,
+      </if>
+      <if test="costAmount != null" >
+        cost_amount,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="basicItems != null" >
+        #{basicItems,jdbcType=VARCHAR},
+      </if>
+      <if test="composite != null" >
+        #{composite,jdbcType=VARCHAR},
+      </if>
+      <if test="basicItemsAmount != null" >
+        #{basicItemsAmount,jdbcType=INTEGER},
+      </if>
+      <if test="compositeType != null" >
+        #{compositeType,jdbcType=INTEGER},
+      </if>
+      <if test="compositeAmount != null" >
+        #{compositeAmount,jdbcType=INTEGER},
+      </if>
+      <if test="cost != null" >
+        #{cost,jdbcType=VARCHAR},
+      </if>
+      <if test="costAmount != null" >
+        #{costAmount,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.tongzhu.usergoods.model.CompoundInfoExample" resultType="java.lang.Integer" >
+    select count(*) from tz_compound_info
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update tz_compound_info
+    <set >
+      <if test="record.basicItems != null" >
+        basic_items = #{record.basicItems,jdbcType=VARCHAR},
+      </if>
+      <if test="record.composite != null" >
+        composite = #{record.composite,jdbcType=VARCHAR},
+      </if>
+      <if test="record.basicItemsAmount != null" >
+        basic_items_amount = #{record.basicItemsAmount,jdbcType=INTEGER},
+      </if>
+      <if test="record.compositeType != null" >
+        composite_type = #{record.compositeType,jdbcType=INTEGER},
+      </if>
+      <if test="record.compositeAmount != null" >
+        composite_amount = #{record.compositeAmount,jdbcType=INTEGER},
+      </if>
+      <if test="record.cost != null" >
+        cost = #{record.cost,jdbcType=VARCHAR},
+      </if>
+      <if test="record.costAmount != null" >
+        cost_amount = #{record.costAmount,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update tz_compound_info
+    set basic_items = #{record.basicItems,jdbcType=VARCHAR},
+      composite = #{record.composite,jdbcType=VARCHAR},
+      basic_items_amount = #{record.basicItemsAmount,jdbcType=INTEGER},
+      composite_type = #{record.compositeType,jdbcType=INTEGER},
+      composite_amount = #{record.compositeAmount,jdbcType=INTEGER},
+      cost = #{record.cost,jdbcType=VARCHAR},
+      cost_amount = #{record.costAmount,jdbcType=INTEGER}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.tongzhu.usergoods.model.CompoundInfo" >
+    update tz_compound_info
+    <set >
+      <if test="basicItemsAmount != null" >
+        basic_items_amount = #{basicItemsAmount,jdbcType=INTEGER},
+      </if>
+      <if test="compositeType != null" >
+        composite_type = #{compositeType,jdbcType=INTEGER},
+      </if>
+      <if test="compositeAmount != null" >
+        composite_amount = #{compositeAmount,jdbcType=INTEGER},
+      </if>
+      <if test="cost != null" >
+        cost = #{cost,jdbcType=VARCHAR},
+      </if>
+      <if test="costAmount != null" >
+        cost_amount = #{costAmount,jdbcType=INTEGER},
+      </if>
+    </set>
+    where basic_items = #{basicItems,jdbcType=VARCHAR}
+      and composite = #{composite,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.tongzhu.usergoods.model.CompoundInfo" >
+    update tz_compound_info
+    set basic_items_amount = #{basicItemsAmount,jdbcType=INTEGER},
+      composite_type = #{compositeType,jdbcType=INTEGER},
+      composite_amount = #{compositeAmount,jdbcType=INTEGER},
+      cost = #{cost,jdbcType=VARCHAR},
+      cost_amount = #{costAmount,jdbcType=INTEGER}
+    where basic_items = #{basicItems,jdbcType=VARCHAR}
+      and composite = #{composite,jdbcType=VARCHAR}
+  </update>
+</mapper>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.tongzhu.user.mapper.ext.NPCAttributeExtMapper" >
+  <insert id="batchInsert" parameterType="java.util.List" >
+    insert into tz_npc_attribute (level_id, ph_atk, mf_atk, 
+      ph_def, mf_def, hp_, accuracy_, 
+      miss_, critical_, dcritical_
+      )
+    values
+    <foreach collection="list" item="item" index="index" separator=",">
+      (
+      #{item.levelId,jdbcType=INTEGER},
+      #{item.phAtk,jdbcType=INTEGER},
+      #{item.mfAtk,jdbcType=INTEGER},
+      #{item.phDef,jdbcType=INTEGER},
+      #{item.mfDef,jdbcType=INTEGER},
+      #{item.hp,jdbcType=INTEGER},
+      #{item.accuracy,jdbcType=INTEGER},
+      #{item.miss,jdbcType=INTEGER},
+      #{item.critical,jdbcType=INTEGER},
+      #{item.dcritical,jdbcType=INTEGER}
+      )
+    </foreach>
+
+  </insert>
+
+</mapper>

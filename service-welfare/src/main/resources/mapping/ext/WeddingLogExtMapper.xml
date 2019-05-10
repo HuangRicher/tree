@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.tongzhu.welfare.mapper.ext.WeddingLogExtMapper" >
+
+
+  <resultMap id="BaseResultMap" type="com.tongzhu.welfare.model.vo.WeddingLogVo" >
+    <result column="user_name" property="userName" jdbcType="VARCHAR" />
+    <result column="other_name" property="otherName" jdbcType="VARCHAR" />
+    <result column="order_no" property="orderNo" jdbcType="INTEGER" />
+ 	<result column="created_time" property="createdTime" jdbcType="INTEGER" />   
+  </resultMap>
+
+  <select id="weddingLogVoList" resultMap="BaseResultMap" parameterType="map">
+    SELECT
+        (select name FROM tz_user where ml.user_id = user_id limit 1) as user_name,
+		(select name FROM tz_user where ml.other_id = user_id limit 1) as other_name,
+        ml.order_no,
+        ml.created_time
+    FROM
+        tz_wedding_log ml 
+    ORDER BY ml.created_time DESC
+  </select>
+</mapper>

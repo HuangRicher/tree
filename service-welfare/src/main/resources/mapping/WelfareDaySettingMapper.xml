@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.tongzhu.welfare.mapper.WelfareDaySettingMapper" >
+  <resultMap id="BaseResultMap" type="com.tongzhu.welfare.model.WelfareDaySetting" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="date_num" property="dateNum" jdbcType="INTEGER" />
+    <result column="rewards_type" property="rewardsType" jdbcType="INTEGER" />
+    <result column="rewards_content" property="rewardsContent" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, date_num, rewards_type, rewards_content
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.tongzhu.welfare.model.WelfareDaySettingExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from tz_welfare_day_setting
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from tz_welfare_day_setting
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from tz_welfare_day_setting
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.tongzhu.welfare.model.WelfareDaySettingExample" >
+    delete from tz_welfare_day_setting
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.tongzhu.welfare.model.WelfareDaySetting" >
+    insert into tz_welfare_day_setting (id, date_num, rewards_type, 
+      rewards_content)
+    values (#{id,jdbcType=INTEGER}, #{dateNum,jdbcType=INTEGER}, #{rewardsType,jdbcType=INTEGER}, 
+      #{rewardsContent,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.tongzhu.welfare.model.WelfareDaySetting" >
+    insert into tz_welfare_day_setting
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="dateNum != null" >
+        date_num,
+      </if>
+      <if test="rewardsType != null" >
+        rewards_type,
+      </if>
+      <if test="rewardsContent != null" >
+        rewards_content,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="dateNum != null" >
+        #{dateNum,jdbcType=INTEGER},
+      </if>
+      <if test="rewardsType != null" >
+        #{rewardsType,jdbcType=INTEGER},
+      </if>
+      <if test="rewardsContent != null" >
+        #{rewardsContent,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.tongzhu.welfare.model.WelfareDaySettingExample" resultType="java.lang.Integer" >
+    select count(*) from tz_welfare_day_setting
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update tz_welfare_day_setting
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.dateNum != null" >
+        date_num = #{record.dateNum,jdbcType=INTEGER},
+      </if>
+      <if test="record.rewardsType != null" >
+        rewards_type = #{record.rewardsType,jdbcType=INTEGER},
+      </if>
+      <if test="record.rewardsContent != null" >
+        rewards_content = #{record.rewardsContent,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update tz_welfare_day_setting
+    set id = #{record.id,jdbcType=INTEGER},
+      date_num = #{record.dateNum,jdbcType=INTEGER},
+      rewards_type = #{record.rewardsType,jdbcType=INTEGER},
+      rewards_content = #{record.rewardsContent,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.tongzhu.welfare.model.WelfareDaySetting" >
+    update tz_welfare_day_setting
+    <set >
+      <if test="dateNum != null" >
+        date_num = #{dateNum,jdbcType=INTEGER},
+      </if>
+      <if test="rewardsType != null" >
+        rewards_type = #{rewardsType,jdbcType=INTEGER},
+      </if>
+      <if test="rewardsContent != null" >
+        rewards_content = #{rewardsContent,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.tongzhu.welfare.model.WelfareDaySetting" >
+    update tz_welfare_day_setting
+    set date_num = #{dateNum,jdbcType=INTEGER},
+      rewards_type = #{rewardsType,jdbcType=INTEGER},
+      rewards_content = #{rewardsContent,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

@@ -1,0 +1,138 @@
+eureka:
+  instance:
+    prefer-ip-address: true
+    ip-address: 10.141.25.60
+    leaseRenewalIntervalInSeconds: 1
+    leaseExpirationDurationInSeconds: 2
+  client:
+    serviceUrl:
+      defaultZone: http://10.141.25.60:8761/eureka/
+server:
+  port: 9991
+  tomcat:
+    max-threads: 500
+spring:
+  application:
+    name: tree-house-zuul-test
+  redis:
+    database: 6
+    host: 10.66.170.87
+    port: 6379
+    password: 6^xAq@MWLlM!RSVP
+    lettuce:
+      shutdown-timeout: 30000ms
+      pool:
+        max-active: 10
+        max-wait: -1ms
+        max-idle: 0
+zuul:
+  semaphore:
+    max-semaphores: 500
+  routes:
+    api-user:
+      path: /api-user/**
+      serviceId: user-test
+    api-friend:
+      path: /api-friend/**
+      serviceId: friend-test
+    api-userGoods:
+      path: /api-goods/**
+      serviceId: user-goods-test
+    api-treeHouse:
+      path: /api-treeHouse/**
+      serviceId: tree-house-test
+    api-message:
+      path: /api-message/**
+      serviceId: message-test
+    api-fishing:
+      path: /api-fishing/**
+      serviceId: fishing-test
+    api-welfare:
+      path: /api-welfare/**
+      serviceId: welfare-test
+  host:
+    connect-timeout-millis: 60000
+    socket-timeout-millis: 60000
+user-test:
+  ribbon:
+    ReadTimeout: 60000
+    ConnectTimeout: 60000
+    SocketTimeout: 60000
+friend-test:
+  ribbon:
+    ReadTimeout: 60000
+    ConnectTimeout: 60000
+    SocketTimeout: 60000
+user-goods-test:
+  ribbon:
+    ReadTimeout: 60000
+    ConnectTimeout: 60000
+    SocketTimeout: 60000
+tree-house-test:
+  ribbon:
+    ReadTimeout: 60000
+    ConnectTimeout: 60000
+    SocketTimeout: 60000
+message-test:
+  ribbon:
+    ReadTimeout: 60000
+    ConnectTimeout: 60000
+    SocketTimeout: 60000
+fishing-test:
+  ribbon:
+    ReadTimeout: 60000
+    ConnectTimeout: 60000
+    SocketTimeout: 60000
+welfare-test:
+  ribbon:
+    ReadTimeout: 60000
+    ConnectTimeout: 60000
+    SocketTimeout: 60000
+hystrix:
+  #  command:
+  #    default:
+  #      execution:
+  #        isolation:
+  #          thread:
+  #            timeoutInMilliseconds: 60000
+  user-test:
+    execution:
+      isolation:
+        thread:
+          timeoutInMilliseconds: 60000
+  friend-test:
+    execution:
+      isolation:
+        thread:
+          timeoutInMilliseconds: 60000
+  user-goods-test:
+    execution:
+      isolation:
+        thread:
+          timeoutInMilliseconds: 60000
+  tree-house-test:
+    execution:
+      isolation:
+        thread:
+          timeoutInMilliseconds: 60000
+  message-test:
+    execution:
+      isolation:
+        thread:
+          timeoutInMilliseconds: 60000
+  fishing-test:
+    execution:
+      isolation:
+        thread:
+          timeoutInMilliseconds: 60000
+  welfare-test:
+    execution:
+      isolation:
+        thread:
+          timeoutInMilliseconds: 60000
+
+ribbon:
+  #Ribbon允许最大连接数，即所有后端微服务实例请求并发数之和的最大值。
+  MaxTotalConnections: 500
+  #单个后端微服务实例能接收的最大请求并发数
+  MaxConnectionsPerHost: 500

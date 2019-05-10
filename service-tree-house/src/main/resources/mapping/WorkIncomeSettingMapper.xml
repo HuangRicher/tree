@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.tongzhu.treehouse.mapper.WorkIncomeSettingMapper" >
+  <resultMap id="BaseResultMap" type="com.tongzhu.treehouse.model.WorkIncomeSetting" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="work_type_id" property="workTypeId" jdbcType="INTEGER" />
+    <result column="position_id" property="positionId" jdbcType="INTEGER" />
+    <result column="work_type_level" property="workTypeLevel" jdbcType="INTEGER" />
+    <result column="income_goods" property="incomeGoods" jdbcType="VARCHAR" />
+    <result column="game_friend_more_count" property="gameFriendMoreCount" jdbcType="REAL" />
+    <result column="wx_friend_more_count" property="wxFriendMoreCount" jdbcType="REAL" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, work_type_id, position_id, work_type_level, income_goods, game_friend_more_count, 
+    wx_friend_more_count
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.tongzhu.treehouse.model.WorkIncomeSettingExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from tz_work_income_setting
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from tz_work_income_setting
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from tz_work_income_setting
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.tongzhu.treehouse.model.WorkIncomeSettingExample" >
+    delete from tz_work_income_setting
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.tongzhu.treehouse.model.WorkIncomeSetting" >
+    insert into tz_work_income_setting (id, work_type_id, position_id, 
+      work_type_level, income_goods, game_friend_more_count, 
+      wx_friend_more_count)
+    values (#{id,jdbcType=VARCHAR}, #{workTypeId,jdbcType=INTEGER}, #{positionId,jdbcType=INTEGER}, 
+      #{workTypeLevel,jdbcType=INTEGER}, #{incomeGoods,jdbcType=VARCHAR}, #{gameFriendMoreCount,jdbcType=REAL}, 
+      #{wxFriendMoreCount,jdbcType=REAL})
+  </insert>
+  <insert id="insertSelective" parameterType="com.tongzhu.treehouse.model.WorkIncomeSetting" >
+    insert into tz_work_income_setting
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="workTypeId != null" >
+        work_type_id,
+      </if>
+      <if test="positionId != null" >
+        position_id,
+      </if>
+      <if test="workTypeLevel != null" >
+        work_type_level,
+      </if>
+      <if test="incomeGoods != null" >
+        income_goods,
+      </if>
+      <if test="gameFriendMoreCount != null" >
+        game_friend_more_count,
+      </if>
+      <if test="wxFriendMoreCount != null" >
+        wx_friend_more_count,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="workTypeId != null" >
+        #{workTypeId,jdbcType=INTEGER},
+      </if>
+      <if test="positionId != null" >
+        #{positionId,jdbcType=INTEGER},
+      </if>
+      <if test="workTypeLevel != null" >
+        #{workTypeLevel,jdbcType=INTEGER},
+      </if>
+      <if test="incomeGoods != null" >
+        #{incomeGoods,jdbcType=VARCHAR},
+      </if>
+      <if test="gameFriendMoreCount != null" >
+        #{gameFriendMoreCount,jdbcType=REAL},
+      </if>
+      <if test="wxFriendMoreCount != null" >
+        #{wxFriendMoreCount,jdbcType=REAL},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.tongzhu.treehouse.model.WorkIncomeSettingExample" resultType="java.lang.Integer" >
+    select count(*) from tz_work_income_setting
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update tz_work_income_setting
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=VARCHAR},
+      </if>
+      <if test="record.workTypeId != null" >
+        work_type_id = #{record.workTypeId,jdbcType=INTEGER},
+      </if>
+      <if test="record.positionId != null" >
+        position_id = #{record.positionId,jdbcType=INTEGER},
+      </if>
+      <if test="record.workTypeLevel != null" >
+        work_type_level = #{record.workTypeLevel,jdbcType=INTEGER},
+      </if>
+      <if test="record.incomeGoods != null" >
+        income_goods = #{record.incomeGoods,jdbcType=VARCHAR},
+      </if>
+      <if test="record.gameFriendMoreCount != null" >
+        game_friend_more_count = #{record.gameFriendMoreCount,jdbcType=REAL},
+      </if>
+      <if test="record.wxFriendMoreCount != null" >
+        wx_friend_more_count = #{record.wxFriendMoreCount,jdbcType=REAL},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update tz_work_income_setting
+    set id = #{record.id,jdbcType=VARCHAR},
+      work_type_id = #{record.workTypeId,jdbcType=INTEGER},
+      position_id = #{record.positionId,jdbcType=INTEGER},
+      work_type_level = #{record.workTypeLevel,jdbcType=INTEGER},
+      income_goods = #{record.incomeGoods,jdbcType=VARCHAR},
+      game_friend_more_count = #{record.gameFriendMoreCount,jdbcType=REAL},
+      wx_friend_more_count = #{record.wxFriendMoreCount,jdbcType=REAL}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.tongzhu.treehouse.model.WorkIncomeSetting" >
+    update tz_work_income_setting
+    <set >
+      <if test="workTypeId != null" >
+        work_type_id = #{workTypeId,jdbcType=INTEGER},
+      </if>
+      <if test="positionId != null" >
+        position_id = #{positionId,jdbcType=INTEGER},
+      </if>
+      <if test="workTypeLevel != null" >
+        work_type_level = #{workTypeLevel,jdbcType=INTEGER},
+      </if>
+      <if test="incomeGoods != null" >
+        income_goods = #{incomeGoods,jdbcType=VARCHAR},
+      </if>
+      <if test="gameFriendMoreCount != null" >
+        game_friend_more_count = #{gameFriendMoreCount,jdbcType=REAL},
+      </if>
+      <if test="wxFriendMoreCount != null" >
+        wx_friend_more_count = #{wxFriendMoreCount,jdbcType=REAL},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.tongzhu.treehouse.model.WorkIncomeSetting" >
+    update tz_work_income_setting
+    set work_type_id = #{workTypeId,jdbcType=INTEGER},
+      position_id = #{positionId,jdbcType=INTEGER},
+      work_type_level = #{workTypeLevel,jdbcType=INTEGER},
+      income_goods = #{incomeGoods,jdbcType=VARCHAR},
+      game_friend_more_count = #{gameFriendMoreCount,jdbcType=REAL},
+      wx_friend_more_count = #{wxFriendMoreCount,jdbcType=REAL}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

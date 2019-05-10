@@ -1,0 +1,495 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.tongzhu.usergoods.mapper.UserAdornEquipMapper" >
+  <resultMap id="BaseResultMap" type="com.tongzhu.usergoods.model.UserAdornEquip" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="user_id" property="userId" jdbcType="VARCHAR" />
+    <result column="head" property="head" jdbcType="VARCHAR" />
+    <result column="clothing" property="clothing" jdbcType="VARCHAR" />
+    <result column="trousers" property="trousers" jdbcType="VARCHAR" />
+    <result column="shoe" property="shoe" jdbcType="VARCHAR" />
+    <result column="fashion" property="fashion" jdbcType="VARCHAR" />
+    <result column="wedding_ring" property="weddingRing" jdbcType="VARCHAR" />
+    <result column="weapon" property="weapon" jdbcType="VARCHAR" />
+    <result column="ring" property="ring" jdbcType="VARCHAR" />
+    <result column="cuff" property="cuff" jdbcType="VARCHAR" />
+    <result column="necklace" property="necklace" jdbcType="VARCHAR" />
+    <result column="jewelry" property="jewelry" jdbcType="VARCHAR" />
+    <result column="always_fighting" property="alwaysFighting" jdbcType="DOUBLE" />
+    <result column="vitality" property="vitality" jdbcType="DOUBLE" />
+    <result column="attack" property="attack" jdbcType="DOUBLE" />
+    <result column="spell_attacks" property="spellAttacks" jdbcType="DOUBLE" />
+    <result column="pdef" property="pdef" jdbcType="DOUBLE" />
+    <result column="magdef" property="magdef" jdbcType="DOUBLE" />
+    <result column="crit" property="crit" jdbcType="DOUBLE" />
+    <result column="dodge" property="dodge" jdbcType="DOUBLE" />
+    <result column="hit_rate" property="hitRate" jdbcType="DOUBLE" />
+    <result column="defense_crit" property="defenseCrit" jdbcType="DOUBLE" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, user_id, head, clothing, trousers, shoe, fashion, wedding_ring, weapon, ring, 
+    cuff, necklace, jewelry, always_fighting, vitality, attack, spell_attacks, pdef, 
+    magdef, crit, dodge, hit_rate, defense_crit
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.tongzhu.usergoods.model.UserAdornEquipExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from tz_user_adorn_equip
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from tz_user_adorn_equip
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from tz_user_adorn_equip
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.tongzhu.usergoods.model.UserAdornEquipExample" >
+    delete from tz_user_adorn_equip
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.tongzhu.usergoods.model.UserAdornEquip" >
+    insert into tz_user_adorn_equip (id, user_id, head, 
+      clothing, trousers, shoe, 
+      fashion, wedding_ring, weapon, 
+      ring, cuff, necklace, 
+      jewelry, always_fighting, vitality, 
+      attack, spell_attacks, pdef, 
+      magdef, crit, dodge, hit_rate, 
+      defense_crit)
+    values (#{id,jdbcType=VARCHAR}, #{userId,jdbcType=VARCHAR}, #{head,jdbcType=VARCHAR}, 
+      #{clothing,jdbcType=VARCHAR}, #{trousers,jdbcType=VARCHAR}, #{shoe,jdbcType=VARCHAR}, 
+      #{fashion,jdbcType=VARCHAR}, #{weddingRing,jdbcType=VARCHAR}, #{weapon,jdbcType=VARCHAR}, 
+      #{ring,jdbcType=VARCHAR}, #{cuff,jdbcType=VARCHAR}, #{necklace,jdbcType=VARCHAR}, 
+      #{jewelry,jdbcType=VARCHAR}, #{alwaysFighting,jdbcType=DOUBLE}, #{vitality,jdbcType=DOUBLE}, 
+      #{attack,jdbcType=DOUBLE}, #{spellAttacks,jdbcType=DOUBLE}, #{pdef,jdbcType=DOUBLE}, 
+      #{magdef,jdbcType=DOUBLE}, #{crit,jdbcType=DOUBLE}, #{dodge,jdbcType=DOUBLE}, #{hitRate,jdbcType=DOUBLE}, 
+      #{defenseCrit,jdbcType=DOUBLE})
+  </insert>
+  <insert id="insertSelective" parameterType="com.tongzhu.usergoods.model.UserAdornEquip" >
+    insert into tz_user_adorn_equip
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="head != null" >
+        head,
+      </if>
+      <if test="clothing != null" >
+        clothing,
+      </if>
+      <if test="trousers != null" >
+        trousers,
+      </if>
+      <if test="shoe != null" >
+        shoe,
+      </if>
+      <if test="fashion != null" >
+        fashion,
+      </if>
+      <if test="weddingRing != null" >
+        wedding_ring,
+      </if>
+      <if test="weapon != null" >
+        weapon,
+      </if>
+      <if test="ring != null" >
+        ring,
+      </if>
+      <if test="cuff != null" >
+        cuff,
+      </if>
+      <if test="necklace != null" >
+        necklace,
+      </if>
+      <if test="jewelry != null" >
+        jewelry,
+      </if>
+      <if test="alwaysFighting != null" >
+        always_fighting,
+      </if>
+      <if test="vitality != null" >
+        vitality,
+      </if>
+      <if test="attack != null" >
+        attack,
+      </if>
+      <if test="spellAttacks != null" >
+        spell_attacks,
+      </if>
+      <if test="pdef != null" >
+        pdef,
+      </if>
+      <if test="magdef != null" >
+        magdef,
+      </if>
+      <if test="crit != null" >
+        crit,
+      </if>
+      <if test="dodge != null" >
+        dodge,
+      </if>
+      <if test="hitRate != null" >
+        hit_rate,
+      </if>
+      <if test="defenseCrit != null" >
+        defense_crit,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="head != null" >
+        #{head,jdbcType=VARCHAR},
+      </if>
+      <if test="clothing != null" >
+        #{clothing,jdbcType=VARCHAR},
+      </if>
+      <if test="trousers != null" >
+        #{trousers,jdbcType=VARCHAR},
+      </if>
+      <if test="shoe != null" >
+        #{shoe,jdbcType=VARCHAR},
+      </if>
+      <if test="fashion != null" >
+        #{fashion,jdbcType=VARCHAR},
+      </if>
+      <if test="weddingRing != null" >
+        #{weddingRing,jdbcType=VARCHAR},
+      </if>
+      <if test="weapon != null" >
+        #{weapon,jdbcType=VARCHAR},
+      </if>
+      <if test="ring != null" >
+        #{ring,jdbcType=VARCHAR},
+      </if>
+      <if test="cuff != null" >
+        #{cuff,jdbcType=VARCHAR},
+      </if>
+      <if test="necklace != null" >
+        #{necklace,jdbcType=VARCHAR},
+      </if>
+      <if test="jewelry != null" >
+        #{jewelry,jdbcType=VARCHAR},
+      </if>
+      <if test="alwaysFighting != null" >
+        #{alwaysFighting,jdbcType=DOUBLE},
+      </if>
+      <if test="vitality != null" >
+        #{vitality,jdbcType=DOUBLE},
+      </if>
+      <if test="attack != null" >
+        #{attack,jdbcType=DOUBLE},
+      </if>
+      <if test="spellAttacks != null" >
+        #{spellAttacks,jdbcType=DOUBLE},
+      </if>
+      <if test="pdef != null" >
+        #{pdef,jdbcType=DOUBLE},
+      </if>
+      <if test="magdef != null" >
+        #{magdef,jdbcType=DOUBLE},
+      </if>
+      <if test="crit != null" >
+        #{crit,jdbcType=DOUBLE},
+      </if>
+      <if test="dodge != null" >
+        #{dodge,jdbcType=DOUBLE},
+      </if>
+      <if test="hitRate != null" >
+        #{hitRate,jdbcType=DOUBLE},
+      </if>
+      <if test="defenseCrit != null" >
+        #{defenseCrit,jdbcType=DOUBLE},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.tongzhu.usergoods.model.UserAdornEquipExample" resultType="java.lang.Integer" >
+    select count(*) from tz_user_adorn_equip
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update tz_user_adorn_equip
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userId != null" >
+        user_id = #{record.userId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.head != null" >
+        head = #{record.head,jdbcType=VARCHAR},
+      </if>
+      <if test="record.clothing != null" >
+        clothing = #{record.clothing,jdbcType=VARCHAR},
+      </if>
+      <if test="record.trousers != null" >
+        trousers = #{record.trousers,jdbcType=VARCHAR},
+      </if>
+      <if test="record.shoe != null" >
+        shoe = #{record.shoe,jdbcType=VARCHAR},
+      </if>
+      <if test="record.fashion != null" >
+        fashion = #{record.fashion,jdbcType=VARCHAR},
+      </if>
+      <if test="record.weddingRing != null" >
+        wedding_ring = #{record.weddingRing,jdbcType=VARCHAR},
+      </if>
+      <if test="record.weapon != null" >
+        weapon = #{record.weapon,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ring != null" >
+        ring = #{record.ring,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cuff != null" >
+        cuff = #{record.cuff,jdbcType=VARCHAR},
+      </if>
+      <if test="record.necklace != null" >
+        necklace = #{record.necklace,jdbcType=VARCHAR},
+      </if>
+      <if test="record.jewelry != null" >
+        jewelry = #{record.jewelry,jdbcType=VARCHAR},
+      </if>
+      <if test="record.alwaysFighting != null" >
+        always_fighting = #{record.alwaysFighting,jdbcType=DOUBLE},
+      </if>
+      <if test="record.vitality != null" >
+        vitality = #{record.vitality,jdbcType=DOUBLE},
+      </if>
+      <if test="record.attack != null" >
+        attack = #{record.attack,jdbcType=DOUBLE},
+      </if>
+      <if test="record.spellAttacks != null" >
+        spell_attacks = #{record.spellAttacks,jdbcType=DOUBLE},
+      </if>
+      <if test="record.pdef != null" >
+        pdef = #{record.pdef,jdbcType=DOUBLE},
+      </if>
+      <if test="record.magdef != null" >
+        magdef = #{record.magdef,jdbcType=DOUBLE},
+      </if>
+      <if test="record.crit != null" >
+        crit = #{record.crit,jdbcType=DOUBLE},
+      </if>
+      <if test="record.dodge != null" >
+        dodge = #{record.dodge,jdbcType=DOUBLE},
+      </if>
+      <if test="record.hitRate != null" >
+        hit_rate = #{record.hitRate,jdbcType=DOUBLE},
+      </if>
+      <if test="record.defenseCrit != null" >
+        defense_crit = #{record.defenseCrit,jdbcType=DOUBLE},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update tz_user_adorn_equip
+    set id = #{record.id,jdbcType=VARCHAR},
+      user_id = #{record.userId,jdbcType=VARCHAR},
+      head = #{record.head,jdbcType=VARCHAR},
+      clothing = #{record.clothing,jdbcType=VARCHAR},
+      trousers = #{record.trousers,jdbcType=VARCHAR},
+      shoe = #{record.shoe,jdbcType=VARCHAR},
+      fashion = #{record.fashion,jdbcType=VARCHAR},
+      wedding_ring = #{record.weddingRing,jdbcType=VARCHAR},
+      weapon = #{record.weapon,jdbcType=VARCHAR},
+      ring = #{record.ring,jdbcType=VARCHAR},
+      cuff = #{record.cuff,jdbcType=VARCHAR},
+      necklace = #{record.necklace,jdbcType=VARCHAR},
+      jewelry = #{record.jewelry,jdbcType=VARCHAR},
+      always_fighting = #{record.alwaysFighting,jdbcType=DOUBLE},
+      vitality = #{record.vitality,jdbcType=DOUBLE},
+      attack = #{record.attack,jdbcType=DOUBLE},
+      spell_attacks = #{record.spellAttacks,jdbcType=DOUBLE},
+      pdef = #{record.pdef,jdbcType=DOUBLE},
+      magdef = #{record.magdef,jdbcType=DOUBLE},
+      crit = #{record.crit,jdbcType=DOUBLE},
+      dodge = #{record.dodge,jdbcType=DOUBLE},
+      hit_rate = #{record.hitRate,jdbcType=DOUBLE},
+      defense_crit = #{record.defenseCrit,jdbcType=DOUBLE}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.tongzhu.usergoods.model.UserAdornEquip" >
+    update tz_user_adorn_equip
+    <set >
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="head != null" >
+        head = #{head,jdbcType=VARCHAR},
+      </if>
+      <if test="clothing != null" >
+        clothing = #{clothing,jdbcType=VARCHAR},
+      </if>
+      <if test="trousers != null" >
+        trousers = #{trousers,jdbcType=VARCHAR},
+      </if>
+      <if test="shoe != null" >
+        shoe = #{shoe,jdbcType=VARCHAR},
+      </if>
+      <if test="fashion != null" >
+        fashion = #{fashion,jdbcType=VARCHAR},
+      </if>
+      <if test="weddingRing != null" >
+        wedding_ring = #{weddingRing,jdbcType=VARCHAR},
+      </if>
+      <if test="weapon != null" >
+        weapon = #{weapon,jdbcType=VARCHAR},
+      </if>
+      <if test="ring != null" >
+        ring = #{ring,jdbcType=VARCHAR},
+      </if>
+      <if test="cuff != null" >
+        cuff = #{cuff,jdbcType=VARCHAR},
+      </if>
+      <if test="necklace != null" >
+        necklace = #{necklace,jdbcType=VARCHAR},
+      </if>
+      <if test="jewelry != null" >
+        jewelry = #{jewelry,jdbcType=VARCHAR},
+      </if>
+      <if test="alwaysFighting != null" >
+        always_fighting = #{alwaysFighting,jdbcType=DOUBLE},
+      </if>
+      <if test="vitality != null" >
+        vitality = #{vitality,jdbcType=DOUBLE},
+      </if>
+      <if test="attack != null" >
+        attack = #{attack,jdbcType=DOUBLE},
+      </if>
+      <if test="spellAttacks != null" >
+        spell_attacks = #{spellAttacks,jdbcType=DOUBLE},
+      </if>
+      <if test="pdef != null" >
+        pdef = #{pdef,jdbcType=DOUBLE},
+      </if>
+      <if test="magdef != null" >
+        magdef = #{magdef,jdbcType=DOUBLE},
+      </if>
+      <if test="crit != null" >
+        crit = #{crit,jdbcType=DOUBLE},
+      </if>
+      <if test="dodge != null" >
+        dodge = #{dodge,jdbcType=DOUBLE},
+      </if>
+      <if test="hitRate != null" >
+        hit_rate = #{hitRate,jdbcType=DOUBLE},
+      </if>
+      <if test="defenseCrit != null" >
+        defense_crit = #{defenseCrit,jdbcType=DOUBLE},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.tongzhu.usergoods.model.UserAdornEquip" >
+    update tz_user_adorn_equip
+    set user_id = #{userId,jdbcType=VARCHAR},
+      head = #{head,jdbcType=VARCHAR},
+      clothing = #{clothing,jdbcType=VARCHAR},
+      trousers = #{trousers,jdbcType=VARCHAR},
+      shoe = #{shoe,jdbcType=VARCHAR},
+      fashion = #{fashion,jdbcType=VARCHAR},
+      wedding_ring = #{weddingRing,jdbcType=VARCHAR},
+      weapon = #{weapon,jdbcType=VARCHAR},
+      ring = #{ring,jdbcType=VARCHAR},
+      cuff = #{cuff,jdbcType=VARCHAR},
+      necklace = #{necklace,jdbcType=VARCHAR},
+      jewelry = #{jewelry,jdbcType=VARCHAR},
+      always_fighting = #{alwaysFighting,jdbcType=DOUBLE},
+      vitality = #{vitality,jdbcType=DOUBLE},
+      attack = #{attack,jdbcType=DOUBLE},
+      spell_attacks = #{spellAttacks,jdbcType=DOUBLE},
+      pdef = #{pdef,jdbcType=DOUBLE},
+      magdef = #{magdef,jdbcType=DOUBLE},
+      crit = #{crit,jdbcType=DOUBLE},
+      dodge = #{dodge,jdbcType=DOUBLE},
+      hit_rate = #{hitRate,jdbcType=DOUBLE},
+      defense_crit = #{defenseCrit,jdbcType=DOUBLE}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

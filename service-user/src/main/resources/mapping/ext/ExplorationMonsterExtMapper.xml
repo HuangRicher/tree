@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.tongzhu.user.mapper.ext.ExplorationMonsterExtMapper" >
+  <resultMap id="BaseResultMap" type="com.tongzhu.user.model.ExplorationMonster" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="exploration_id" property="explorationId" jdbcType="INTEGER" />
+    <result column="pass_id" property="passId" jdbcType="INTEGER" />
+    <result column="monster_id" property="monsterId" jdbcType="VARCHAR" />
+    <result column="group_id" property="groupId" jdbcType="INTEGER" />
+  </resultMap>
+
+  <insert id="batchInsert" parameterType="java.util.List" >
+    insert into tz_game_exploration_monster (id, exploration_id, pass_id, 
+      monster_id, group_id)
+    values
+    <foreach collection="list" index="index" item="item" separator=",">
+      (
+      #{item.id,jdbcType=VARCHAR},
+      #{item.explorationId,jdbcType=INTEGER},
+      #{item.passId,jdbcType=INTEGER},
+      #{item.monsterId,jdbcType=VARCHAR},
+      #{item.groupId,jdbcType=INTEGER}
+      )
+    </foreach>
+  </insert>
+
+</mapper>

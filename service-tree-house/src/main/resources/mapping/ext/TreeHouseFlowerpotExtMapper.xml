@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.tongzhu.treehouse.mapper.ext.TreeHouseFlowerpotExtMapper" >
+
+  <insert id="insertBatch" parameterType="java.util.List">
+    insert into tz_tree_house_flowerpot (id, tree_house_id, goods_id,
+    lock_level, lock_status)
+    values
+    <foreach collection ="list" item="item" index= "index" separator =",">
+      (
+      #{item.id,jdbcType=VARCHAR},
+      #{item.treeHouseId,jdbcType=VARCHAR},
+      #{item.goodsId,jdbcType=VARCHAR},
+      #{item.lockLevel,jdbcType=INTEGER},
+      #{item.lockStatus,jdbcType=INTEGER}
+      )
+    </foreach >
+  </insert>
+
+  <update id="wateringAll" parameterType="map">
+    UPDATE `tz_tree_house_flowerpot` SET water_count=water_count+1 ,flower_status=IF(flower_status &gt;=4,4,(flower_status+1)),change_date=NOW()
+    WHERE tree_house_id=#{treeHouseId,jdbcType=VARCHAR} AND goods_id IS NOT NULL AND sowing_date IS NOT NULL AND ABS(TIMESTAMPDIFF(SECOND,NOW(),change_date)) &gt;180
+  </update>
+
+  <update id="spreadManureAll" parameterType="map">
+    UPDATE `tz_tree_house_flowerpot` SET spread_manure_count=spread_manure_count+1,flower_status=IF(flower_status &gt;=4,4,(flower_status+1)),change_date=NOW()
+    WHERE tree_house_id=#{treeHouseId,jdbcType=VARCHAR} AND goods_id IS NOT NULL AND sowing_date IS NOT NULL AND ABS(TIMESTAMPDIFF(SECOND,NOW(),change_date)) &gt;180
+  </update>
+
+  <update id="harvestAll" parameterType="map">
+    UPDATE `tz_tree_house_flowerpot` SET goods_id=NULL,water_count=0,spread_manure_count=0,flower_status=0,
+    last_water_date=NULL,last_spread_manure_date=NULL,sowing_date=NULL,change_date=NULL,plant_id=null
+    WHERE tree_house_id=#{treeHouseId,jdbcType=VARCHAR} AND goods_id IS NOT NULL AND flower_status &gt;=4
+  </update>
+
+  <update id="deleteAll" parameterType="map">
+    UPDATE `tz_tree_house_flowerpot` SET goods_id=NULL,water_count=0,spread_manure_count=0,flower_status=0,last_water_date=NULL,
+    last_spread_manure_date=NULL,sowing_date=NULL,change_date=NULL,plant_id=null
+    WHERE tree_house_id=#{treeHouseId,jdbcType=VARCHAR} AND goods_id IS NOT NULL AND sowing_date IS NOT NULL
+    AND (TIMESTAMPDIFF(MINUTE, last_water_date, NOW()) &gt; #{waterTimes,jdbcType=INTEGER} OR TIMESTAMPDIFF(MINUTE, last_spread_manure_date, NOW()) &gt; #{spreedManureTimes,jdbcType=INTEGER})
+    AND water_count &lt; #{waterCount,jdbcType=INTEGER} AND spread_manure_count &lt; #{spreedManureCount,jdbcType=INTEGER}
+  </update>
+</mapper>

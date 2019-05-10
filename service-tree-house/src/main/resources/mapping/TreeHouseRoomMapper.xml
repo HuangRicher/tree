@@ -1,0 +1,323 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.tongzhu.treehouse.mapper.TreeHouseRoomMapper" >
+  <resultMap id="BaseResultMap" type="com.tongzhu.treehouse.model.TreeHouseRoom" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="user_id" property="userId" jdbcType="VARCHAR" />
+    <result column="tree_house_Id" property="treeHouseId" jdbcType="VARCHAR" />
+    <result column="room_id" property="roomId" jdbcType="INTEGER" />
+    <result column="worker_id" property="workerId" jdbcType="VARCHAR" />
+    <result column="work_type_id" property="workTypeId" jdbcType="INTEGER" />
+    <result column="status_" property="status" jdbcType="INTEGER" />
+    <result column="protect_start_date" property="protectStartDate" jdbcType="TIMESTAMP" />
+    <result column="protect_end_date" property="protectEndDate" jdbcType="TIMESTAMP" />
+    <result column="reduce_price_date" property="reducePriceDate" jdbcType="TIMESTAMP" />
+    <result column="is_wx_friend" property="isWxFriend" jdbcType="BIT" />
+    <result column="is_game_friend" property="isGameFriend" jdbcType="BIT" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, user_id, tree_house_Id, room_id, worker_id, work_type_id, status_, protect_start_date, 
+    protect_end_date, reduce_price_date, is_wx_friend, is_game_friend
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.tongzhu.treehouse.model.TreeHouseRoomExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from tz_tree_house_room
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from tz_tree_house_room
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from tz_tree_house_room
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.tongzhu.treehouse.model.TreeHouseRoomExample" >
+    delete from tz_tree_house_room
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.tongzhu.treehouse.model.TreeHouseRoom" >
+    insert into tz_tree_house_room (id, user_id, tree_house_Id, 
+      room_id, worker_id, work_type_id, 
+      status_, protect_start_date, protect_end_date, 
+      reduce_price_date, is_wx_friend, is_game_friend
+      )
+    values (#{id,jdbcType=VARCHAR}, #{userId,jdbcType=VARCHAR}, #{treeHouseId,jdbcType=VARCHAR}, 
+      #{roomId,jdbcType=INTEGER}, #{workerId,jdbcType=VARCHAR}, #{workTypeId,jdbcType=INTEGER}, 
+      #{status,jdbcType=INTEGER}, #{protectStartDate,jdbcType=TIMESTAMP}, #{protectEndDate,jdbcType=TIMESTAMP}, 
+      #{reducePriceDate,jdbcType=TIMESTAMP}, #{isWxFriend,jdbcType=BIT}, #{isGameFriend,jdbcType=BIT}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.tongzhu.treehouse.model.TreeHouseRoom" >
+    insert into tz_tree_house_room
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="treeHouseId != null" >
+        tree_house_Id,
+      </if>
+      <if test="roomId != null" >
+        room_id,
+      </if>
+      <if test="workerId != null" >
+        worker_id,
+      </if>
+      <if test="workTypeId != null" >
+        work_type_id,
+      </if>
+      <if test="status != null" >
+        status_,
+      </if>
+      <if test="protectStartDate != null" >
+        protect_start_date,
+      </if>
+      <if test="protectEndDate != null" >
+        protect_end_date,
+      </if>
+      <if test="reducePriceDate != null" >
+        reduce_price_date,
+      </if>
+      <if test="isWxFriend != null" >
+        is_wx_friend,
+      </if>
+      <if test="isGameFriend != null" >
+        is_game_friend,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="treeHouseId != null" >
+        #{treeHouseId,jdbcType=VARCHAR},
+      </if>
+      <if test="roomId != null" >
+        #{roomId,jdbcType=INTEGER},
+      </if>
+      <if test="workerId != null" >
+        #{workerId,jdbcType=VARCHAR},
+      </if>
+      <if test="workTypeId != null" >
+        #{workTypeId,jdbcType=INTEGER},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="protectStartDate != null" >
+        #{protectStartDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="protectEndDate != null" >
+        #{protectEndDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="reducePriceDate != null" >
+        #{reducePriceDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isWxFriend != null" >
+        #{isWxFriend,jdbcType=BIT},
+      </if>
+      <if test="isGameFriend != null" >
+        #{isGameFriend,jdbcType=BIT},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.tongzhu.treehouse.model.TreeHouseRoomExample" resultType="java.lang.Integer" >
+    select count(*) from tz_tree_house_room
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update tz_tree_house_room
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userId != null" >
+        user_id = #{record.userId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.treeHouseId != null" >
+        tree_house_Id = #{record.treeHouseId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.roomId != null" >
+        room_id = #{record.roomId,jdbcType=INTEGER},
+      </if>
+      <if test="record.workerId != null" >
+        worker_id = #{record.workerId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.workTypeId != null" >
+        work_type_id = #{record.workTypeId,jdbcType=INTEGER},
+      </if>
+      <if test="record.status != null" >
+        status_ = #{record.status,jdbcType=INTEGER},
+      </if>
+      <if test="record.protectStartDate != null" >
+        protect_start_date = #{record.protectStartDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.protectEndDate != null" >
+        protect_end_date = #{record.protectEndDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.reducePriceDate != null" >
+        reduce_price_date = #{record.reducePriceDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.isWxFriend != null" >
+        is_wx_friend = #{record.isWxFriend,jdbcType=BIT},
+      </if>
+      <if test="record.isGameFriend != null" >
+        is_game_friend = #{record.isGameFriend,jdbcType=BIT},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update tz_tree_house_room
+    set id = #{record.id,jdbcType=VARCHAR},
+      user_id = #{record.userId,jdbcType=VARCHAR},
+      tree_house_Id = #{record.treeHouseId,jdbcType=VARCHAR},
+      room_id = #{record.roomId,jdbcType=INTEGER},
+      worker_id = #{record.workerId,jdbcType=VARCHAR},
+      work_type_id = #{record.workTypeId,jdbcType=INTEGER},
+      status_ = #{record.status,jdbcType=INTEGER},
+      protect_start_date = #{record.protectStartDate,jdbcType=TIMESTAMP},
+      protect_end_date = #{record.protectEndDate,jdbcType=TIMESTAMP},
+      reduce_price_date = #{record.reducePriceDate,jdbcType=TIMESTAMP},
+      is_wx_friend = #{record.isWxFriend,jdbcType=BIT},
+      is_game_friend = #{record.isGameFriend,jdbcType=BIT}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.tongzhu.treehouse.model.TreeHouseRoom" >
+    update tz_tree_house_room
+    <set >
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="treeHouseId != null" >
+        tree_house_Id = #{treeHouseId,jdbcType=VARCHAR},
+      </if>
+      <if test="roomId != null" >
+        room_id = #{roomId,jdbcType=INTEGER},
+      </if>
+      <if test="workerId != null" >
+        worker_id = #{workerId,jdbcType=VARCHAR},
+      </if>
+      <if test="workTypeId != null" >
+        work_type_id = #{workTypeId,jdbcType=INTEGER},
+      </if>
+      <if test="status != null" >
+        status_ = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="protectStartDate != null" >
+        protect_start_date = #{protectStartDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="protectEndDate != null" >
+        protect_end_date = #{protectEndDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="reducePriceDate != null" >
+        reduce_price_date = #{reducePriceDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isWxFriend != null" >
+        is_wx_friend = #{isWxFriend,jdbcType=BIT},
+      </if>
+      <if test="isGameFriend != null" >
+        is_game_friend = #{isGameFriend,jdbcType=BIT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.tongzhu.treehouse.model.TreeHouseRoom" >
+    update tz_tree_house_room
+    set user_id = #{userId,jdbcType=VARCHAR},
+      tree_house_Id = #{treeHouseId,jdbcType=VARCHAR},
+      room_id = #{roomId,jdbcType=INTEGER},
+      worker_id = #{workerId,jdbcType=VARCHAR},
+      work_type_id = #{workTypeId,jdbcType=INTEGER},
+      status_ = #{status,jdbcType=INTEGER},
+      protect_start_date = #{protectStartDate,jdbcType=TIMESTAMP},
+      protect_end_date = #{protectEndDate,jdbcType=TIMESTAMP},
+      reduce_price_date = #{reducePriceDate,jdbcType=TIMESTAMP},
+      is_wx_friend = #{isWxFriend,jdbcType=BIT},
+      is_game_friend = #{isGameFriend,jdbcType=BIT}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

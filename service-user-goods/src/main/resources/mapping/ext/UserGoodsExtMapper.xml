@@ -1,0 +1,437 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.tongzhu.usergoods.mapper.ext.UserGoodsExtMapper">
+    <resultMap id="BaseResultMap" type="com.tongzhu.usergoods.model.UserGoods">
+        <id column="user_id" property="userId" jdbcType="VARCHAR"/>
+        <id column="goods_id" property="goodsId" jdbcType="INTEGER"/>
+        <result column="id" property="id" jdbcType="VARCHAR"/>
+        <result column="amount" property="amount" jdbcType="INTEGER"/>
+        <result column="surplus_date" property="surplusDate" jdbcType="TIMESTAMP"/>
+        <result column="create_date" property="createDate" jdbcType="TIMESTAMP"/>
+        <result column="update_date" property="updateDate" jdbcType="TIMESTAMP"/>
+        <result column="status" property="status" jdbcType="INTEGER"/>
+        <result column="setting_position" property="settingPosition" jdbcType="INTEGER"/>
+    </resultMap>
+    <resultMap id="EquipmentInfoMap" type="com.tongzhu.usergoods.model.EquipmentInfo">
+        <id column="intensify_id" property="intensifyId" jdbcType="VARCHAR"/>
+        <result column="id" property="id" jdbcType="INTEGER"/>
+        <result column="name" property="name" jdbcType="VARCHAR"/>
+        <result column="quality" property="quality" jdbcType="INTEGER"/>
+        <result column="fighting_capacity" property="fightingCapacity" jdbcType="DOUBLE"/>
+        <result column="level" property="level" jdbcType="INTEGER"/>
+        <result column="sex" property="sex" jdbcType="INTEGER"/>
+        <result column="description" property="description" jdbcType="VARCHAR"/>
+        <result column="acquiring_way" property="acquiringWay" jdbcType="VARCHAR"/>
+        <result column="expiration_time" property="expirationTime" jdbcType="TIMESTAMP"/>
+        <result column="create_date" property="createDate" jdbcType="TIMESTAMP"/>
+        <result column="update_date" property="updateDate" jdbcType="TIMESTAMP"/>
+        <result column="vitality" property="vitality" jdbcType="DOUBLE"/>
+        <result column="attack" property="attack" jdbcType="DOUBLE"/>
+        <result column="spell_attacks" property="spellAttacks" jdbcType="DOUBLE"/>
+        <result column="pdef" property="pdef" jdbcType="DOUBLE"/>
+        <result column="magdef" property="magdef" jdbcType="DOUBLE"/>
+        <result column="crit" property="crit" jdbcType="DOUBLE"/>
+        <result column="dodge" property="dodge" jdbcType="DOUBLE"/>
+        <result column="hit_rate" property="hitRate" jdbcType="DOUBLE"/>
+        <result column="defense_crit" property="defenseCrit" jdbcType="DOUBLE"/>
+        <result column="conversion_prop_id" property="conversionPropId" jdbcType="VARCHAR"/>
+        <result column="conversion_amount" property="conversionAmount" jdbcType="INTEGER"/>
+        <result column="iconid" property="iconid" jdbcType="VARCHAR"/>
+        <result column="role" property="role" jdbcType="VARCHAR"/>
+        <result column="suit_id" property="suitId" jdbcType="INTEGER"/>
+        <result column="suit_name" property="suitName" jdbcType="VARCHAR"/>
+        <result column="log_record" property="logRecord" jdbcType="INTEGER"/>
+        <result column="storage" property="storage" jdbcType="INTEGER"/>
+        <result column="binding" property="binding" jdbcType="INTEGER"/>
+        <result column="deal" property="deal" jdbcType="INTEGER"/>
+        <result column="sell" property="sell" jdbcType="INTEGER"/>
+        <result column="destroy" property="destroy" jdbcType="INTEGER"/>
+        <result column="inlay" property="inlay" jdbcType="INTEGER"/>
+        <result column="wear_position" property="wearPosition" jdbcType="INTEGER"/>
+        <result column="original" property="original" jdbcType="INTEGER"/>
+        <result column="guardians_male" property="guardiansMale" jdbcType="VARCHAR"/>
+        <result column="guardians_female" property="guardiansFemale" jdbcType="VARCHAR"/>
+        <result column="assassin_male" property="assassinMale" jdbcType="VARCHAR"/>
+        <result column="assassin_female" property="assassinFemale" jdbcType="VARCHAR"/>
+        <result column="crafts_male" property="craftsMale" jdbcType="VARCHAR"/>
+        <result column="crafts_female" property="craftsFemale" jdbcType="VARCHAR"/>
+        <result column="master_male" property="masterMale" jdbcType="VARCHAR"/>
+        <result column="master_female" property="masterFemale" jdbcType="VARCHAR"/>
+        <result column="profession" property="profession" jdbcType="VARCHAR"/>
+        <result column="time" property="time" jdbcType="INTEGER"/>
+        <result column="enchantlvl" property="enchantlvl" jdbcType="INTEGER"/>
+        <result column="vitality_intensify" property="vitalityIntensify" jdbcType="DOUBLE"/>
+        <result column="attack_intensify" property="attackIntensify" jdbcType="DOUBLE"/>
+        <result column="spell_attacks_intensify" property="spellAttacksIntensify" jdbcType="DOUBLE"/>
+        <result column="pdef_intensify" property="pdefIntensify" jdbcType="DOUBLE"/>
+        <result column="magdef_intensify" property="magdefIntensify" jdbcType="DOUBLE"/>
+        <result column="crit_intensify" property="critIntensify" jdbcType="DOUBLE"/>
+        <result column="dodge_intensify" property="dodgeIntensify" jdbcType="DOUBLE"/>
+        <result column="hit_rate_intensify" property="hitRateIntensify" jdbcType="DOUBLE"/>
+        <result column="defense_crit_intensify" property="defenseCritIntensify" jdbcType="DOUBLE"/>
+        <result column="gem_rhombus" property="gemRhombus" jdbcType="VARCHAR"/>
+        <result column="gem_roundness" property="gemRoundness" jdbcType="VARCHAR"/>
+        <result column="gem_hexagon" property="gemHexagon" jdbcType="VARCHAR"/>
+        <result column="vitality_gem" property="vitalityGem" jdbcType="DOUBLE"/>
+        <result column="attack_gem" property="attackGem" jdbcType="DOUBLE"/>
+        <result column="spell_attacks_gem" property="spellAttacksGem" jdbcType="DOUBLE"/>
+        <result column="pdef_gem" property="pdefGem" jdbcType="DOUBLE"/>
+        <result column="magdef_gem" property="magdefGem" jdbcType="DOUBLE"/>
+        <result column="crit_gem" property="critGem" jdbcType="DOUBLE"/>
+        <result column="dodge_gem" property="dodgeGem" jdbcType="DOUBLE"/>
+        <result column="hit_rate_gem" property="hitRateGem" jdbcType="DOUBLE"/>
+        <result column="defense_crit_gem" property="defenseCritGem" jdbcType="DOUBLE"/>
+        <result column="upgrade" property="upgrade" jdbcType="INTEGER"/>
+    </resultMap>
+    <resultMap id="UserGoodsVO" type="com.tongzhu.usergoods.mapper.vo.UserGoodsVO">
+        <id column="user_id" property="userId" jdbcType="VARCHAR"/>
+        <id column="goods_id" property="goodsId" jdbcType="INTEGER"/>
+        <result column="amount" property="amount" jdbcType="INTEGER"/>
+        <result column="surplus_date" property="surplusDate" jdbcType="TIMESTAMP"/>
+        <result column="create_date" property="createDate" jdbcType="TIMESTAMP"/>
+        <result column="status" property="status" jdbcType="INTEGER"/>
+        <result column="setting_position" property="settingPosition" jdbcType="INTEGER"/>
+        <result column="name" property="name" jdbcType="VARCHAR"/>
+        <result column="type" property="type" jdbcType="INTEGER"/>
+        <result column="quality" property="quality" jdbcType="INTEGER"/>
+        <result column="fighting_capacity" property="fightingCapacity" jdbcType="DOUBLE"/>
+        <result column="picture_url" property="pictureUrl" jdbcType="VARCHAR"/>
+        <result column="level" property="level" jdbcType="INTEGER"/>
+        <result column="occupation" property="occupation" jdbcType="INTEGER"/>
+        <result column="sex" property="sex" jdbcType="INTEGER"/>
+        <result column="scene" property="scene" jdbcType="INTEGER"/>
+        <result column="description" property="description" jdbcType="VARCHAR"/>
+        <result column="acquiring_way" property="acquiringWay" jdbcType="VARCHAR"/>
+        <result column="expiration_time" property="expirationTime" jdbcType="TIMESTAMP"/>
+        <result column="conversion_prop_id" property="conversionPropId" jdbcType="INTEGER"/>
+        <result column="conversion_amount" property="conversionAmount" jdbcType="INTEGER"/>
+        <result column="wear_position" property="wearPosition" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <resultMap id="PropInfoResultMap" type="com.tongzhu.usergoods.model.PropInfo">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="name" property="name" jdbcType="VARCHAR"/>
+        <result column="type" property="type" jdbcType="INTEGER"/>
+        <result column="quality" property="quality" jdbcType="INTEGER"/>
+        <result column="fighting_capacity" property="fightingCapacity" jdbcType="DOUBLE"/>
+        <result column="picture_url" property="pictureUrl" jdbcType="VARCHAR"/>
+        <result column="level" property="level" jdbcType="INTEGER"/>
+        <result column="occupation" property="occupation" jdbcType="INTEGER"/>
+        <result column="sex" property="sex" jdbcType="INTEGER"/>
+        <result column="scene" property="scene" jdbcType="INTEGER"/>
+        <result column="description" property="description" jdbcType="VARCHAR"/>
+        <result column="acquiring_way" property="acquiringWay" jdbcType="VARCHAR"/>
+        <result column="expiration_time" property="expirationTime" jdbcType="TIMESTAMP"/>
+        <result column="create_date" property="createDate" jdbcType="TIMESTAMP"/>
+        <result column="update_date" property="updateDate" jdbcType="TIMESTAMP"/>
+        <result column="wear_position" property="wearPosition" jdbcType="INTEGER"/>
+        <result column="vitality" property="vitality" jdbcType="DOUBLE"/>
+        <result column="attack" property="attack" jdbcType="DOUBLE"/>
+        <result column="spell_attacks" property="spellAttacks" jdbcType="DOUBLE"/>
+        <result column="pdef" property="pdef" jdbcType="DOUBLE"/>
+        <result column="magdef" property="magdef" jdbcType="DOUBLE"/>
+        <result column="crit" property="crit" jdbcType="DOUBLE"/>
+        <result column="dodge" property="dodge" jdbcType="DOUBLE"/>
+        <result column="hit_rate" property="hitRate" jdbcType="DOUBLE"/>
+        <result column="defense_crit" property="defenseCrit" jdbcType="DOUBLE"/>
+        <result column="superposition" property="superposition" jdbcType="INTEGER"/>
+        <result column="conversion_prop_id" property="conversionPropId" jdbcType="INTEGER"/>
+        <result column="conversion_amount" property="conversionAmount" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <select id="selectByUserId" resultMap="BaseResultMap" parameterType="map">
+    select goods_id, amount from tz_user_goods
+    where user_id = #{userId,jdbcType=VARCHAR} AND type=1
+  </select>
+
+    <select id="getBackpacksNumber" resultType="int" parameterType="map">
+               SELECT
+               COUNT(*)
+               FROM
+               (
+               SELECT
+               tug.setting_position sp
+               FROM
+               tz_user_goods tug
+               JOIN tz_prop_info tpi ON tug.goods_id = tpi.id
+               WHERE
+               tug.user_id =#{userId}  AND tpi.type != 0 AND tug.amount>0  AND tug.`status` = 0
+               UNION ALL
+               SELECT
+               tug.setting_position sp
+               FROM
+               tz_user_goods tug
+               JOIN tz_equipment_info tei ON tug.goods_id = tei.intensify_id
+               WHERE
+               tug.user_id = #{userId} AND tug.amount>0  AND tug.`status` = 0
+               ) a
+               WHERE
+               sp =  #{settingPosition}
+    </select>
+    <select id="getPacksackGoods" resultMap="BaseResultMap" parameterType="map">
+        SELECT
+        tug.id,
+        tug.user_id,
+        tug.goods_id,
+        tug.amount,
+        tug.surplus_date,
+        tug.create_date,
+        tug.update_date,
+        tug.`status`,
+        tug.setting_position
+        FROM
+        tz_user_goods tug
+        JOIN tz_prop_info tpi ON tug.goods_id = tpi.id
+        WHERE
+        tug.id = #{id}
+        <!-- 0  资源 6 武器 都不放在背包中-->
+        AND tpi.type != 0 AND tpi.type != 6
+    </select>
+
+    <select id="queryKnapsack" resultMap="UserGoodsVO" parameterType="map">
+        SELECT
+        tug.user_id,
+        tug.goods_id,
+        tug.amount,
+        tug.surplus_date,
+        tug.create_date,
+        tug.`status`,
+        tug.setting_position,
+        tpi.`name`,
+        tpi.type,
+        tpi.quality,
+        tpi.fighting_capacity,
+        tpi.picture_url,
+        tpi.`level`,
+        tpi.occupation,
+        tpi.sex,
+        tpi.scene,
+        tpi.description,
+        tpi.acquiring_way,
+        tpi.expiration_time,
+        tpi.`conversion_prop_id`,
+        tpi.`conversion_amount`,
+        tpi.wear_position
+        FROM
+        tz_user_goods tug
+        JOIN tz_prop_info tpi ON tug.goods_id = tpi.id
+        WHERE
+        tug.user_id = #{userId} AND tug.setting_position = #{settingPosition} AND tug.amount> 0
+        <!-- 0  资源 6 武器 都不放在背包中-->
+        AND tpi.type != 0 AND tpi.type != 6 AND tug.`status` = 0
+
+    </select>
+
+    <select id="queryUserWeapon" resultMap="UserGoodsVO" parameterType="map">
+        SELECT
+        tug.user_id,
+        tug.goods_id,
+        tug.amount,
+        tug.surplus_date,
+        tug.create_date,
+        tug.`status`,
+        tug.setting_position,
+        tpi.`name`,
+        tpi.type,
+        tpi.quality,
+        tpi.fighting_capacity,
+        tpi.picture_url,
+        tpi.`level`,
+        tpi.occupation,
+        tpi.sex,
+        tpi.scene,
+        tpi.description,
+        tpi.acquiring_way,
+        tpi.expiration_time,
+        tpi.`conversion_prop_id`,
+        tpi.`conversion_amount`,
+        tpi.wear_position
+        FROM
+        tz_user_goods tug
+        JOIN tz_prop_info tpi ON tug.goods_id = tpi.id
+        WHERE
+        tug.user_id = #{userId} AND tug.amount> 0
+        <!--  6 武器 武器库-->
+        AND tpi.type = 6 AND tug.`status` = 0
+
+    </select>
+
+    <update id="addVigourForSchedule" parameterType="map">
+        UPDATE `tz_user_goods` SET amount=amount+1 WHERE goods_id='50003' AND amount &lt;25
+    </update>
+
+    <select id="selectUserWarePropInfo" resultMap="PropInfoResultMap" parameterType="map">
+        SELECT prop.* FROM `tz_user_goods` goods
+        JOIN tz_prop_info prop ON goods.`goods_id`=prop.`id`
+        WHERE goods.user_id=#{userId} AND goods.`setting_position`=#{settingPosition} AND goods.amount>0
+    </select>
+
+    <select id="queryExistGoods" parameterType="map" resultType="java.lang.Integer">
+        SELECT
+        COUNT(1)
+        FROM
+        tz_user_goods tug
+        LEFT JOIN tz_prop_info tpi ON tug.goods_id = tpi.id
+        WHERE
+        tug.user_id = #{userId} AND tug.type = 1 AND tpi.type != 0 AND tug.goods_id in
+        <foreach collection="goodsIdList" item="goodsId"
+                 open="(" separator="," close=")">
+            #{goodsId}
+        </foreach>
+        AND tug.amount >0
+    </select>
+
+
+    <select id="getUserGoodsVO" resultMap="UserGoodsVO" parameterType="map">
+        SELECT
+            tug.user_id,
+            tug.goods_id,
+            tug.amount,
+            tug.surplus_date,
+            tug.create_date,
+            tug.`status`,
+            tug.setting_position,
+            tpi.`name`,
+            tpi.type,
+            tpi.quality,
+            tpi.fighting_capacity,
+            tpi.`level`,
+            tpi.occupation,
+            tpi.sex,
+            tpi.scene,
+            tpi.description,
+            tpi.acquiring_way,
+            tpi.expiration_time,
+            tpi.`conversion_prop_id`,
+            tpi.`conversion_amount`
+        FROM
+            tz_user_goods tug
+        RIGHT JOIN  tz_prop_info tpi ON tug.goods_id = tpi.id
+        WHERE
+            tug.user_id = #{userId}
+        AND tug.goods_id = #{goodsId}
+        AND tug.`status` = 0
+    </select>
+
+
+    <select id="getMinEnchantlvl" parameterType="map" resultType="java.lang.Integer">
+        SELECT min(ifnull(tei.enchantlvl,0)) FROM tz_equipment_info tei RIGHT JOIN (
+        SELECT tug.goods_id goodsId,tug.user_id FROM tz_user_adorn_equip tuae LEFT JOIN tz_user_goods tug ON tuae.head = tug.id
+        UNION
+        SELECT tug.goods_id goodsId,tug.user_id FROM tz_user_adorn_equip tuae LEFT JOIN tz_user_goods tug ON tuae.clothing = tug.id
+        UNION
+        SELECT tug.goods_id goodsId,tug.user_id FROM tz_user_adorn_equip tuae LEFT JOIN tz_user_goods tug ON tuae.trousers = tug.id
+        UNION
+        SELECT tug.goods_id goodsId,tug.user_id FROM tz_user_adorn_equip tuae LEFT JOIN tz_user_goods tug ON tuae.shoe = tug.id
+        UNION
+        SELECT tug.goods_id goodsId,tug.user_id FROM tz_user_adorn_equip tuae LEFT JOIN tz_user_goods tug ON tuae.ring = tug.id
+        UNION
+        SELECT tug.goods_id goodsId,tug.user_id FROM tz_user_adorn_equip tuae LEFT JOIN tz_user_goods tug ON tuae.cuff = tug.id
+        UNION
+        SELECT tug.goods_id goodsId,tug.user_id FROM tz_user_adorn_equip tuae LEFT JOIN tz_user_goods tug ON tuae.necklace = tug.id
+        UNION
+        SELECT tug.goods_id goodsId,tug.user_id FROM tz_user_adorn_equip tuae LEFT JOIN tz_user_goods tug ON tuae.jewelry = tug.id
+        ) goods ON goods.goodsId =tei.intensify_id WHERE goods.user_id = #{userId}
+    </select>
+
+    <select id="queryGoodsWeddingRing" resultMap="EquipmentInfoMap" parameterType="map">
+    SELECT
+	tei.id,
+    tei.intensify_id,
+    tei.`name`,
+    tei.quality,
+    tei.fighting_capacity,
+    tei.`level`,
+    tei.sex,
+    tei.description,
+    tei.acquiring_way,
+    tei.expiration_time,
+    tei.create_date,
+    tei.update_date,
+    tei.vitality,
+    tei.attack,
+    tei.spell_attacks,
+    tei.pdef,
+    tei.magdef,
+    tei.crit,
+    tei.dodge,
+    tei.hit_rate,
+    tei.defense_crit,
+    tei.conversion_prop_id,
+    tei.conversion_amount,
+    tei.iconid,
+    tei.role,
+    tei.suit_id,
+    tei.suit_name,
+    tei.log_record,
+    tei.`storage`,
+    tei.binding,
+    tei.deal,
+    tei.sell,
+    tei.destroy,
+    tei.inlay,
+    tei.wear_position,
+    tei.original,
+    tei.guardians_male,
+    tei.guardians_female,
+    tei.assassin_male,
+    tei.assassin_female,
+    tei.crafts_male,
+    tei.crafts_female,
+    tei.master_male,
+    tei.master_female,
+    tei.profession,
+    tei.time,
+    tei.enchantlvl,
+    tei.vitality_intensify,
+    tei.attack_intensify,
+    tei.spell_attacks_intensify,
+    tei.pdef_intensify,
+    tei.magdef_intensify,
+    tei.crit_intensify,
+    tei.dodge_intensify,
+    tei.hit_rate_intensify,
+    tei.defense_crit_intensify,
+    tei.gem_rhombus,
+    tei.gem_roundness,
+    tei.gem_hexagon,
+    tei.vitality_gem,
+    tei.attack_gem,
+    tei.spell_attacks_gem,
+    tei.pdef_gem,
+    tei.magdef_gem,
+    tei.crit_gem,
+    tei.dodge_gem,
+    tei.hit_rate_gem,
+    tei.defense_crit_gem,
+    tei.`upgrade`
+    FROM
+        tz_user_goods tug
+    LEFT JOIN tz_equipment_info tei ON tug.goods_id = tei.intensify_id
+    WHERE
+        tug.user_id = #{userId} AND tei.wear_position = #{wearPosition} AND tug.amount> 0 AND tug.`status` = 0 ORDER BY `quality`
+    </select>
+
+    <select id="getSumGemLevel" parameterType="map" resultType="java.lang.Integer">
+       SELECT SUM(tgi.`level`) FROM tz_gem_info tgi JOIN (
+        SELECT tei.gem_hexagon,tei.gem_rhombus,tei.gem_roundness FROM tz_equipment_info tei RIGHT JOIN (
+        SELECT tug.goods_id goodsId,tug.user_id FROM tz_user_adorn_equip tuae LEFT JOIN tz_user_goods tug ON tuae.head = tug.id
+        UNION
+        SELECT tug.goods_id goodsId,tug.user_id FROM tz_user_adorn_equip tuae LEFT JOIN tz_user_goods tug ON tuae.clothing = tug.id
+        UNION
+        SELECT tug.goods_id goodsId,tug.user_id FROM tz_user_adorn_equip tuae LEFT JOIN tz_user_goods tug ON tuae.trousers = tug.id
+        UNION
+        SELECT tug.goods_id goodsId,tug.user_id FROM tz_user_adorn_equip tuae LEFT JOIN tz_user_goods tug ON tuae.shoe = tug.id
+        UNION
+        SELECT tug.goods_id goodsId,tug.user_id FROM tz_user_adorn_equip tuae LEFT JOIN tz_user_goods tug ON tuae.ring = tug.id
+        UNION
+        SELECT tug.goods_id goodsId,tug.user_id FROM tz_user_adorn_equip tuae LEFT JOIN tz_user_goods tug ON tuae.cuff = tug.id
+        UNION
+        SELECT tug.goods_id goodsId,tug.user_id FROM tz_user_adorn_equip tuae LEFT JOIN tz_user_goods tug ON tuae.necklace = tug.id
+        UNION
+        SELECT tug.goods_id goodsId,tug.user_id FROM tz_user_adorn_equip tuae LEFT JOIN tz_user_goods tug ON tuae.jewelry = tug.id
+        ) goods ON goods.goodsId =tei.intensify_id WHERE goods.user_id = #{userId}) t ON t.gem_hexagon = tgi.id OR t.gem_rhombus = tgi.id OR t.gem_roundness = tgi.id
+    </select>
+
+
+</mapper>

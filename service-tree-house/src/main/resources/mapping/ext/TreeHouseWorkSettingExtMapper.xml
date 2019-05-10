@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.tongzhu.treehouse.mapper.ext.TreeHouseWorkSettingExtMapper" >
+  <resultMap id="BaseResultMap" type="com.tongzhu.treehouse.model.TreeHouseWorkSetting" >
+    <id column="role_level" property="roleLevel" jdbcType="INTEGER" />
+    <result column="exp_common" property="expCommon" jdbcType="INTEGER" />
+    <result column="exp_middle" property="expMiddle" jdbcType="INTEGER" />
+    <result column="exp_senior" property="expSenior" jdbcType="INTEGER" />
+  </resultMap>
+
+  <insert id="batchInsert" parameterType="java.util.List" >
+    insert into tz_tree_house_work_setting (role_level, output_)
+    values
+    <foreach collection="list" item="item" separator=",">
+      (
+      #{item.roleLevel,jdbcType=INTEGER},
+      #{item.output,jdbcType=INTEGER}
+      )
+    </foreach>
+  </insert>
+</mapper>

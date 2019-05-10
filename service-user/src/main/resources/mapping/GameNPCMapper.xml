@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.tongzhu.user.mapper.GameNPCMapper" >
+  <resultMap id="BaseResultMap" type="com.tongzhu.user.model.GameNPC" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="name_" property="name" jdbcType="VARCHAR" />
+    <result column="head_" property="head" jdbcType="INTEGER" />
+    <result column="portrait_url" property="portraitUrl" jdbcType="VARCHAR" />
+    <result column="level_add" property="levelAdd" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, name_, head_, portrait_url, level_add
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.tongzhu.user.model.GameNPCExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from tz_game_npc
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from tz_game_npc
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from tz_game_npc
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.tongzhu.user.model.GameNPCExample" >
+    delete from tz_game_npc
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.tongzhu.user.model.GameNPC" >
+    insert into tz_game_npc (id, name_, head_, 
+      portrait_url, level_add)
+    values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{head,jdbcType=INTEGER}, 
+      #{portraitUrl,jdbcType=VARCHAR}, #{levelAdd,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.tongzhu.user.model.GameNPC" >
+    insert into tz_game_npc
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="name != null" >
+        name_,
+      </if>
+      <if test="head != null" >
+        head_,
+      </if>
+      <if test="portraitUrl != null" >
+        portrait_url,
+      </if>
+      <if test="levelAdd != null" >
+        level_add,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="head != null" >
+        #{head,jdbcType=INTEGER},
+      </if>
+      <if test="portraitUrl != null" >
+        #{portraitUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="levelAdd != null" >
+        #{levelAdd,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.tongzhu.user.model.GameNPCExample" resultType="java.lang.Integer" >
+    select count(*) from tz_game_npc
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update tz_game_npc
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.name != null" >
+        name_ = #{record.name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.head != null" >
+        head_ = #{record.head,jdbcType=INTEGER},
+      </if>
+      <if test="record.portraitUrl != null" >
+        portrait_url = #{record.portraitUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.levelAdd != null" >
+        level_add = #{record.levelAdd,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update tz_game_npc
+    set id = #{record.id,jdbcType=INTEGER},
+      name_ = #{record.name,jdbcType=VARCHAR},
+      head_ = #{record.head,jdbcType=INTEGER},
+      portrait_url = #{record.portraitUrl,jdbcType=VARCHAR},
+      level_add = #{record.levelAdd,jdbcType=INTEGER}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.tongzhu.user.model.GameNPC" >
+    update tz_game_npc
+    <set >
+      <if test="name != null" >
+        name_ = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="head != null" >
+        head_ = #{head,jdbcType=INTEGER},
+      </if>
+      <if test="portraitUrl != null" >
+        portrait_url = #{portraitUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="levelAdd != null" >
+        level_add = #{levelAdd,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.tongzhu.user.model.GameNPC" >
+    update tz_game_npc
+    set name_ = #{name,jdbcType=VARCHAR},
+      head_ = #{head,jdbcType=INTEGER},
+      portrait_url = #{portraitUrl,jdbcType=VARCHAR},
+      level_add = #{levelAdd,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

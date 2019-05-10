@@ -1,0 +1,291 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.tongzhu.fishing.mapper.FishInfoMapper" >
+  <resultMap id="BaseResultMap" type="com.tongzhu.fishing.model.FishInfo" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="common_probability" property="commonProbability" jdbcType="INTEGER" />
+    <result column="senior_probability" property="seniorProbability" jdbcType="INTEGER" />
+    <result column="rare_probability" property="rareProbability" jdbcType="INTEGER" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="update_date" property="updateDate" jdbcType="TIMESTAMP" />
+    <result column="reward" property="reward" jdbcType="VARCHAR" />
+    <result column="reward_probability" property="rewardProbability" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="boutique" property="boutique" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, common_probability, senior_probability, rare_probability, create_date, update_date, 
+    reward, reward_probability, status, boutique
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.tongzhu.fishing.model.FishInfoExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from tz_fish_info
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from tz_fish_info
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from tz_fish_info
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.tongzhu.fishing.model.FishInfoExample" >
+    delete from tz_fish_info
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.tongzhu.fishing.model.FishInfo" >
+    insert into tz_fish_info (id, common_probability, senior_probability, 
+      rare_probability, create_date, update_date, 
+      reward, reward_probability, status, 
+      boutique)
+    values (#{id,jdbcType=INTEGER}, #{commonProbability,jdbcType=INTEGER}, #{seniorProbability,jdbcType=INTEGER}, 
+      #{rareProbability,jdbcType=INTEGER}, #{createDate,jdbcType=TIMESTAMP}, #{updateDate,jdbcType=TIMESTAMP}, 
+      #{reward,jdbcType=VARCHAR}, #{rewardProbability,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}, 
+      #{boutique,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.tongzhu.fishing.model.FishInfo" >
+    insert into tz_fish_info
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="commonProbability != null" >
+        common_probability,
+      </if>
+      <if test="seniorProbability != null" >
+        senior_probability,
+      </if>
+      <if test="rareProbability != null" >
+        rare_probability,
+      </if>
+      <if test="createDate != null" >
+        create_date,
+      </if>
+      <if test="updateDate != null" >
+        update_date,
+      </if>
+      <if test="reward != null" >
+        reward,
+      </if>
+      <if test="rewardProbability != null" >
+        reward_probability,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="boutique != null" >
+        boutique,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="commonProbability != null" >
+        #{commonProbability,jdbcType=INTEGER},
+      </if>
+      <if test="seniorProbability != null" >
+        #{seniorProbability,jdbcType=INTEGER},
+      </if>
+      <if test="rareProbability != null" >
+        #{rareProbability,jdbcType=INTEGER},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateDate != null" >
+        #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="reward != null" >
+        #{reward,jdbcType=VARCHAR},
+      </if>
+      <if test="rewardProbability != null" >
+        #{rewardProbability,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="boutique != null" >
+        #{boutique,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.tongzhu.fishing.model.FishInfoExample" resultType="java.lang.Integer" >
+    select count(*) from tz_fish_info
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update tz_fish_info
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.commonProbability != null" >
+        common_probability = #{record.commonProbability,jdbcType=INTEGER},
+      </if>
+      <if test="record.seniorProbability != null" >
+        senior_probability = #{record.seniorProbability,jdbcType=INTEGER},
+      </if>
+      <if test="record.rareProbability != null" >
+        rare_probability = #{record.rareProbability,jdbcType=INTEGER},
+      </if>
+      <if test="record.createDate != null" >
+        create_date = #{record.createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateDate != null" >
+        update_date = #{record.updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.reward != null" >
+        reward = #{record.reward,jdbcType=VARCHAR},
+      </if>
+      <if test="record.rewardProbability != null" >
+        reward_probability = #{record.rewardProbability,jdbcType=VARCHAR},
+      </if>
+      <if test="record.status != null" >
+        status = #{record.status,jdbcType=INTEGER},
+      </if>
+      <if test="record.boutique != null" >
+        boutique = #{record.boutique,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update tz_fish_info
+    set id = #{record.id,jdbcType=INTEGER},
+      common_probability = #{record.commonProbability,jdbcType=INTEGER},
+      senior_probability = #{record.seniorProbability,jdbcType=INTEGER},
+      rare_probability = #{record.rareProbability,jdbcType=INTEGER},
+      create_date = #{record.createDate,jdbcType=TIMESTAMP},
+      update_date = #{record.updateDate,jdbcType=TIMESTAMP},
+      reward = #{record.reward,jdbcType=VARCHAR},
+      reward_probability = #{record.rewardProbability,jdbcType=VARCHAR},
+      status = #{record.status,jdbcType=INTEGER},
+      boutique = #{record.boutique,jdbcType=INTEGER}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.tongzhu.fishing.model.FishInfo" >
+    update tz_fish_info
+    <set >
+      <if test="commonProbability != null" >
+        common_probability = #{commonProbability,jdbcType=INTEGER},
+      </if>
+      <if test="seniorProbability != null" >
+        senior_probability = #{seniorProbability,jdbcType=INTEGER},
+      </if>
+      <if test="rareProbability != null" >
+        rare_probability = #{rareProbability,jdbcType=INTEGER},
+      </if>
+      <if test="createDate != null" >
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateDate != null" >
+        update_date = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="reward != null" >
+        reward = #{reward,jdbcType=VARCHAR},
+      </if>
+      <if test="rewardProbability != null" >
+        reward_probability = #{rewardProbability,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="boutique != null" >
+        boutique = #{boutique,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.tongzhu.fishing.model.FishInfo" >
+    update tz_fish_info
+    set common_probability = #{commonProbability,jdbcType=INTEGER},
+      senior_probability = #{seniorProbability,jdbcType=INTEGER},
+      rare_probability = #{rareProbability,jdbcType=INTEGER},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      update_date = #{updateDate,jdbcType=TIMESTAMP},
+      reward = #{reward,jdbcType=VARCHAR},
+      reward_probability = #{rewardProbability,jdbcType=VARCHAR},
+      status = #{status,jdbcType=INTEGER},
+      boutique = #{boutique,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

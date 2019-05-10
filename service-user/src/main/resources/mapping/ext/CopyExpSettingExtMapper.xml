@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.tongzhu.user.mapper.ext.CopyExpSettingExtMapper" >
+  <resultMap id="BaseResultMap" type="com.tongzhu.user.model.CopyExpSetting" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="role_level" property="roleLevel" jdbcType="INTEGER" />
+    <result column="copy_exp" property="copyExp" jdbcType="INTEGER" />
+    <result column="copy_id" property="copyId" jdbcType="INTEGER" />
+  </resultMap>
+
+  <insert id="batchInsert" parameterType="java.util.List" >
+    insert into tz_game_copy_exp_setting (id, role_level, copy_exp, 
+      copy_id)
+    values
+    <foreach collection ="list" item="item" index= "index" separator =",">
+      (
+      #{item.id,jdbcType=VARCHAR},
+      #{item.roleLevel,jdbcType=INTEGER},
+      #{item.copyExp,jdbcType=INTEGER},
+      #{item.copyId,jdbcType=INTEGER}
+      )
+    </foreach >
+  </insert>
+
+</mapper>

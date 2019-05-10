@@ -1,0 +1,276 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.tongzhu.treehouse.mapper.TreeHouseFurnitureMapper" >
+  <resultMap id="BaseResultMap" type="com.tongzhu.treehouse.model.TreeHouseFurniture" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="tree_house_id" property="treeHouseId" jdbcType="VARCHAR" />
+    <result column="goods_id" property="goodsId" jdbcType="VARCHAR" />
+    <result column="end_date" property="endDate" jdbcType="TIMESTAMP" />
+    <result column="can_forever" property="canForever" jdbcType="BIT" />
+    <result column="status_" property="status" jdbcType="INTEGER" />
+    <result column="last_time" property="lastTime" jdbcType="INTEGER" />
+    <result column="start_date" property="startDate" jdbcType="TIMESTAMP" />
+    <result column="location_" property="location" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, tree_house_id, goods_id, end_date, can_forever, status_, last_time, start_date, 
+    location_
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.tongzhu.treehouse.model.TreeHouseFurnitureExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from tz_tree_house_furniture
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from tz_tree_house_furniture
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from tz_tree_house_furniture
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.tongzhu.treehouse.model.TreeHouseFurnitureExample" >
+    delete from tz_tree_house_furniture
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.tongzhu.treehouse.model.TreeHouseFurniture" >
+    insert into tz_tree_house_furniture (id, tree_house_id, goods_id, 
+      end_date, can_forever, status_, 
+      last_time, start_date, location_
+      )
+    values (#{id,jdbcType=VARCHAR}, #{treeHouseId,jdbcType=VARCHAR}, #{goodsId,jdbcType=VARCHAR}, 
+      #{endDate,jdbcType=TIMESTAMP}, #{canForever,jdbcType=BIT}, #{status,jdbcType=INTEGER}, 
+      #{lastTime,jdbcType=INTEGER}, #{startDate,jdbcType=TIMESTAMP}, #{location,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.tongzhu.treehouse.model.TreeHouseFurniture" >
+    insert into tz_tree_house_furniture
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="treeHouseId != null" >
+        tree_house_id,
+      </if>
+      <if test="goodsId != null" >
+        goods_id,
+      </if>
+      <if test="endDate != null" >
+        end_date,
+      </if>
+      <if test="canForever != null" >
+        can_forever,
+      </if>
+      <if test="status != null" >
+        status_,
+      </if>
+      <if test="lastTime != null" >
+        last_time,
+      </if>
+      <if test="startDate != null" >
+        start_date,
+      </if>
+      <if test="location != null" >
+        location_,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="treeHouseId != null" >
+        #{treeHouseId,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsId != null" >
+        #{goodsId,jdbcType=VARCHAR},
+      </if>
+      <if test="endDate != null" >
+        #{endDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="canForever != null" >
+        #{canForever,jdbcType=BIT},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="lastTime != null" >
+        #{lastTime,jdbcType=INTEGER},
+      </if>
+      <if test="startDate != null" >
+        #{startDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="location != null" >
+        #{location,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.tongzhu.treehouse.model.TreeHouseFurnitureExample" resultType="java.lang.Integer" >
+    select count(*) from tz_tree_house_furniture
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update tz_tree_house_furniture
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=VARCHAR},
+      </if>
+      <if test="record.treeHouseId != null" >
+        tree_house_id = #{record.treeHouseId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.goodsId != null" >
+        goods_id = #{record.goodsId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.endDate != null" >
+        end_date = #{record.endDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.canForever != null" >
+        can_forever = #{record.canForever,jdbcType=BIT},
+      </if>
+      <if test="record.status != null" >
+        status_ = #{record.status,jdbcType=INTEGER},
+      </if>
+      <if test="record.lastTime != null" >
+        last_time = #{record.lastTime,jdbcType=INTEGER},
+      </if>
+      <if test="record.startDate != null" >
+        start_date = #{record.startDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.location != null" >
+        location_ = #{record.location,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update tz_tree_house_furniture
+    set id = #{record.id,jdbcType=VARCHAR},
+      tree_house_id = #{record.treeHouseId,jdbcType=VARCHAR},
+      goods_id = #{record.goodsId,jdbcType=VARCHAR},
+      end_date = #{record.endDate,jdbcType=TIMESTAMP},
+      can_forever = #{record.canForever,jdbcType=BIT},
+      status_ = #{record.status,jdbcType=INTEGER},
+      last_time = #{record.lastTime,jdbcType=INTEGER},
+      start_date = #{record.startDate,jdbcType=TIMESTAMP},
+      location_ = #{record.location,jdbcType=INTEGER}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.tongzhu.treehouse.model.TreeHouseFurniture" >
+    update tz_tree_house_furniture
+    <set >
+      <if test="treeHouseId != null" >
+        tree_house_id = #{treeHouseId,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsId != null" >
+        goods_id = #{goodsId,jdbcType=VARCHAR},
+      </if>
+      <if test="endDate != null" >
+        end_date = #{endDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="canForever != null" >
+        can_forever = #{canForever,jdbcType=BIT},
+      </if>
+      <if test="status != null" >
+        status_ = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="lastTime != null" >
+        last_time = #{lastTime,jdbcType=INTEGER},
+      </if>
+      <if test="startDate != null" >
+        start_date = #{startDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="location != null" >
+        location_ = #{location,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.tongzhu.treehouse.model.TreeHouseFurniture" >
+    update tz_tree_house_furniture
+    set tree_house_id = #{treeHouseId,jdbcType=VARCHAR},
+      goods_id = #{goodsId,jdbcType=VARCHAR},
+      end_date = #{endDate,jdbcType=TIMESTAMP},
+      can_forever = #{canForever,jdbcType=BIT},
+      status_ = #{status,jdbcType=INTEGER},
+      last_time = #{lastTime,jdbcType=INTEGER},
+      start_date = #{startDate,jdbcType=TIMESTAMP},
+      location_ = #{location,jdbcType=INTEGER}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

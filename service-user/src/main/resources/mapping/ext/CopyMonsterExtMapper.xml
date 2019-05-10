@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.tongzhu.user.mapper.ext.CopyMonsterExtMapper" >
+  <resultMap id="BaseResultMap" type="com.tongzhu.user.model.CopyMonster" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="copy_id" property="copyId" jdbcType="INTEGER" />
+    <result column="monster_id" property="monsterId" jdbcType="VARCHAR" />
+    <result column="group_id" property="groupId" jdbcType="INTEGER" />
+    <result column="limit" property="limit" jdbcType="INTEGER" />
+    <result column="random_status" property="randomStatus" jdbcType="INTEGER" />
+  </resultMap>
+
+  <insert id="batchInsert" parameterType="java.util.List" >
+    insert into tz_game_copy_monster (id, copy_id, monster_id,
+    group_id, `limit`, random_status
+    )
+    values
+    <foreach collection ="list" item="item" index= "index" separator =",">
+      (#{item.id,jdbcType=VARCHAR},
+      #{item.copyId,jdbcType=INTEGER},
+      #{item.monsterId,jdbcType=VARCHAR},
+      #{item.groupId,jdbcType=INTEGER},
+      #{item.limit,jdbcType=INTEGER},
+      #{item.randomStatus,jdbcType=INTEGER}
+      )
+    </foreach >
+  </insert>
+</mapper>

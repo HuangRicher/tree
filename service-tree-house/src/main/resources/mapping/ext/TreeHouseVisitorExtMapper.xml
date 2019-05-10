@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.tongzhu.treehouse.mapper.ext.TreeHouseVisitorExtMapper" >
+
+  <resultMap id="BaseResultMap" type="com.tongzhu.treehouse.mapper.vo.TreeHouseVisitorDO" >
+    <result column="role_id" property="roleId" jdbcType="INTEGER" />
+    <result column="user_id" property="userId" jdbcType="VARCHAR" />
+    <result column="user_name" property="userName" jdbcType="VARCHAR" />
+    <result column="pet_id" property="petId" jdbcType="INTEGER" />
+    <result column="spouse" property="spouse" jdbcType="VARCHAR" />
+    <result column="sex" property="sex" jdbcType="INTEGER" />
+  </resultMap>
+  <insert id="insertBatch" parameterType="java.util.List">
+    insert into tz_tree_house_visitor (id, tree_house_id, visitor_id,
+    status_)
+    values
+    <foreach collection ="list" item="item" index= "index" separator =",">
+      (
+      #{item.id,jdbcType=VARCHAR},
+      #{item.treeHouseId,jdbcType=VARCHAR},
+      #{item.visitorId,jdbcType=VARCHAR},
+      #{item.status,jdbcType=INTEGER}
+      )
+    </foreach >
+
+  </insert>
+
+  <select id="selectForTreeHouseDetail" parameterType="java.util.List" resultMap="BaseResultMap">
+    SELECT mmoo.user_id,mmoo.role_id,mmoo.user_name,pinf.id as pet_id,mmoo.spouse,mmoo.sex FROM (SELECT ur.user_id,ur.role_id,ur.user_name,pet.pet_id,u1.name AS spouse,us.sex FROM tz_game_user_role ur
+    LEFT JOIN tz_user us ON ur.user_id=us.user_id
+    LEFT JOIN tz_user u1 ON spouse=u1.user_id
+    LEFT JOIN (SELECT * FROM tz_user_pet WHERE follow=2) pet ON ur.`user_id`=pet.`user_id`
+    WHERE ur.user_id IN
+    <foreach collection="list" index="index" item="item" open="(" separator="," close=")">
+      #{item}
+    </foreach>
+    ) mmoo
+    LEFT JOIN `tz_pet_info` pinf ON mmoo.`pet_id`=pinf.`pet_id`
+
+  </select>
+</mapper>

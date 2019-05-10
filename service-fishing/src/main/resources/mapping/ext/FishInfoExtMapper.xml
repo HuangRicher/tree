@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.tongzhu.fishing.mapper.ext.FishInfoExtMapper" >
+  <resultMap id="BaseResultMap" type="com.tongzhu.fishing.model.FishInfo" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="common_probability" property="commonProbability" jdbcType="INTEGER" />
+    <result column="senior_probability" property="seniorProbability" jdbcType="INTEGER" />
+    <result column="rare_probability" property="rareProbability" jdbcType="INTEGER" />
+    <result column="picture_url" property="pictureUrl" jdbcType="VARCHAR" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="update_date" property="updateDate" jdbcType="TIMESTAMP" />
+  </resultMap>
+
+
+
+
+  <select id="getSumSeniorProbability"  resultType="java.lang.Integer" >
+    select sum(senior_probability) from tz_fish_info WHERE status = 0
+  </select>
+
+  <select id="getSumRrareProbability"  resultType="java.lang.Integer" >
+    select sum(rare_probability) from tz_fish_info WHERE status = 0
+  </select>
+
+  <select id="getSumCommonProbability"  resultType="java.lang.Integer" >
+    select sum(common_probability) from tz_fish_info WHERE status = 0
+  </select>
+</mapper>

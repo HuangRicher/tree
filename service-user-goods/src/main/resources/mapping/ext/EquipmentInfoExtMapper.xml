@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.tongzhu.usergoods.mapper.ext.EquipmentInfoExtMapper">
+    <resultMap id="EquipmentInfoVO" type="com.tongzhu.usergoods.mapper.vo.EquipmentInfoVO">
+
+        <result column="id" property="id" jdbcType="VARCHAR"/>
+        <result column="user_id" property="userId" jdbcType="VARCHAR"/>
+        <result column="goods_id" property="goodsId" jdbcType="INTEGER"/>
+        <result column="amount" property="amount" jdbcType="INTEGER"/>
+        <result column="gainDate" property="gainDate" jdbcType="TIMESTAMP"/>
+        <result column="surplusDate" property="surplusDate" jdbcType="TIMESTAMP"/>
+        <result column="status" property="status" jdbcType="INTEGER"/>
+        <result column="setting_position" property="settingPosition" jdbcType="INTEGER"/>
+        <result column="type" property="type" jdbcType="INTEGER"/>
+        <result column="equipmentId" property="equipmentId" jdbcType="INTEGER"/>
+        <result column="name" property="name" jdbcType="VARCHAR"/>
+        <result column="quality" property="quality" jdbcType="INTEGER"/>
+        <result column="fighting_capacity" property="fightingCapacity" jdbcType="DOUBLE"/>
+        <result column="level" property="level" jdbcType="INTEGER"/>
+        <result column="sex" property="sex" jdbcType="INTEGER"/>
+        <result column="description" property="description" jdbcType="VARCHAR"/>
+        <result column="acquiring_way" property="acquiringWay" jdbcType="VARCHAR"/>
+        <result column="expiration_time" property="expirationTime" jdbcType="TIMESTAMP"/>
+        <result column="vitality" property="vitality" jdbcType="DOUBLE"/>
+        <result column="attack" property="attack" jdbcType="DOUBLE"/>
+        <result column="spell_attacks" property="spellAttacks" jdbcType="DOUBLE"/>
+        <result column="pdef" property="pdef" jdbcType="DOUBLE"/>
+        <result column="magdef" property="magdef" jdbcType="DOUBLE"/>
+        <result column="crit" property="crit" jdbcType="DOUBLE"/>
+        <result column="dodge" property="dodge" jdbcType="DOUBLE"/>
+        <result column="hit_rate" property="hitRate" jdbcType="DOUBLE"/>
+        <result column="defense_crit" property="defenseCrit" jdbcType="DOUBLE"/>
+        <result column="conversion_prop_id" property="conversionPropId" jdbcType="INTEGER"/>
+        <result column="conversion_amount" property="conversionAmount" jdbcType="INTEGER"/>
+        <result column="iconid" property="iconid" jdbcType="VARCHAR"/>
+        <result column="storage" property="storage" jdbcType="INTEGER"/>
+        <result column="binding" property="binding" jdbcType="INTEGER"/>
+        <result column="deal" property="deal" jdbcType="INTEGER"/>
+        <result column="sell" property="sell" jdbcType="INTEGER"/>
+        <result column="destroy" property="destroy" jdbcType="INTEGER"/>
+        <result column="inlay" property="inlay" jdbcType="INTEGER"/>
+        <result column="wear_position" property="wearPosition" jdbcType="INTEGER"/>
+        <result column="original" property="original" jdbcType="INTEGER"/>
+        <result column="guardians_male" property="guardiansMale" jdbcType="VARCHAR" />
+        <result column="guardians_female" property="guardiansFemale" jdbcType="VARCHAR" />
+        <result column="assassin_male" property="assassinMale" jdbcType="VARCHAR" />
+        <result column="assassin_female" property="assassinFemale" jdbcType="VARCHAR" />
+        <result column="crafts_male" property="craftsMale" jdbcType="VARCHAR" />
+        <result column="crafts_female" property="craftsFemale" jdbcType="VARCHAR" />
+        <result column="master_male" property="masterMale" jdbcType="VARCHAR" />
+        <result column="master_female" property="masterFemale" jdbcType="VARCHAR" />
+        <result column="profession" property="profession" jdbcType="VARCHAR" />
+        <result column="time" property="time" jdbcType="INTEGER" />
+        <result column="enchantlvl" property="enchantlvl" jdbcType="INTEGER" />
+        <result column="gem_rhombus" property="gemRhombus" jdbcType="VARCHAR" />
+        <result column="gem_roundness" property="gemRoundness" jdbcType="VARCHAR" />
+        <result column="gem_hexagon" property="gemHexagon" jdbcType="VARCHAR" />
+    </resultMap>
+
+    <select id="queryEquipmentInfoList" resultMap="EquipmentInfoVO" parameterType="map">
+        SELECT
+        tug.id,
+        tug.user_id,
+        tug.goods_id,
+        tug.amount,
+        tug.surplus_date surplusDate,
+        tug.create_date gainDate,
+        tug.`status`,
+        tug.setting_position,
+        tug.type,
+        tei.id equipmentId,
+        tei.`name`,
+        tei.quality,
+        tei.fighting_capacity,
+        tei.`level`,
+        tei.sex,
+        tei.description,
+        tei.acquiring_way,
+        tei.expiration_time,
+        tei.vitality,
+        tei.attack,
+        tei.spell_attacks,
+        tei.pdef,
+        tei.magdef,
+        tei.crit,
+        tei.dodge,
+        tei.hit_rate,
+        tei.defense_crit,
+        tei.conversion_prop_id,
+        tei.conversion_amount,
+        tei.iconid,
+        tei.`storage`,
+        tei.binding,
+        tei.deal,
+        tei.sell,
+        tei.destroy,
+        tei.inlay,
+        tei.wear_position,
+        tei.original,
+        tei.guardians_male,
+        tei.guardians_female,
+        tei.assassin_male,
+        tei.assassin_female,
+        tei.crafts_male,
+        tei.crafts_female,
+        tei.master_male,
+        tei.master_female,
+        tei.profession,
+        tei.time,
+        tei.enchantlvl,
+        tei.gem_rhombus,
+        tei.gem_roundness,
+        tei.gem_hexagon
+        FROM
+            tz_user_goods tug
+        JOIN tz_equipment_info tei ON tug.goods_id = tei.intensify_id
+        WHERE
+            tug.user_id = #{userId}
+        AND tug.`status` = 0 AND tug.amount > 0 and tug.type = 2
+        <if test="settingPosition != null ">
+            AND tug.setting_position = #{settingPosition}
+        </if>
+        ORDER BY `setting_position`
+</select>
+    <select id="queryWarehouseEquipmentInfoList" resultMap="EquipmentInfoVO" parameterType="map">
+        SELECT
+        tug.id,
+        tug.user_id,
+        tug.goods_id,
+        tug.amount,
+        tug.surplus_date surplusDate,
+        tug.create_date gainDate,
+        tug.type,
+        tei.id equipmentId,
+        tei.`name`,
+        tei.quality,
+        tei.fighting_capacity,
+        tei.`level`,
+        tei.sex,
+        tei.description,
+        tei.acquiring_way,
+        tei.expiration_time,
+        tei.vitality,
+        tei.attack,
+        tei.spell_attacks,
+        tei.pdef,
+        tei.magdef,
+        tei.crit,
+        tei.dodge,
+        tei.hit_rate,
+        tei.defense_crit,
+        tei.conversion_prop_id,
+        tei.conversion_amount,
+        tei.iconid,
+        tei.`storage`,
+        tei.binding,
+        tei.deal,
+        tei.sell,
+        tei.destroy,
+        tei.inlay,
+        tei.wear_position,
+        tei.original,
+        tei.guardians_male,
+        tei.guardians_female,
+        tei.assassin_male,
+        tei.assassin_female,
+        tei.crafts_male,
+        tei.crafts_female,
+        tei.master_male,
+        tei.master_female,
+        tei.profession,
+        tei.time,
+        tei.enchantlvl,
+        tei.gem_rhombus,
+        tei.gem_roundness,
+        tei.gem_hexagon
+        FROM
+        tz_user_goods_warehouse tug
+        JOIN tz_equipment_info tei ON tug.goods_id = tei.intensify_id
+        WHERE
+        tug.user_id = #{userId} and  tug.amount>0
+    </select>
+
+
+</mapper>

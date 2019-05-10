@@ -1,0 +1,276 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.tongzhu.welfare.mapper.BuildingTreeSettingMapper" >
+  <resultMap id="BaseResultMap" type="com.tongzhu.welfare.model.BuildingTreeSetting" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="grade" property="grade" jdbcType="INTEGER" />
+    <result column="ambience_count" property="ambienceCount" jdbcType="BIGINT" />
+    <result column="amusement_count" property="amusementCount" jdbcType="BIGINT" />
+    <result column="environment_count" property="environmentCount" jdbcType="BIGINT" />
+    <result column="upgrade_gold" property="upgradeGold" jdbcType="INTEGER" />
+    <result column="upgrade_time" property="upgradeTime" jdbcType="INTEGER" />
+    <result column="contain_num" property="containNum" jdbcType="INTEGER" />
+    <result column="contain_thing" property="containThing" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, grade, ambience_count, amusement_count, environment_count, upgrade_gold, upgrade_time, 
+    contain_num, contain_thing
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.tongzhu.welfare.model.BuildingTreeSettingExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from tz_building_tree_setting
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from tz_building_tree_setting
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from tz_building_tree_setting
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.tongzhu.welfare.model.BuildingTreeSettingExample" >
+    delete from tz_building_tree_setting
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.tongzhu.welfare.model.BuildingTreeSetting" >
+    insert into tz_building_tree_setting (id, grade, ambience_count, 
+      amusement_count, environment_count, upgrade_gold, 
+      upgrade_time, contain_num, contain_thing
+      )
+    values (#{id,jdbcType=INTEGER}, #{grade,jdbcType=INTEGER}, #{ambienceCount,jdbcType=BIGINT}, 
+      #{amusementCount,jdbcType=BIGINT}, #{environmentCount,jdbcType=BIGINT}, #{upgradeGold,jdbcType=INTEGER}, 
+      #{upgradeTime,jdbcType=INTEGER}, #{containNum,jdbcType=INTEGER}, #{containThing,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.tongzhu.welfare.model.BuildingTreeSetting" >
+    insert into tz_building_tree_setting
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="grade != null" >
+        grade,
+      </if>
+      <if test="ambienceCount != null" >
+        ambience_count,
+      </if>
+      <if test="amusementCount != null" >
+        amusement_count,
+      </if>
+      <if test="environmentCount != null" >
+        environment_count,
+      </if>
+      <if test="upgradeGold != null" >
+        upgrade_gold,
+      </if>
+      <if test="upgradeTime != null" >
+        upgrade_time,
+      </if>
+      <if test="containNum != null" >
+        contain_num,
+      </if>
+      <if test="containThing != null" >
+        contain_thing,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="grade != null" >
+        #{grade,jdbcType=INTEGER},
+      </if>
+      <if test="ambienceCount != null" >
+        #{ambienceCount,jdbcType=BIGINT},
+      </if>
+      <if test="amusementCount != null" >
+        #{amusementCount,jdbcType=BIGINT},
+      </if>
+      <if test="environmentCount != null" >
+        #{environmentCount,jdbcType=BIGINT},
+      </if>
+      <if test="upgradeGold != null" >
+        #{upgradeGold,jdbcType=INTEGER},
+      </if>
+      <if test="upgradeTime != null" >
+        #{upgradeTime,jdbcType=INTEGER},
+      </if>
+      <if test="containNum != null" >
+        #{containNum,jdbcType=INTEGER},
+      </if>
+      <if test="containThing != null" >
+        #{containThing,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.tongzhu.welfare.model.BuildingTreeSettingExample" resultType="java.lang.Integer" >
+    select count(*) from tz_building_tree_setting
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update tz_building_tree_setting
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.grade != null" >
+        grade = #{record.grade,jdbcType=INTEGER},
+      </if>
+      <if test="record.ambienceCount != null" >
+        ambience_count = #{record.ambienceCount,jdbcType=BIGINT},
+      </if>
+      <if test="record.amusementCount != null" >
+        amusement_count = #{record.amusementCount,jdbcType=BIGINT},
+      </if>
+      <if test="record.environmentCount != null" >
+        environment_count = #{record.environmentCount,jdbcType=BIGINT},
+      </if>
+      <if test="record.upgradeGold != null" >
+        upgrade_gold = #{record.upgradeGold,jdbcType=INTEGER},
+      </if>
+      <if test="record.upgradeTime != null" >
+        upgrade_time = #{record.upgradeTime,jdbcType=INTEGER},
+      </if>
+      <if test="record.containNum != null" >
+        contain_num = #{record.containNum,jdbcType=INTEGER},
+      </if>
+      <if test="record.containThing != null" >
+        contain_thing = #{record.containThing,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update tz_building_tree_setting
+    set id = #{record.id,jdbcType=INTEGER},
+      grade = #{record.grade,jdbcType=INTEGER},
+      ambience_count = #{record.ambienceCount,jdbcType=BIGINT},
+      amusement_count = #{record.amusementCount,jdbcType=BIGINT},
+      environment_count = #{record.environmentCount,jdbcType=BIGINT},
+      upgrade_gold = #{record.upgradeGold,jdbcType=INTEGER},
+      upgrade_time = #{record.upgradeTime,jdbcType=INTEGER},
+      contain_num = #{record.containNum,jdbcType=INTEGER},
+      contain_thing = #{record.containThing,jdbcType=INTEGER}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.tongzhu.welfare.model.BuildingTreeSetting" >
+    update tz_building_tree_setting
+    <set >
+      <if test="grade != null" >
+        grade = #{grade,jdbcType=INTEGER},
+      </if>
+      <if test="ambienceCount != null" >
+        ambience_count = #{ambienceCount,jdbcType=BIGINT},
+      </if>
+      <if test="amusementCount != null" >
+        amusement_count = #{amusementCount,jdbcType=BIGINT},
+      </if>
+      <if test="environmentCount != null" >
+        environment_count = #{environmentCount,jdbcType=BIGINT},
+      </if>
+      <if test="upgradeGold != null" >
+        upgrade_gold = #{upgradeGold,jdbcType=INTEGER},
+      </if>
+      <if test="upgradeTime != null" >
+        upgrade_time = #{upgradeTime,jdbcType=INTEGER},
+      </if>
+      <if test="containNum != null" >
+        contain_num = #{containNum,jdbcType=INTEGER},
+      </if>
+      <if test="containThing != null" >
+        contain_thing = #{containThing,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.tongzhu.welfare.model.BuildingTreeSetting" >
+    update tz_building_tree_setting
+    set grade = #{grade,jdbcType=INTEGER},
+      ambience_count = #{ambienceCount,jdbcType=BIGINT},
+      amusement_count = #{amusementCount,jdbcType=BIGINT},
+      environment_count = #{environmentCount,jdbcType=BIGINT},
+      upgrade_gold = #{upgradeGold,jdbcType=INTEGER},
+      upgrade_time = #{upgradeTime,jdbcType=INTEGER},
+      contain_num = #{containNum,jdbcType=INTEGER},
+      contain_thing = #{containThing,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

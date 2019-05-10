@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.tongzhu.treehouse.mapper.ext.UserWorkTypeExtMapper" >
+  <resultMap id="BaseResultMap" type="com.tongzhu.treehouse.model.UserWorkType" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="user_id" property="userId" jdbcType="VARCHAR" />
+    <result column="work_type_id" property="workTypeId" jdbcType="INTEGER" />
+    <result column="work_type_name" property="workTypeName" jdbcType="VARCHAR" />
+    <result column="status_" property="status" jdbcType="INTEGER" />
+    <result column="order_" property="order" jdbcType="INTEGER" />
+    <result column="level_" property="level" jdbcType="INTEGER" />
+    <result column="unlock_level" property="unlockLevel" jdbcType="INTEGER" />
+  </resultMap>
+
+  <insert id="insertBatch" parameterType="java.util.List">
+    insert into tz_user_work_type (id, user_id, work_type_id, 
+      work_type_name, status_, order_, 
+      level_, unlock_level)
+    values
+    <foreach collection ="list" item="workType" index= "index" separator =",">
+      (
+      #{workType.id,jdbcType=VARCHAR},
+      #{workType.userId,jdbcType=VARCHAR},
+      #{workType.workTypeId,jdbcType=INTEGER},
+      #{workType.workTypeName,jdbcType=VARCHAR},
+      #{workType.status,jdbcType=INTEGER},
+      #{workType.order,jdbcType=INTEGER},
+      #{workType.level,jdbcType=INTEGER},
+      #{workType.unlockLevel,jdbcType=INTEGER}
+      )
+    </foreach >
+
+  </insert>
+
+</mapper>

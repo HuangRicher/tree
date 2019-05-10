@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.tongzhu.treehouse.mapper.ext.TreeHousePurchaseHistoryExtMapper" >
+
+
+  <resultMap id="BaseResultMap" type="com.tongzhu.treehouse.mapper.vo.TreeHousePurchaseHistoryDO" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="creation_start_date" property="creationStartDate" jdbcType="TIMESTAMP" />
+    <result column="recompose_end_date" property="recomposeEndDate" jdbcType="TIMESTAMP" />
+    <result column="sell_user_id" property="sellUserId" jdbcType="VARCHAR" />
+    <result column="monetary_amount" property="monetaryAmount" jdbcType="INTEGER" />
+    <result column="selling_price" property="sellingPrice" jdbcType="INTEGER" />
+    <result column="purchaser_user_id" property="purchaserUserId" jdbcType="VARCHAR" />
+    <result column="bargainor_user_id" property="bargainorUserId" jdbcType="VARCHAR" />
+    <result column="type" property="type" jdbcType="INTEGER" />
+    <result column="purchaserName" property="purchaserName" jdbcType="VARCHAR" />
+    <result column="bargainorName" property="bargainorName" jdbcType="VARCHAR" />
+    <result column="sellName" property="sellName" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+  </resultMap>
+
+
+
+
+
+  <select id="purchaseHistoryList" resultMap="BaseResultMap" parameterType="String">
+    SELECT
+        tthph.id,
+        tthph.creation_start_date,
+        tthph.recompose_end_date,
+        tthph.sell_user_id,
+        tu.`name` sellName,
+        tthph.monetary_amount,
+        tthph.selling_price,
+        tthph.purchaser_user_id,
+        ptu.`name` purchaserName,
+        tthph.bargainor_user_id,
+        btu. NAME bargainorName,
+        tthph.type,
+        status status
+    FROM
+        tz_tree_house_purchase_history tthph
+    LEFT JOIN tz_user tu ON tthph.sell_user_id = tu.user_id
+    LEFT JOIN tz_user ptu ON tthph.purchaser_user_id = ptu.user_id
+    LEFT JOIN tz_user btu ON tthph.bargainor_user_id = btu.user_id
+    WHERE
+        (tthph.sell_user_id = #{userId}
+    OR tthph.purchaser_user_id = #{userId}
+   )  AND status = 0
+    ORDER BY tthph.creation_start_date ASC
+  </select>
+
+  <select id="getTreeHousePurchaseHistorySum" resultType="Integer" parameterType="String">
+    SELECT
+       COUNT(1)
+    FROM
+        tz_tree_house_purchase_history tthph
+    WHERE
+        (tthph.sell_user_id = #{userId}
+    OR tthph.purchaser_user_id = #{userId}
+    OR tthph.bargainor_user_id = #{userId})  AND status = 0
+  </select>
+
+</mapper>

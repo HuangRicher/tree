@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.tongzhu.treehouse.mapper.ext.TreeHouseRoomExtMapper" >
+  <resultMap id="CountResultMap" type="com.tongzhu.treehouse.mapper.vo.TreeHouseRoomCountVO" >
+    <result column="user_id" property="userId" jdbcType="VARCHAR" />
+    <result column="amount" property="amount" jdbcType="INTEGER" />
+  </resultMap>
+
+  <resultMap id="WorkerResultMap" type="com.tongzhu.treehouse.mapper.vo.TreeHouseRoomDO" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="user_id" property="userId" jdbcType="VARCHAR" />
+    <result column="tree_house_Id" property="treeHouseId" jdbcType="VARCHAR" />
+    <result column="room_id" property="roomId" jdbcType="INTEGER" />
+    <result column="worker_id" property="workerId" jdbcType="VARCHAR" />
+    <result column="work_type_id" property="workTypeId" jdbcType="INTEGER" />
+    <result column="status_" property="status" jdbcType="INTEGER" />
+    <result column="protect_start_date" property="protectStartDate" jdbcType="TIMESTAMP" />
+    <result column="protect_end_date" property="protectEndDate" jdbcType="TIMESTAMP" />
+    <result column="reduce_price_date" property="reducePriceDate" jdbcType="TIMESTAMP" />
+    <result column="is_wx_friend" property="isWxFriend" jdbcType="BIT" />
+    <result column="is_game_friend" property="isGameFriend" jdbcType="BIT" />
+    <result column="name" property="userName" jdbcType="VARCHAR" />
+    <result column="selling_price" property="sellingPrice" jdbcType="TIMESTAMP" />
+    <result column="portrait_url" property="portraitUrl" jdbcType="VARCHAR" />
+    <result column="user_status" property="userStatus" jdbcType="INTEGER" />
+    <result column="login_date" property="loginDate" jdbcType="TIMESTAMP" />
+  </resultMap>
+
+  <select id="countRoomsByUserId" resultMap="CountResultMap">
+    SELECT COUNT(user_id) amount,user_id FROM tz_tree_house_room GROUP BY user_id
+  </select>
+
+  <select id="findWorkersListByUserIdOrderBySellingPrice" resultMap="WorkerResultMap" parameterType="map">
+    SELECT room.*,us.name,us.selling_price,us.portrait_url,us.status_ AS user_status,us.login_date FROM tz_tree_house_room room
+    LEFT JOIN tz_user us ON room.worker_id=us.user_id
+    WHERE room.user_id=#{userId,jdbcType=VARCHAR} AND room.worker_id IS NOT NULL
+    ORDER BY us.selling_price DESC
+  </select>
+
+  <update id="updateForReleaseWorker" parameterType="map">
+    UPDATE tz_tree_house_room
+    SET worker_id=NULL ,
+        work_type_id=NULL,
+        status_=NULL,
+        protect_start_date=NULL,
+        protect_end_date=NULL,
+        reduce_price_date=NULL,
+        is_wx_friend=NULL,
+        is_game_friend=NULL
+    WHERE user_id=#{userId,jdbcType=VARCHAR} AND worker_id=#{workerId,jdbcType=VARCHAR}
+  </update>
+</mapper>

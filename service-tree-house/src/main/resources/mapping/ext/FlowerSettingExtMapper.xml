@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.tongzhu.treehouse.mapper.ext.FlowerSettingExtMapper" >
+  <resultMap id="BaseResultMap" type="com.tongzhu.treehouse.model.FlowerSetting" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="money_award" property="moneyAward" jdbcType="INTEGER" />
+    <result column="enviroment_award" property="enviromentAward" jdbcType="INTEGER" />
+    <result column="other_award" property="otherAward" jdbcType="VARCHAR" />
+  </resultMap>
+
+  <insert id="batchInsertSeeds" parameterType="java.util.List" >
+    insert into tz_flower_setting (id, money_award, enviroment_award, 
+      other_award)
+    values
+    <foreach collection="list" item="item" index="index" separator=",">
+      (
+      #{item.id,jdbcType=VARCHAR},
+      #{item.moneyAward,jdbcType=INTEGER},
+      #{item.enviromentAward,jdbcType=INTEGER},
+      #{item.otherAward,jdbcType=VARCHAR}
+      )
+    </foreach>
+  </insert>
+
+  <insert id="batchInsertNumber" parameterType="java.util.List" >
+    insert into tz_flower_number_setting (day_plant_count, probability_)
+    values
+    <foreach collection="list" item="item" index="index" separator=",">
+    (
+      #{item.dayPlantCount,jdbcType=INTEGER},
+      #{item.probability,jdbcType=REAL}
+      )
+    </foreach>
+  </insert>
+
+  <insert id="batchInsertDraw" parameterType="java.util.List" >
+    insert into tz_flower_seeds_draw_setting (goods_id, probability_, upper_limit)
+    values
+    <foreach collection="list" item="item" index="index" separator=",">
+    (
+      #{item.goodsId,jdbcType=VARCHAR},
+      #{item.probability,jdbcType=REAL},
+      #{item.upperLimit,jdbcType=INTEGER}
+      )
+    </foreach>
+  </insert>
+
+</mapper>

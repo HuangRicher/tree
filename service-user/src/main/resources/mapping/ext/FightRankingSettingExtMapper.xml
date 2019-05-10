@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.tongzhu.user.mapper.ext.FightRankingSettingExtMapper" >
+
+  <insert id="batchInsert" parameterType="java.util.List" >
+    insert into tz_game_fight_ranking_setting (rank_id, grade, name, 
+      max_rank, min_rank, first_rank, 
+      award_money_day, award_money_season, award_honor_season, 
+      after_rank_id, after_grade)
+    values
+    <foreach collection="list" item="item" index="index" separator=",">
+      (
+      #{item.rankId,jdbcType=INTEGER},
+      #{item.grade,jdbcType=INTEGER},
+      #{item.name,jdbcType=VARCHAR},
+      #{item.maxRank,jdbcType=INTEGER},
+      #{item.minRank,jdbcType=INTEGER},
+      #{item.firstRank,jdbcType=INTEGER},
+      #{item.awardMoneyDay,jdbcType=INTEGER},
+      #{item.awardMoneySeason,jdbcType=INTEGER},
+      #{item.awardHonorSeason,jdbcType=INTEGER},
+      #{item.afterRankId,jdbcType=INTEGER},
+      #{item.afterGrade,jdbcType=INTEGER}
+      )
+    </foreach>
+
+  </insert>
+</mapper>

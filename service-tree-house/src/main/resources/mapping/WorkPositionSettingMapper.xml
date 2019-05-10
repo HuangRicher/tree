@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.tongzhu.treehouse.mapper.WorkPositionSettingMapper" >
+  <resultMap id="BaseResultMap" type="com.tongzhu.treehouse.model.WorkPositionSetting" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="work_type_id" property="workTypeId" jdbcType="INTEGER" />
+    <result column="position_order" property="positionOrder" jdbcType="INTEGER" />
+    <result column="unlock_goods" property="unlockGoods" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, work_type_id, position_order, unlock_goods
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.tongzhu.treehouse.model.WorkPositionSettingExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from tz_work_position_setting
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from tz_work_position_setting
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from tz_work_position_setting
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.tongzhu.treehouse.model.WorkPositionSettingExample" >
+    delete from tz_work_position_setting
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.tongzhu.treehouse.model.WorkPositionSetting" >
+    insert into tz_work_position_setting (id, work_type_id, position_order, 
+      unlock_goods)
+    values (#{id,jdbcType=INTEGER}, #{workTypeId,jdbcType=INTEGER}, #{positionOrder,jdbcType=INTEGER}, 
+      #{unlockGoods,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.tongzhu.treehouse.model.WorkPositionSetting" >
+    insert into tz_work_position_setting
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="workTypeId != null" >
+        work_type_id,
+      </if>
+      <if test="positionOrder != null" >
+        position_order,
+      </if>
+      <if test="unlockGoods != null" >
+        unlock_goods,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="workTypeId != null" >
+        #{workTypeId,jdbcType=INTEGER},
+      </if>
+      <if test="positionOrder != null" >
+        #{positionOrder,jdbcType=INTEGER},
+      </if>
+      <if test="unlockGoods != null" >
+        #{unlockGoods,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.tongzhu.treehouse.model.WorkPositionSettingExample" resultType="java.lang.Integer" >
+    select count(*) from tz_work_position_setting
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update tz_work_position_setting
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.workTypeId != null" >
+        work_type_id = #{record.workTypeId,jdbcType=INTEGER},
+      </if>
+      <if test="record.positionOrder != null" >
+        position_order = #{record.positionOrder,jdbcType=INTEGER},
+      </if>
+      <if test="record.unlockGoods != null" >
+        unlock_goods = #{record.unlockGoods,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update tz_work_position_setting
+    set id = #{record.id,jdbcType=INTEGER},
+      work_type_id = #{record.workTypeId,jdbcType=INTEGER},
+      position_order = #{record.positionOrder,jdbcType=INTEGER},
+      unlock_goods = #{record.unlockGoods,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.tongzhu.treehouse.model.WorkPositionSetting" >
+    update tz_work_position_setting
+    <set >
+      <if test="workTypeId != null" >
+        work_type_id = #{workTypeId,jdbcType=INTEGER},
+      </if>
+      <if test="positionOrder != null" >
+        position_order = #{positionOrder,jdbcType=INTEGER},
+      </if>
+      <if test="unlockGoods != null" >
+        unlock_goods = #{unlockGoods,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.tongzhu.treehouse.model.WorkPositionSetting" >
+    update tz_work_position_setting
+    set work_type_id = #{workTypeId,jdbcType=INTEGER},
+      position_order = #{positionOrder,jdbcType=INTEGER},
+      unlock_goods = #{unlockGoods,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

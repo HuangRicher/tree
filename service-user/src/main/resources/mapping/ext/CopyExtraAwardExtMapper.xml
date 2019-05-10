@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.tongzhu.user.mapper.ext.CopyExtraAwardExtMapper" >
+  <resultMap id="BaseResultMap" type="com.tongzhu.user.model.CopyExtraAward" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="goods_id" property="goodsId" jdbcType="VARCHAR" />
+    <result column="rate_" property="rate" jdbcType="REAL" />
+    <result column="name_" property="name" jdbcType="VARCHAR" />
+    <result column="level_" property="level" jdbcType="INTEGER" />
+    <result column="consume_money" property="consumeMoney" jdbcType="INTEGER" />
+  </resultMap>
+
+  <insert id="batchInsert" parameterType="java.util.List" >
+    insert into tz_game_copy_extra_award (id, level_, amount,
+    goods_id, rate_, name_, consume_goods
+      )
+    values
+    <foreach collection="list" item="item" separator="," index="index">
+      (
+      #{item.id,jdbcType=VARCHAR},
+      #{item.level,jdbcType=INTEGER},
+      #{item.amount,jdbcType=INTEGER},
+      #{item.goodsId,jdbcType=VARCHAR},
+      #{item.rate,jdbcType=REAL},
+      #{item.name,jdbcType=VARCHAR},
+      #{item.consumeGoods,jdbcType=VARCHAR}
+      )
+    </foreach>
+  </insert>
+
+</mapper>

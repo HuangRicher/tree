@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.tongzhu.user.mapper.ext.UserSkillExtMapper" >
+  <resultMap id="BaseResultMap" type="com.tongzhu.user.model.UserSkill" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="user_id" property="userId" jdbcType="VARCHAR" />
+    <result column="skill_id" property="skillId" jdbcType="INTEGER" />
+    <result column="level" property="level" jdbcType="INTEGER" />
+    <result column="active_status" property="activeStatus" jdbcType="INTEGER" />
+  </resultMap>
+
+  <resultMap id="SkillBaseResultMap" type="com.tongzhu.user.model.Skill" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="skill_name" property="skillName" jdbcType="VARCHAR" />
+    <result column="description" property="description" jdbcType="VARCHAR" />
+    <result column="cooling_circle" property="coolingCircle" jdbcType="INTEGER" />
+    <result column="role_level" property="roleLevel" jdbcType="INTEGER" />
+    <result column="apperception_probability" property="apperceptionProbability" jdbcType="REAL" />
+    <result column="type" property="type" jdbcType="INTEGER" />
+    <result column="priority" property="priority" jdbcType="INTEGER" />
+    <result column="buff_id" property="buffId" jdbcType="VARCHAR" />
+  </resultMap>
+  <select id="selectByUserIdSkillType" resultMap="BaseResultMap" parameterType="map" >
+    SELECT usk.* FROM tz_game_user_skill usk
+    LEFT JOIN tz_game_skill sk ON usk.`skill_id`=sk.`id`
+    WHERE sk.`type`=#{type,jdbcType=INTEGER} AND usk.`user_id`=#{userId,jdbcType=VARCHAR} order by usk.skill_id asc
+  </select>
+
+
+  <select id="selectByUserIdBuffLike" parameterType="map" resultMap="BaseResultMap">
+    SELECT us.* FROM tz_game_user_skill us
+    LEFT JOIN tz_game_skill_setting ss ON us.`skill_id`=ss.`skill_id` AND us.`level`=ss.`skill_level`
+    WHERE us.`user_id`=#{userId,jdbcType=VARCHAR} AND ss.`pro` LIKE #{buff,jdbcType=VARCHAR}
+  </select>
+
+  <select id="selectUserNoneSkill" parameterType="map" resultMap="SkillBaseResultMap">
+    SELECT skill.* FROM `tz_game_skill` skill
+    LEFT JOIN (SELECT * FROM `tz_game_user_skill` WHERE `user_id`=#{userId,jdbcType=VARCHAR}) uskill
+    ON skill.`id`=uskill.`skill_id`
+    WHERE uskill.user_id IS NULL
+  </select>
+</mapper>

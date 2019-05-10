@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.tongzhu.user.mapper.ext.MonsterExtMapper" >
+  <resultMap id="BaseResultMap" type="com.tongzhu.user.mapper.vo.MonsterDO" >
+    <id column="monster_id" property="monsterId" jdbcType="VARCHAR" />
+    <result column="level_" property="level" jdbcType="INTEGER" />
+    <result column="name_" property="name" jdbcType="VARCHAR" />
+    <result column="head_" property="head" jdbcType="VARCHAR" />
+    <result column="mode_" property="mode" jdbcType="VARCHAR" />
+    <result column="type_" property="type" jdbcType="INTEGER" />
+    <result column="ph_atk" property="phAtk" jdbcType="REAL" />
+    <result column="mf_atk" property="mfAtk" jdbcType="REAL" />
+    <result column="ph_def" property="phDef" jdbcType="REAL" />
+    <result column="mf_def" property="mfDef" jdbcType="REAL" />
+    <result column="hp_" property="hp" jdbcType="REAL" />
+    <result column="accuracy" property="accuracy" jdbcType="REAL" />
+    <result column="miss" property="miss" jdbcType="REAL" />
+    <result column="critical" property="critical" jdbcType="REAL" />
+    <result column="dcritical" property="dcritical" jdbcType="REAL" />
+    <result column="skill1_id" property="skill1Id" jdbcType="INTEGER" />
+    <result column="skill1_lv" property="skill1Lv" jdbcType="INTEGER" />
+    <result column="skill2_id" property="skill2Id" jdbcType="INTEGER" />
+    <result column="skill2_lv" property="skill2Lv" jdbcType="INTEGER" />
+    <result column="skill3_id" property="skill3Id" jdbcType="INTEGER" />
+    <result column="skill3_lv" property="skill3Lv" jdbcType="INTEGER" />
+    <result column="real_hurt" property="realHurt" jdbcType="REAL" />
+    <result column="drop_" property="drop" jdbcType="VARCHAR" />
+    <result column="talk_" property="talk" jdbcType="VARCHAR" />
+    <result column="limit_" property="limit" jdbcType="INTEGER" />
+    <result column="role_type" property="roleType" jdbcType="INTEGER" />
+    <result column="group_id" property="groupId" jdbcType="INTEGER" />
+    <result column="random_status" property="randomStatus" jdbcType="INTEGER" />
+  </resultMap>
+
+  <select id="selectByCopyIdOrderByGroup" resultMap="BaseResultMap" parameterType="map" >
+    SELECT cm.group_id,cm.`random_status`,mo.* FROM tz_game_copy_monster cm
+    LEFT JOIN tz_game_monster mo ON cm.monster_id=mo.monster_id
+    WHERE cm.copy_id= #{copyId,jdbcType=INTEGER} ORDER BY cm.group_id
+  </select>
+
+  <select id="selectByExplorationIdAndPassId" resultMap="BaseResultMap" parameterType="map" >
+    SELECT monster.*,exmonster.group_id FROM tz_game_exploration_monster exmonster,`tz_game_monster` monster
+    WHERE monster.monster_id=exmonster.monster_id
+    AND exmonster.exploration_id=#{explorationId,jdbcType=INTEGER}
+    AND exmonster.pass_id=#{passId,jdbcType=INTEGER} ORDER BY group_id
+  </select>
+
+  <insert id="batchInsert" parameterType="java.util.List">
+    insert into tz_game_monster (monster_id, level_, name_,
+      head_, mode_, type_, ph_atk,
+      mf_atk, ph_def, mf_def, hp_,
+      accuracy, miss, critical, dcritical,
+      skill1_id, skill1_lv, skill2_id,
+      skill2_lv, skill3_id, skill3_lv,
+      real_hurt, drop_, talk_,
+      limit_, role_type)
+    values
+    <foreach collection ="list" item="item" index= "index" separator =",">
+      (
+      #{item.monsterId,jdbcType=VARCHAR},
+      #{item.level,jdbcType=INTEGER},
+      #{item.name,jdbcType=VARCHAR},
+      #{item.head,jdbcType=VARCHAR},
+      #{item.mode,jdbcType=VARCHAR},
+      #{item.type,jdbcType=INTEGER},
+      #{item.phAtk,jdbcType=REAL},
+      #{item.mfAtk,jdbcType=REAL},
+      #{item.phDef,jdbcType=REAL},
+      #{item.mfDef,jdbcType=REAL},
+      #{item.hp,jdbcType=REAL},
+      #{item.accuracy,jdbcType=REAL},
+      #{item.miss,jdbcType=REAL},
+      #{item.critical,jdbcType=REAL},
+      #{item.dcritical,jdbcType=REAL},
+      #{item.skill1Id,jdbcType=INTEGER},
+      #{item.skill1Lv,jdbcType=INTEGER},
+      #{item.skill2Id,jdbcType=INTEGER},
+      #{item.skill2Lv,jdbcType=INTEGER},
+      #{item.skill3Id,jdbcType=INTEGER},
+      #{item.skill3Lv,jdbcType=INTEGER},
+      #{item.realHurt,jdbcType=REAL},
+      #{item.drop,jdbcType=VARCHAR},
+      #{item.talk,jdbcType=VARCHAR},
+      #{item.limit,jdbcType=INTEGER},
+      #{item.roleType,jdbcType=INTEGER}
+      )
+    </foreach>
+
+  </insert>
+</mapper>

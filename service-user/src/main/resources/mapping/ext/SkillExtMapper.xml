@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.tongzhu.user.mapper.ext.SkillExtMapper" >
+
+  <insert id="batchInsert" parameterType="java.util.List" >
+    insert into tz_game_skill (id, skill_name, description, 
+      cooling_circle, role_level, apperception_probability, 
+      `type`, priority, buff_id
+      )
+    values
+    <foreach collection="list" index="index" item="item" separator=",">
+      (
+      #{item.id,jdbcType=INTEGER},
+      #{item.skillName,jdbcType=VARCHAR},
+      #{item.description,jdbcType=VARCHAR},
+      #{item.coolingCircle,jdbcType=INTEGER},
+      #{item.roleLevel,jdbcType=INTEGER},
+      #{item.apperceptionProbability,jdbcType=REAL},
+      #{item.type,jdbcType=INTEGER},
+      #{item.priority,jdbcType=INTEGER},
+      #{item.buffId,jdbcType=VARCHAR}
+      )
+    </foreach>
+  </insert>
+</mapper>

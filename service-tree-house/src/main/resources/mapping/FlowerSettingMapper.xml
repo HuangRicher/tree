@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.tongzhu.treehouse.mapper.FlowerSettingMapper" >
+  <resultMap id="BaseResultMap" type="com.tongzhu.treehouse.model.FlowerSetting" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="money_award" property="moneyAward" jdbcType="INTEGER" />
+    <result column="enviroment_award" property="enviromentAward" jdbcType="INTEGER" />
+    <result column="other_award" property="otherAward" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, money_award, enviroment_award, other_award
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.tongzhu.treehouse.model.FlowerSettingExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from tz_flower_setting
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from tz_flower_setting
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from tz_flower_setting
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.tongzhu.treehouse.model.FlowerSettingExample" >
+    delete from tz_flower_setting
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.tongzhu.treehouse.model.FlowerSetting" >
+    insert into tz_flower_setting (id, money_award, enviroment_award, 
+      other_award)
+    values (#{id,jdbcType=VARCHAR}, #{moneyAward,jdbcType=INTEGER}, #{enviromentAward,jdbcType=INTEGER}, 
+      #{otherAward,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.tongzhu.treehouse.model.FlowerSetting" >
+    insert into tz_flower_setting
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="moneyAward != null" >
+        money_award,
+      </if>
+      <if test="enviromentAward != null" >
+        enviroment_award,
+      </if>
+      <if test="otherAward != null" >
+        other_award,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="moneyAward != null" >
+        #{moneyAward,jdbcType=INTEGER},
+      </if>
+      <if test="enviromentAward != null" >
+        #{enviromentAward,jdbcType=INTEGER},
+      </if>
+      <if test="otherAward != null" >
+        #{otherAward,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.tongzhu.treehouse.model.FlowerSettingExample" resultType="java.lang.Integer" >
+    select count(*) from tz_flower_setting
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update tz_flower_setting
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=VARCHAR},
+      </if>
+      <if test="record.moneyAward != null" >
+        money_award = #{record.moneyAward,jdbcType=INTEGER},
+      </if>
+      <if test="record.enviromentAward != null" >
+        enviroment_award = #{record.enviromentAward,jdbcType=INTEGER},
+      </if>
+      <if test="record.otherAward != null" >
+        other_award = #{record.otherAward,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update tz_flower_setting
+    set id = #{record.id,jdbcType=VARCHAR},
+      money_award = #{record.moneyAward,jdbcType=INTEGER},
+      enviroment_award = #{record.enviromentAward,jdbcType=INTEGER},
+      other_award = #{record.otherAward,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.tongzhu.treehouse.model.FlowerSetting" >
+    update tz_flower_setting
+    <set >
+      <if test="moneyAward != null" >
+        money_award = #{moneyAward,jdbcType=INTEGER},
+      </if>
+      <if test="enviromentAward != null" >
+        enviroment_award = #{enviromentAward,jdbcType=INTEGER},
+      </if>
+      <if test="otherAward != null" >
+        other_award = #{otherAward,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.tongzhu.treehouse.model.FlowerSetting" >
+    update tz_flower_setting
+    set money_award = #{moneyAward,jdbcType=INTEGER},
+      enviroment_award = #{enviromentAward,jdbcType=INTEGER},
+      other_award = #{otherAward,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

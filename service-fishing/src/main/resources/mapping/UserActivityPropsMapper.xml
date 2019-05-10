@@ -1,0 +1,324 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.tongzhu.fishing.mapper.UserActivityPropsMapper" >
+  <resultMap id="BaseResultMap" type="com.tongzhu.fishing.model.UserActivityProps" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="activity_id" property="activityId" jdbcType="INTEGER" />
+    <result column="game_props_name" property="gamePropsName" jdbcType="VARCHAR" />
+    <result column="drop_probability" property="dropProbability" jdbcType="INTEGER" />
+    <result column="introduce" property="introduce" jdbcType="VARCHAR" />
+    <result column="game_props_picture" property="gamePropsPicture" jdbcType="VARCHAR" />
+    <result column="creation_start_date" property="creationStartDate" jdbcType="TIMESTAMP" />
+    <result column="recompose_end_date" property="recomposeEndDate" jdbcType="TIMESTAMP" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="common_fishery_probability" property="commonFisheryProbability" jdbcType="INTEGER" />
+    <result column="senior_fishery_probability" property="seniorFisheryProbability" jdbcType="INTEGER" />
+    <result column="rare_fishery_probability" property="rareFisheryProbability" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, activity_id, game_props_name, drop_probability, introduce, game_props_picture, 
+    creation_start_date, recompose_end_date, status, common_fishery_probability, senior_fishery_probability, 
+    rare_fishery_probability
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.tongzhu.fishing.model.UserActivityPropsExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from tz_user_activity_props
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from tz_user_activity_props
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from tz_user_activity_props
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.tongzhu.fishing.model.UserActivityPropsExample" >
+    delete from tz_user_activity_props
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.tongzhu.fishing.model.UserActivityProps" >
+    insert into tz_user_activity_props (id, activity_id, game_props_name, 
+      drop_probability, introduce, game_props_picture, 
+      creation_start_date, recompose_end_date, 
+      status, common_fishery_probability, senior_fishery_probability, 
+      rare_fishery_probability)
+    values (#{id,jdbcType=INTEGER}, #{activityId,jdbcType=INTEGER}, #{gamePropsName,jdbcType=VARCHAR}, 
+      #{dropProbability,jdbcType=INTEGER}, #{introduce,jdbcType=VARCHAR}, #{gamePropsPicture,jdbcType=VARCHAR}, 
+      #{creationStartDate,jdbcType=TIMESTAMP}, #{recomposeEndDate,jdbcType=TIMESTAMP}, 
+      #{status,jdbcType=INTEGER}, #{commonFisheryProbability,jdbcType=INTEGER}, #{seniorFisheryProbability,jdbcType=INTEGER}, 
+      #{rareFisheryProbability,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.tongzhu.fishing.model.UserActivityProps" >
+    insert into tz_user_activity_props
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="activityId != null" >
+        activity_id,
+      </if>
+      <if test="gamePropsName != null" >
+        game_props_name,
+      </if>
+      <if test="dropProbability != null" >
+        drop_probability,
+      </if>
+      <if test="introduce != null" >
+        introduce,
+      </if>
+      <if test="gamePropsPicture != null" >
+        game_props_picture,
+      </if>
+      <if test="creationStartDate != null" >
+        creation_start_date,
+      </if>
+      <if test="recomposeEndDate != null" >
+        recompose_end_date,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="commonFisheryProbability != null" >
+        common_fishery_probability,
+      </if>
+      <if test="seniorFisheryProbability != null" >
+        senior_fishery_probability,
+      </if>
+      <if test="rareFisheryProbability != null" >
+        rare_fishery_probability,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="activityId != null" >
+        #{activityId,jdbcType=INTEGER},
+      </if>
+      <if test="gamePropsName != null" >
+        #{gamePropsName,jdbcType=VARCHAR},
+      </if>
+      <if test="dropProbability != null" >
+        #{dropProbability,jdbcType=INTEGER},
+      </if>
+      <if test="introduce != null" >
+        #{introduce,jdbcType=VARCHAR},
+      </if>
+      <if test="gamePropsPicture != null" >
+        #{gamePropsPicture,jdbcType=VARCHAR},
+      </if>
+      <if test="creationStartDate != null" >
+        #{creationStartDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="recomposeEndDate != null" >
+        #{recomposeEndDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="commonFisheryProbability != null" >
+        #{commonFisheryProbability,jdbcType=INTEGER},
+      </if>
+      <if test="seniorFisheryProbability != null" >
+        #{seniorFisheryProbability,jdbcType=INTEGER},
+      </if>
+      <if test="rareFisheryProbability != null" >
+        #{rareFisheryProbability,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.tongzhu.fishing.model.UserActivityPropsExample" resultType="java.lang.Integer" >
+    select count(*) from tz_user_activity_props
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update tz_user_activity_props
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.activityId != null" >
+        activity_id = #{record.activityId,jdbcType=INTEGER},
+      </if>
+      <if test="record.gamePropsName != null" >
+        game_props_name = #{record.gamePropsName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.dropProbability != null" >
+        drop_probability = #{record.dropProbability,jdbcType=INTEGER},
+      </if>
+      <if test="record.introduce != null" >
+        introduce = #{record.introduce,jdbcType=VARCHAR},
+      </if>
+      <if test="record.gamePropsPicture != null" >
+        game_props_picture = #{record.gamePropsPicture,jdbcType=VARCHAR},
+      </if>
+      <if test="record.creationStartDate != null" >
+        creation_start_date = #{record.creationStartDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.recomposeEndDate != null" >
+        recompose_end_date = #{record.recomposeEndDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.status != null" >
+        status = #{record.status,jdbcType=INTEGER},
+      </if>
+      <if test="record.commonFisheryProbability != null" >
+        common_fishery_probability = #{record.commonFisheryProbability,jdbcType=INTEGER},
+      </if>
+      <if test="record.seniorFisheryProbability != null" >
+        senior_fishery_probability = #{record.seniorFisheryProbability,jdbcType=INTEGER},
+      </if>
+      <if test="record.rareFisheryProbability != null" >
+        rare_fishery_probability = #{record.rareFisheryProbability,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update tz_user_activity_props
+    set id = #{record.id,jdbcType=INTEGER},
+      activity_id = #{record.activityId,jdbcType=INTEGER},
+      game_props_name = #{record.gamePropsName,jdbcType=VARCHAR},
+      drop_probability = #{record.dropProbability,jdbcType=INTEGER},
+      introduce = #{record.introduce,jdbcType=VARCHAR},
+      game_props_picture = #{record.gamePropsPicture,jdbcType=VARCHAR},
+      creation_start_date = #{record.creationStartDate,jdbcType=TIMESTAMP},
+      recompose_end_date = #{record.recomposeEndDate,jdbcType=TIMESTAMP},
+      status = #{record.status,jdbcType=INTEGER},
+      common_fishery_probability = #{record.commonFisheryProbability,jdbcType=INTEGER},
+      senior_fishery_probability = #{record.seniorFisheryProbability,jdbcType=INTEGER},
+      rare_fishery_probability = #{record.rareFisheryProbability,jdbcType=INTEGER}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.tongzhu.fishing.model.UserActivityProps" >
+    update tz_user_activity_props
+    <set >
+      <if test="activityId != null" >
+        activity_id = #{activityId,jdbcType=INTEGER},
+      </if>
+      <if test="gamePropsName != null" >
+        game_props_name = #{gamePropsName,jdbcType=VARCHAR},
+      </if>
+      <if test="dropProbability != null" >
+        drop_probability = #{dropProbability,jdbcType=INTEGER},
+      </if>
+      <if test="introduce != null" >
+        introduce = #{introduce,jdbcType=VARCHAR},
+      </if>
+      <if test="gamePropsPicture != null" >
+        game_props_picture = #{gamePropsPicture,jdbcType=VARCHAR},
+      </if>
+      <if test="creationStartDate != null" >
+        creation_start_date = #{creationStartDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="recomposeEndDate != null" >
+        recompose_end_date = #{recomposeEndDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="commonFisheryProbability != null" >
+        common_fishery_probability = #{commonFisheryProbability,jdbcType=INTEGER},
+      </if>
+      <if test="seniorFisheryProbability != null" >
+        senior_fishery_probability = #{seniorFisheryProbability,jdbcType=INTEGER},
+      </if>
+      <if test="rareFisheryProbability != null" >
+        rare_fishery_probability = #{rareFisheryProbability,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.tongzhu.fishing.model.UserActivityProps" >
+    update tz_user_activity_props
+    set activity_id = #{activityId,jdbcType=INTEGER},
+      game_props_name = #{gamePropsName,jdbcType=VARCHAR},
+      drop_probability = #{dropProbability,jdbcType=INTEGER},
+      introduce = #{introduce,jdbcType=VARCHAR},
+      game_props_picture = #{gamePropsPicture,jdbcType=VARCHAR},
+      creation_start_date = #{creationStartDate,jdbcType=TIMESTAMP},
+      recompose_end_date = #{recomposeEndDate,jdbcType=TIMESTAMP},
+      status = #{status,jdbcType=INTEGER},
+      common_fishery_probability = #{commonFisheryProbability,jdbcType=INTEGER},
+      senior_fishery_probability = #{seniorFisheryProbability,jdbcType=INTEGER},
+      rare_fishery_probability = #{rareFisheryProbability,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

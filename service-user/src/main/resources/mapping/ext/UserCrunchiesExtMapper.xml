@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.tongzhu.user.mapper.ext.UserCrunchiesExtMapper" >
+  <resultMap id="BaseResultMap" type="com.tongzhu.user.model.UserCrunchies" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="user_id" property="userId" jdbcType="VARCHAR" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="type" property="type" jdbcType="INTEGER" />
+    <result column="minimum" property="minimum" jdbcType="INTEGER" />
+    <result column="maximum" property="maximum" jdbcType="INTEGER" />
+  </resultMap>
+
+  <resultMap id="RankingResultMap" type="com.tongzhu.user.mapper.vo.UserRankingVO" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="user_id" property="userId" jdbcType="VARCHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="portrait_url" property="portraitUrl" jdbcType="VARCHAR" />
+    <result column="grade" property="grade" jdbcType="INTEGER" />
+    <result column="selling_price" property="sellingPrice" jdbcType="INTEGER" />
+    <result column="autograph" property="autograph" jdbcType="VARCHAR" />
+    <result column="lottery" property="lottery" jdbcType="INTEGER" />
+    <result column="vip" property="vip" jdbcType="INTEGER" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="update_date" property="updateDate" jdbcType="TIMESTAMP" />
+    <result column="role_id" property="roleId" jdbcType="INTEGER" />
+    <result column="status_" property="status" jdbcType="INTEGER" />
+    <result column="login_date" property="loginDate" jdbcType="TIMESTAMP" />
+    <result column="open_id" property="openId" jdbcType="VARCHAR" />
+    <result column="sex" property="sex" jdbcType="INTEGER" />
+    <result column="province" property="province" jdbcType="VARCHAR" />
+    <result column="city" property="city" jdbcType="VARCHAR" />
+    <result column="country" property="country" jdbcType="VARCHAR" />
+    <result column="union_id" property="unionId" jdbcType="VARCHAR" />
+    <result column="serial_no" property="serialNo" jdbcType="INTEGER"/>
+    <result column="amount" property="amount" jdbcType="INTEGER"/>
+    <result column="role_level" property="roleLevel" jdbcType="INTEGER" />
+    <result column="charm_num" property="charmNum" jdbcType="INTEGER" />
+    <result column="always_fighting" property="alwaysFighting" jdbcType="INTEGER" />
+    <result column="promote" property="promote" jdbcType="INTEGER" />
+  </resultMap>
+
+
+  <select id="getCrunchiesByUserIdAndType" resultMap="BaseResultMap" parameterType="map">
+        SELECT
+            *
+        FROM
+            tz_user_crunchies tuc
+        WHERE
+            tuc.type = #{type}
+        AND tuc.user_id = #{userId}
+        AND DATE_FORMAT( #{date}, '%Y%m') =
+            DATE_FORMAT(
+                tuc.create_date,
+                '%Y%m'
+            )
+  </select>
+
+  <select id="fightingMonthRankingList" resultMap="RankingResultMap" parameterType="map">
+      SELECT
+          (@i :=@i + 1) AS serial_no,
+          us.*
+      FROM
+          (
+              SELECT
+                  tuc.user_id,
+                  (tuc.maximum - tuc.minimum) promote,
+                  tu.sex,
+                  tu.`name`,
+                  tu.portrait_url
+              FROM
+                  tz_user_crunchies tuc
+              JOIN tz_user tu ON tuc.user_id = tu.user_id
+              WHERE
+                  type = #{type}
+              AND DATE_FORMAT(now(), '%Y%m') = DATE_FORMAT(tuc.create_date, '%Y%m') AND tu.user_id NOT IN (1,2,3,4,5,6,7,8,9)
+              ORDER BY
+                  promote DESC,
+                  tu.create_date ASC
+              LIMIT #{count}
+          ) us,
+          (SELECT @i := 0) AS it
+  </select>
+</mapper>

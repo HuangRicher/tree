@@ -1,0 +1,259 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.tongzhu.user.mapper.SkillSettingMapper" >
+  <resultMap id="BaseResultMap" type="com.tongzhu.user.model.SkillSetting" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="skill_id" property="skillId" jdbcType="INTEGER" />
+    <result column="role_level" property="roleLevel" jdbcType="INTEGER" />
+    <result column="skill_level" property="skillLevel" jdbcType="INTEGER" />
+    <result column="consume_money" property="consumeMoney" jdbcType="INTEGER" />
+    <result column="consume_experience" property="consumeExperience" jdbcType="INTEGER" />
+    <result column="cooling_time" property="coolingTime" jdbcType="INTEGER" />
+    <result column="pro" property="pro" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, skill_id, role_level, skill_level, consume_money, consume_experience, cooling_time, 
+    pro
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.tongzhu.user.model.SkillSettingExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from tz_game_skill_setting
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from tz_game_skill_setting
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from tz_game_skill_setting
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.tongzhu.user.model.SkillSettingExample" >
+    delete from tz_game_skill_setting
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.tongzhu.user.model.SkillSetting" >
+    insert into tz_game_skill_setting (id, skill_id, role_level, 
+      skill_level, consume_money, consume_experience, 
+      cooling_time, pro)
+    values (#{id,jdbcType=INTEGER}, #{skillId,jdbcType=INTEGER}, #{roleLevel,jdbcType=INTEGER}, 
+      #{skillLevel,jdbcType=INTEGER}, #{consumeMoney,jdbcType=INTEGER}, #{consumeExperience,jdbcType=INTEGER}, 
+      #{coolingTime,jdbcType=INTEGER}, #{pro,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.tongzhu.user.model.SkillSetting" >
+    insert into tz_game_skill_setting
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="skillId != null" >
+        skill_id,
+      </if>
+      <if test="roleLevel != null" >
+        role_level,
+      </if>
+      <if test="skillLevel != null" >
+        skill_level,
+      </if>
+      <if test="consumeMoney != null" >
+        consume_money,
+      </if>
+      <if test="consumeExperience != null" >
+        consume_experience,
+      </if>
+      <if test="coolingTime != null" >
+        cooling_time,
+      </if>
+      <if test="pro != null" >
+        pro,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="skillId != null" >
+        #{skillId,jdbcType=INTEGER},
+      </if>
+      <if test="roleLevel != null" >
+        #{roleLevel,jdbcType=INTEGER},
+      </if>
+      <if test="skillLevel != null" >
+        #{skillLevel,jdbcType=INTEGER},
+      </if>
+      <if test="consumeMoney != null" >
+        #{consumeMoney,jdbcType=INTEGER},
+      </if>
+      <if test="consumeExperience != null" >
+        #{consumeExperience,jdbcType=INTEGER},
+      </if>
+      <if test="coolingTime != null" >
+        #{coolingTime,jdbcType=INTEGER},
+      </if>
+      <if test="pro != null" >
+        #{pro,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.tongzhu.user.model.SkillSettingExample" resultType="java.lang.Integer" >
+    select count(*) from tz_game_skill_setting
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update tz_game_skill_setting
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.skillId != null" >
+        skill_id = #{record.skillId,jdbcType=INTEGER},
+      </if>
+      <if test="record.roleLevel != null" >
+        role_level = #{record.roleLevel,jdbcType=INTEGER},
+      </if>
+      <if test="record.skillLevel != null" >
+        skill_level = #{record.skillLevel,jdbcType=INTEGER},
+      </if>
+      <if test="record.consumeMoney != null" >
+        consume_money = #{record.consumeMoney,jdbcType=INTEGER},
+      </if>
+      <if test="record.consumeExperience != null" >
+        consume_experience = #{record.consumeExperience,jdbcType=INTEGER},
+      </if>
+      <if test="record.coolingTime != null" >
+        cooling_time = #{record.coolingTime,jdbcType=INTEGER},
+      </if>
+      <if test="record.pro != null" >
+        pro = #{record.pro,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update tz_game_skill_setting
+    set id = #{record.id,jdbcType=INTEGER},
+      skill_id = #{record.skillId,jdbcType=INTEGER},
+      role_level = #{record.roleLevel,jdbcType=INTEGER},
+      skill_level = #{record.skillLevel,jdbcType=INTEGER},
+      consume_money = #{record.consumeMoney,jdbcType=INTEGER},
+      consume_experience = #{record.consumeExperience,jdbcType=INTEGER},
+      cooling_time = #{record.coolingTime,jdbcType=INTEGER},
+      pro = #{record.pro,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.tongzhu.user.model.SkillSetting" >
+    update tz_game_skill_setting
+    <set >
+      <if test="skillId != null" >
+        skill_id = #{skillId,jdbcType=INTEGER},
+      </if>
+      <if test="roleLevel != null" >
+        role_level = #{roleLevel,jdbcType=INTEGER},
+      </if>
+      <if test="skillLevel != null" >
+        skill_level = #{skillLevel,jdbcType=INTEGER},
+      </if>
+      <if test="consumeMoney != null" >
+        consume_money = #{consumeMoney,jdbcType=INTEGER},
+      </if>
+      <if test="consumeExperience != null" >
+        consume_experience = #{consumeExperience,jdbcType=INTEGER},
+      </if>
+      <if test="coolingTime != null" >
+        cooling_time = #{coolingTime,jdbcType=INTEGER},
+      </if>
+      <if test="pro != null" >
+        pro = #{pro,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.tongzhu.user.model.SkillSetting" >
+    update tz_game_skill_setting
+    set skill_id = #{skillId,jdbcType=INTEGER},
+      role_level = #{roleLevel,jdbcType=INTEGER},
+      skill_level = #{skillLevel,jdbcType=INTEGER},
+      consume_money = #{consumeMoney,jdbcType=INTEGER},
+      consume_experience = #{consumeExperience,jdbcType=INTEGER},
+      cooling_time = #{coolingTime,jdbcType=INTEGER},
+      pro = #{pro,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

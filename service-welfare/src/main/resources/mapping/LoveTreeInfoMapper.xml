@@ -1,0 +1,353 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.tongzhu.welfare.mapper.LoveTreeInfoMapper" >
+  <resultMap id="BaseResultMap" type="com.tongzhu.welfare.model.LoveTreeInfo" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="user_id" property="userId" jdbcType="VARCHAR" />
+    <result column="created_time" property="createdTime" jdbcType="TIMESTAMP" />
+    <result column="engagement_id" property="engagementId" jdbcType="VARCHAR" />
+    <result column="love_num" property="loveNum" jdbcType="BIGINT" />
+    <result column="love_grade" property="loveGrade" jdbcType="INTEGER" />
+    <result column="happiness_num" property="happinessNum" jdbcType="BIGINT" />
+    <result column="wedding_ring_grade" property="weddingRingGrade" jdbcType="INTEGER" />
+    <result column="love_tree_id" property="loveTreeId" jdbcType="VARCHAR" />
+    <result column="wedding_ring_id" property="weddingRingId" jdbcType="VARCHAR" />
+    <result column="properties" property="properties" jdbcType="VARCHAR" />
+    <result column="play_jokes_num" property="playJokesNum" jdbcType="INTEGER" />
+    <result column="wedding_num" property="weddingNum" jdbcType="INTEGER" />
+    <result column="other_id" property="otherId" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, user_id, created_time, engagement_id, love_num, love_grade, happiness_num, wedding_ring_grade, 
+    love_tree_id, wedding_ring_id, properties, play_jokes_num, wedding_num, other_id
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.tongzhu.welfare.model.LoveTreeInfoExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from tz_love_tree_info
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from tz_love_tree_info
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from tz_love_tree_info
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.tongzhu.welfare.model.LoveTreeInfoExample" >
+    delete from tz_love_tree_info
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.tongzhu.welfare.model.LoveTreeInfo" >
+    insert into tz_love_tree_info (id, user_id, created_time, 
+      engagement_id, love_num, love_grade, 
+      happiness_num, wedding_ring_grade, love_tree_id, 
+      wedding_ring_id, properties, play_jokes_num, 
+      wedding_num, other_id)
+    values (#{id,jdbcType=VARCHAR}, #{userId,jdbcType=VARCHAR}, #{createdTime,jdbcType=TIMESTAMP}, 
+      #{engagementId,jdbcType=VARCHAR}, #{loveNum,jdbcType=BIGINT}, #{loveGrade,jdbcType=INTEGER}, 
+      #{happinessNum,jdbcType=BIGINT}, #{weddingRingGrade,jdbcType=INTEGER}, #{loveTreeId,jdbcType=VARCHAR}, 
+      #{weddingRingId,jdbcType=VARCHAR}, #{properties,jdbcType=VARCHAR}, #{playJokesNum,jdbcType=INTEGER}, 
+      #{weddingNum,jdbcType=INTEGER}, #{otherId,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.tongzhu.welfare.model.LoveTreeInfo" >
+    insert into tz_love_tree_info
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="createdTime != null" >
+        created_time,
+      </if>
+      <if test="engagementId != null" >
+        engagement_id,
+      </if>
+      <if test="loveNum != null" >
+        love_num,
+      </if>
+      <if test="loveGrade != null" >
+        love_grade,
+      </if>
+      <if test="happinessNum != null" >
+        happiness_num,
+      </if>
+      <if test="weddingRingGrade != null" >
+        wedding_ring_grade,
+      </if>
+      <if test="loveTreeId != null" >
+        love_tree_id,
+      </if>
+      <if test="weddingRingId != null" >
+        wedding_ring_id,
+      </if>
+      <if test="properties != null" >
+        properties,
+      </if>
+      <if test="playJokesNum != null" >
+        play_jokes_num,
+      </if>
+      <if test="weddingNum != null" >
+        wedding_num,
+      </if>
+      <if test="otherId != null" >
+        other_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="createdTime != null" >
+        #{createdTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="engagementId != null" >
+        #{engagementId,jdbcType=VARCHAR},
+      </if>
+      <if test="loveNum != null" >
+        #{loveNum,jdbcType=BIGINT},
+      </if>
+      <if test="loveGrade != null" >
+        #{loveGrade,jdbcType=INTEGER},
+      </if>
+      <if test="happinessNum != null" >
+        #{happinessNum,jdbcType=BIGINT},
+      </if>
+      <if test="weddingRingGrade != null" >
+        #{weddingRingGrade,jdbcType=INTEGER},
+      </if>
+      <if test="loveTreeId != null" >
+        #{loveTreeId,jdbcType=VARCHAR},
+      </if>
+      <if test="weddingRingId != null" >
+        #{weddingRingId,jdbcType=VARCHAR},
+      </if>
+      <if test="properties != null" >
+        #{properties,jdbcType=VARCHAR},
+      </if>
+      <if test="playJokesNum != null" >
+        #{playJokesNum,jdbcType=INTEGER},
+      </if>
+      <if test="weddingNum != null" >
+        #{weddingNum,jdbcType=INTEGER},
+      </if>
+      <if test="otherId != null" >
+        #{otherId,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.tongzhu.welfare.model.LoveTreeInfoExample" resultType="java.lang.Integer" >
+    select count(*) from tz_love_tree_info
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update tz_love_tree_info
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userId != null" >
+        user_id = #{record.userId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createdTime != null" >
+        created_time = #{record.createdTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.engagementId != null" >
+        engagement_id = #{record.engagementId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.loveNum != null" >
+        love_num = #{record.loveNum,jdbcType=BIGINT},
+      </if>
+      <if test="record.loveGrade != null" >
+        love_grade = #{record.loveGrade,jdbcType=INTEGER},
+      </if>
+      <if test="record.happinessNum != null" >
+        happiness_num = #{record.happinessNum,jdbcType=BIGINT},
+      </if>
+      <if test="record.weddingRingGrade != null" >
+        wedding_ring_grade = #{record.weddingRingGrade,jdbcType=INTEGER},
+      </if>
+      <if test="record.loveTreeId != null" >
+        love_tree_id = #{record.loveTreeId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.weddingRingId != null" >
+        wedding_ring_id = #{record.weddingRingId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.properties != null" >
+        properties = #{record.properties,jdbcType=VARCHAR},
+      </if>
+      <if test="record.playJokesNum != null" >
+        play_jokes_num = #{record.playJokesNum,jdbcType=INTEGER},
+      </if>
+      <if test="record.weddingNum != null" >
+        wedding_num = #{record.weddingNum,jdbcType=INTEGER},
+      </if>
+      <if test="record.otherId != null" >
+        other_id = #{record.otherId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update tz_love_tree_info
+    set id = #{record.id,jdbcType=VARCHAR},
+      user_id = #{record.userId,jdbcType=VARCHAR},
+      created_time = #{record.createdTime,jdbcType=TIMESTAMP},
+      engagement_id = #{record.engagementId,jdbcType=VARCHAR},
+      love_num = #{record.loveNum,jdbcType=BIGINT},
+      love_grade = #{record.loveGrade,jdbcType=INTEGER},
+      happiness_num = #{record.happinessNum,jdbcType=BIGINT},
+      wedding_ring_grade = #{record.weddingRingGrade,jdbcType=INTEGER},
+      love_tree_id = #{record.loveTreeId,jdbcType=VARCHAR},
+      wedding_ring_id = #{record.weddingRingId,jdbcType=VARCHAR},
+      properties = #{record.properties,jdbcType=VARCHAR},
+      play_jokes_num = #{record.playJokesNum,jdbcType=INTEGER},
+      wedding_num = #{record.weddingNum,jdbcType=INTEGER},
+      other_id = #{record.otherId,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.tongzhu.welfare.model.LoveTreeInfo" >
+    update tz_love_tree_info
+    <set >
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="createdTime != null" >
+        created_time = #{createdTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="engagementId != null" >
+        engagement_id = #{engagementId,jdbcType=VARCHAR},
+      </if>
+      <if test="loveNum != null" >
+        love_num = #{loveNum,jdbcType=BIGINT},
+      </if>
+      <if test="loveGrade != null" >
+        love_grade = #{loveGrade,jdbcType=INTEGER},
+      </if>
+      <if test="happinessNum != null" >
+        happiness_num = #{happinessNum,jdbcType=BIGINT},
+      </if>
+      <if test="weddingRingGrade != null" >
+        wedding_ring_grade = #{weddingRingGrade,jdbcType=INTEGER},
+      </if>
+      <if test="loveTreeId != null" >
+        love_tree_id = #{loveTreeId,jdbcType=VARCHAR},
+      </if>
+      <if test="weddingRingId != null" >
+        wedding_ring_id = #{weddingRingId,jdbcType=VARCHAR},
+      </if>
+      <if test="properties != null" >
+        properties = #{properties,jdbcType=VARCHAR},
+      </if>
+      <if test="playJokesNum != null" >
+        play_jokes_num = #{playJokesNum,jdbcType=INTEGER},
+      </if>
+      <if test="weddingNum != null" >
+        wedding_num = #{weddingNum,jdbcType=INTEGER},
+      </if>
+      <if test="otherId != null" >
+        other_id = #{otherId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.tongzhu.welfare.model.LoveTreeInfo" >
+    update tz_love_tree_info
+    set user_id = #{userId,jdbcType=VARCHAR},
+      created_time = #{createdTime,jdbcType=TIMESTAMP},
+      engagement_id = #{engagementId,jdbcType=VARCHAR},
+      love_num = #{loveNum,jdbcType=BIGINT},
+      love_grade = #{loveGrade,jdbcType=INTEGER},
+      happiness_num = #{happinessNum,jdbcType=BIGINT},
+      wedding_ring_grade = #{weddingRingGrade,jdbcType=INTEGER},
+      love_tree_id = #{loveTreeId,jdbcType=VARCHAR},
+      wedding_ring_id = #{weddingRingId,jdbcType=VARCHAR},
+      properties = #{properties,jdbcType=VARCHAR},
+      play_jokes_num = #{playJokesNum,jdbcType=INTEGER},
+      wedding_num = #{weddingNum,jdbcType=INTEGER},
+      other_id = #{otherId,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

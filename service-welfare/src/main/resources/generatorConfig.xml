@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+<generatorConfiguration>
+    <!--
+        出现错误：Caused by: java.lang.ClassNotFoundException: com.mysql.jdbc.Driver
+        解决办法：将本地的MAVEN仓库中的mysql驱动引入进来
+    -->
+    <classPathEntry location="F:\repository\mysql\mysql-connector-java\5.1.44\mysql-connector-java-5.1.44.jar"/>
+    <context id="mysqlgenerator" targetRuntime="MyBatis3">
+        <!--不生成注释-->
+        <commentGenerator>
+            <property name="suppressAllComments" value="true" />
+        </commentGenerator>
+        <!-- 配置数据库连接 -->
+        <jdbcConnection driverClass="com.mysql.jdbc.Driver"
+                        connectionURL="jdbc:mysql://bj-cdb-kkucszns.sql.tencentcdb.com:62815/tongzhu_treehouse_dev"
+                        userId="root"
+                        password="rP3Za18k3Mw18gDJ" />
+
+        <!-- 指定javaBean生成的位置 -->
+        <javaModelGenerator targetPackage="com.tongzhu.welfare.model" targetProject="src/main/java" >
+            <!-- 在targetPackage的基础上，根据数据库的schema再生成一层package，最终生成的类放在这个package下，默认为false -->
+            <property name="enableSubPackages" value="true" />
+            <!-- 设置是否在getter方法中，对String类型字段调用trim()方法 -->
+            <property name="trimStrings" value="true" />
+        </javaModelGenerator>
+
+        <!--指定sql映射文件生成的位置 -->
+        <sqlMapGenerator targetPackage="mapping" targetProject="src/main/resources" >
+            <property name="enableSubPackages" value="true" />
+        </sqlMapGenerator>
+        <!-- 指定dao接口生成的位置，mapper接口 -->
+        <javaClientGenerator type="XMLMAPPER" targetPackage="com.tongzhu.welfare.mapper" targetProject="src/main/java" >
+            <property name="enableSubPackages" value="true" />
+        </javaClientGenerator>
+
+<!--         <table tableName="tz_building_info" domainObjectName="BuildingInfo"></table> 
+        <table tableName="tz_building_gold_log" domainObjectName="BuildingGoldLog"></table>
+        <table tableName="tz_building_user" domainObjectName="BuildingUser"></table>
+        <table tableName="tz_building_church_setting" domainObjectName="BuildingChurchSetting"></table>
+        <table tableName="tz_building_coffers_setting" domainObjectName="BuildingCoffersSetting"></table>
+        <table tableName="tz_building_marriage_setting" domainObjectName="BuildingMarriageSetting"></table>
+        <table tableName="tz_building_petshop_setting" domainObjectName="BuildingPetshopSetting"></table>
+        <table tableName="tz_building_smithy_setting" domainObjectName="BuildingSmithySetting"></table>
+        <table tableName="tz_building_statue_setting" domainObjectName="BuildingStatueSetting"></table>
+        <table tableName="tz_building_welfare_setting" domainObjectName="BuildingWelfareSetting"></table>
+        <table tableName="tz_building_wineshop_setting" domainObjectName="BuildingWineshopSetting"></table> -->
+<!--         <table tableName="tz_welfare_box_setting" domainObjectName="WelfareBoxSetting"></table>
+        <table tableName="tz_welfare_day_setting" domainObjectName="WelfareDaySetting"></table>
+        <table tableName="tz_welfare_month_setting" domainObjectName="WelfareMonthSetting"></table>
+        <table tableName="tz_mall" domainObjectName="Mall"></table>
+        <table tableName="tz_mall_consumer_log" domainObjectName="MallConsumerLog"></table>
+        <table tableName="tz_send_flowers" domainObjectName="SendFlowers"></table>  -->
+         <!--<table tableName="tz_building_tree_setting" domainObjectName="BuildingTreeSetting"></table>-->
+        <!-- <table tableName="tz_building_gold_log" domainObjectName="BuildingGoldLog"></table> -->
+<!--    <table tableName="tz_engagement_cancle_log" domainObjectName="EngagementCancleLog"></table>
+        <table tableName="tz_engagement_log" domainObjectName="EngagementLog"></table>  -->
+        <!-- <table tableName="tz_building_gold_log" domainObjectName="BuildingGoldLog"></table> 
+        <table tableName="tz_marry_log" domainObjectName="MarryLog"></table> 
+        <table tableName="tz_wedding_log" domainObjectName="WeddingLog"></table> 
+        <table tableName="tz_love_tree" domainObjectName="LoveTree"></table> -->
+<!--         <table tableName="tz_welfare_receive_month_log" domainObjectName="WelfareReceiveMonthLog"></table>
+        <table tableName="tz_welfare_receive_day_log" domainObjectName="WelfareReceiveDayLog"></table> -->
+        <!-- <table tableName="tz_login_log" domainObjectName="LoginLog"></table> -->
+        <!-- <table tableName="tz_marry_log" domainObjectName="MarryLog"></table>  -->
+        <!-- <table tableName="tz_send_wish_log" domainObjectName="SendWishLog"></table> -->
+        <!-- <table tableName="tz_toast_log" domainObjectName="ToastLog"></table> -->
+<!--         <table tableName="tz_love_tree" domainObjectName="LoveTree"></table>
+        <table tableName="tz_love_setting" domainObjectName="LoveSetting"></table>
+        <table tableName="tz_ring_setting" domainObjectName="RingSetting"></table> -->
+<!--         <table tableName="tz_bridegroom_log" domainObjectName="BridegroomLog"></table>
+        <table tableName="tz_play_jokes_log" domainObjectName="PlayJokesLog"></table> 
+        <table tableName="tz_love_tree" domainObjectName="LoveTree"></table>
+        <table tableName="tz_love_tree_info" domainObjectName="LoveTreeInfo"></table> 
+        <table tableName="tz_bridegroom_log" domainObjectName="BridegroomLog"></table>
+        <table tableName="tz_building_coin_reduce_log" domainObjectName="BuildingCoinReduceLog"></table>
+        <table tableName="tz_marry_send_wish_setting" domainObjectName="MarrySendWishSetting"></table>-->
+        <!--<table tableName="tz_play_jokes_log" domainObjectName="PlayJokesLog"></table>-->
+        <!--<table tableName="tz_building_smithy_setting" domainObjectName="BuildingSmithySetting"></table>-->
+        <table tableName="tz_welfare_receive_day_log" domainObjectName="WelfareReceiveDayLog"></table>
+    </context>
+</generatorConfiguration>

@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.tongzhu.fishing.mapper.ext.FishEntrepotExtMapper" >
+  <resultMap id="BaseResultMap" type="com.tongzhu.fishing.model.FishEntrepot" >
+    <result column="user_id" property="userId" jdbcType="VARCHAR" />
+    <result column="goods_id" property="goodsId" jdbcType="VARCHAR" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="update_date" property="updateDate" jdbcType="TIMESTAMP" />
+    <result column="receive" property="receive" jdbcType="INTEGER" />
+    <result column="amount" property="amount" jdbcType="INTEGER" />
+  </resultMap>
+
+  <resultMap id="FishEntrepotVO" type="com.tongzhu.fishing.mapper.vo.FishEntrepotVO" >
+    <result column="userName" property="userName" jdbcType="VARCHAR" />
+    <result column="goodsName" property="goodsName" jdbcType="VARCHAR" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="amount" property="amount" jdbcType="INTEGER" />
+  </resultMap>
+
+
+  <select id="getFishEntrepotList" resultMap="BaseResultMap" parameterType="map">
+    SELECT
+      tz_fish_entrepot.user_id,
+      tz_fish_entrepot.goods_id,
+      tz_fish_entrepot.create_date,
+      tz_fish_entrepot.update_date,
+      tz_fish_entrepot.receive,
+      SUM(tz_fish_entrepot.amount)amount
+      FROM
+          tz_fish_entrepot
+      WHERE
+          receive = 0 AND user_id =#{userId}
+          <if test="goodsId != '' and goodsId != null">
+          AND  tz_fish_entrepot.goods_id = #{goodsId}
+          </if>
+      GROUP BY
+          tz_fish_entrepot.goods_id
+  </select>
+
+  <update id="extractGoods" parameterType="map" >
+         UPDATE tz_fish_entrepot
+      SET receive = 1
+      WHERE
+          goods_id = #{goodsId}
+      AND user_id = #{userId}
+  </update>
+
+    <select id="getFishEntrepotBoutique" resultMap="FishEntrepotVO" parameterType="map">
+        SELECT
+        tu. NAME userName,
+        tfe.create_date,
+        tpi. NAME goodsName,
+        tfe.amount
+        FROM
+        tz_fish_entrepot tfe
+        JOIN tz_user tu ON tfe.user_id = tu.user_id
+        JOIN tz_prop_info tpi ON tfe.goods_id = tpi.id
+        WHERE
+        tfe.boutique = 1
+       ORDER BY
+        tfe.create_date ASC
+
+    </select>
+
+
+</mapper>

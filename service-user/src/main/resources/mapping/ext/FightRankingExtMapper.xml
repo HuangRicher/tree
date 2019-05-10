@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.tongzhu.user.mapper.ext.FightRankingExtMapper" >
+  <resultMap id="BaseResultMap" type="com.tongzhu.user.mapper.vo.FightRankingDO" >
+    <result column="serial" property="serial" jdbcType="INTEGER" />
+    <result column="name" property="userName" jdbcType="VARCHAR" />
+    <result column="sex" property="sex" jdbcType="INTEGER" />
+    <result column="rank_name" property="rankName" jdbcType="VARCHAR" />
+    <result column="score" property="score" jdbcType="INTEGER" />
+  </resultMap>
+
+  <select id="queryOrder50" resultMap="BaseResultMap" >
+    SELECT nus.serial,nus.score,nus.name,se.name AS rank_name,nus.sex
+    FROM (
+        SELECT (@i:=@i+1) `serial`, tt.* FROM(
+            SELECT rank.`ranking`,rank.`grade`,rank.`score`,us.`name`,us.`sex` FROM `tz_game_fight_ranking` rank
+            LEFT JOIN tz_user us ON rank.`user_id`=us.`user_id`
+            ORDER BY rank.`score` DESC LIMIT 50
+        )tt,(SELECT @i:=0) t2
+    ) nus,`tz_game_fight_ranking_setting` se
+    WHERE nus.ranking=se.`rank_id` AND nus.grade=se.`grade`
+  </select>
+
+    <insert id="sendDayAward">
+        INSERT INTO tz_user_mail_single (id, receiver_id, sender_id, send_time, expire_time, `type`,title, content, accessory, read_, receive, swift_address)
+        SELECT MD5(UUID()) AS id,rank.`user_id` AS receiver_id,' ' AS sender_id,NOW() AS send_time,DATE_ADD(NOW(), INTERVAL 15 DAY) AS expire_time,
+        0 AS `type`,'排位赛每日奖励' AS title,'排位赛每日奖励' AS content,
+        CONCAT('{"prop":{"50001":',setting.award_money_day,'}}') AS accessory,0 AS read_,0 AS receive,8 AS swift_address
+         FROM `tz_game_fight_ranking` rank , `tz_game_fight_ranking_setting` setting
+        WHERE rank.`ranking`=setting.`rank_id` AND rank.`grade`=setting.`grade` ORDER BY rank.score DESC LIMIT 1000
+    </insert>
+    <insert id="sendSeasonAward">
+        INSERT INTO tz_user_mail_single (id, receiver_id, sender_id, send_time, expire_time, `type`,title, content, accessory, read_, receive, swift_address)
+        SELECT MD5(UUID()) AS id,rank.`user_id` AS receiver_id,' ' AS sender_id,NOW() AS send_time,DATE_ADD(NOW(), INTERVAL 15 DAY) AS expire_time,
+        0 AS `type`,'排位赛季奖励' AS title,'排位赛季奖励' AS content,
+        CONCAT('{"prop":{"50001":',setting.`award_money_season`,',"50005":',setting.`award_honor_season`,'}}') AS accessory,0 AS read_,0 AS receive,8 AS swift_address
+         FROM `tz_game_fight_ranking` rank , `tz_game_fight_ranking_setting` setting
+        WHERE rank.`ranking`=setting.`rank_id` AND rank.`grade`=setting.`grade`
+    </insert>
+</mapper>

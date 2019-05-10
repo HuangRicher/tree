@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+<generatorConfiguration>
+    <!--
+        出现错误：Caused by: java.lang.ClassNotFoundException: com.mysql.jdbc.Driver
+        解决办法：将本地的MAVEN仓库中的mysql驱动引入进来
+    -->
+     <classPathEntry location="C:\Users\Administrator\.m2\repository\mysql\mysql-connector-java\5.1.44\mysql-connector-java-5.1.44.jar"/>
+	<!--<classPathEntry location="D:\maven3.5.4repo\mysql\mysql-connector-Java\5.1.44\mysql-connector-java-5.1.44.jar"/>-->
+    <context id="mysqlgenerator" targetRuntime="MyBatis3">
+        <!--不生成注释-->
+        <commentGenerator>
+            <property name="suppressAllComments" value="true" />
+        </commentGenerator>
+        <!-- 配置数据库连接 -->
+        <jdbcConnection driverClass="com.mysql.jdbc.Driver"
+                        connectionURL="jdbc:mysql://bj-cdb-kkucszns.sql.tencentcdb.com:62815/tongzhu_treehouse_dev"
+                        userId="root"
+                        password="rP3Za18k3Mw18gDJ" />
+
+        <!-- 指定javaBean生成的位置 -->
+        <javaModelGenerator targetPackage="com.tongzhu.user.model" targetProject="src/main/java" >
+            <!-- 在targetPackage的基础上，根据数据库的schema再生成一层package，最终生成的类放在这个package下，默认为false -->
+            <property name="enableSubPackages" value="true" />
+            <!-- 设置是否在getter方法中，对String类型字段调用trim()方法 -->
+            <property name="trimStrings" value="true" />
+        </javaModelGenerator>
+
+        <!--指定sql映射文件生成的位置 -->
+        <sqlMapGenerator targetPackage="mapping" targetProject="src/main/resources" >
+            <property name="enableSubPackages" value="true" />
+        </sqlMapGenerator>
+        <!-- 指定dao接口生成的位置，mapper接口 -->
+        <javaClientGenerator type="XMLMAPPER" targetPackage="com.tongzhu.user.mapper" targetProject="src/main/java" >
+            <property name="enableSubPackages" value="true" />
+        </javaClientGenerator>
+
+
+        <!--<table tableName="tz_user" domainObjectName="User"></table>-->
+        <!--<table tableName="tz_new_player_guide" domainObjectName="NewPlayerGuide"></table>-->
+        <!--<table tableName="tz_game_copy_monster" domainObjectName="CopyMonster"></table>-->
+        <!--<table tableName="tz_game_monster" domainObjectName="Monster"></table>-->
+        <!--<table tableName="tz_game_fight_user_copy_setting" domainObjectName="UserCopySetting"></table>-->
+        <!--<table tableName="tz_game_fight_copy" domainObjectName="FightCopy"></table>-->
+        <!--<table tableName="tz_game_copy_exp_setting" domainObjectName="CopyExpSetting"></table>-->
+        <!--<table tableName="tz_game_user_role" domainObjectName="UserRole"></table>-->
+        <!--<table tableName="tz_game_user_role_title" domainObjectName="UserRoleTitle"></table>-->
+        <!--<table tableName="tz_game_role" domainObjectName="Role"></table>-->
+        <!--<table tableName="tz_game_skill" domainObjectName="Skill"></table>-->
+        <!--<table tableName="tz_game_user_skill" domainObjectName="UserSkill"></table>-->
+        <!--<table tableName="tz_game_skill_setting" domainObjectName="SkillSetting"></table>-->
+        <!--<table tableName="tz_games_role_level_setting" domainObjectName="RoleLevelSetting"></table>-->
+        <!--<table tableName="tz_user_mail_single" domainObjectName="UserMailSingle"></table>-->
+        <!--<table tableName="tz_user_mail_all" domainObjectName="UserMailAll"></table>-->
+        <!--<table tableName="tz_user_mail_all_details" domainObjectName="UserMailAllDetails"></table> -->
+        <!--<table tableName="tz_user_crunchies" domainObjectName="UserCrunchies"></table>-->
+        <!--<table tableName="tz_game_fight_ranking" domainObjectName="FightRanking"></table>-->
+        <!--<table tableName="tz_game_fight_ranking_setting" domainObjectName="FightRankingSetting"></table>-->
+        <!--<table tableName="tz_game_fight_ranking_log" domainObjectName="FightRankingLog"></table>-->
+        <!--<table tableName="tz_game_exploration" domainObjectName="Exploration"></table>-->
+        <!--<table tableName="tz_game_exploration_user" domainObjectName="ExplorationUser"></table>-->
+        <!--<table tableName="tz_game_exploration_bind" domainObjectName="ExplorationBind"></table>-->
+        <!--<table tableName="tz_game_exploration_setting" domainObjectName="ExplorationSetting"></table>-->
+        <!--<table tableName="tz_game_fight_ranking_exp_setting" domainObjectName="RankingExpSetting"></table>-->
+        <!--<table tableName="tz_game_exploration_monster" domainObjectName="ExplorationMonster"></table>-->
+        <!--<table tableName="tz_activity_award" domainObjectName="ActivityAward"></table>-->
+        <!--<table tableName="tz_game_copy_extra_award" domainObjectName="CopyExtraAward"></table>-->
+        <!--<table tableName="tz_account" domainObjectName="Account"></table>-->
+        <!--<table tableName="tz_account_user" domainObjectName="AccountUser"></table>-->
+        <!--<table tableName="tz_user_message" domainObjectName="UserMessage"></table>-->
+        <!--<table tableName="tz_user_main_person" domainObjectName="UserMainPerson"></table>-->
+        <!--<table tableName="tz_game_npc" domainObjectName="GameNPC"></table>-->
+        <!--<table tableName="tz_npc_attribute" domainObjectName="NPCAttribute"></table>-->
+<!--        <table tableName="tz_game_fight_friend_exp_setting" domainObjectName="FightFriendExpSetting"></table>-->
+        <table tableName="tz_user_message" domainObjectName="UserMessage"></table>
+    </context>
+</generatorConfiguration>

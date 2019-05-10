@@ -1,0 +1,540 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.tongzhu.user.mapper.MonsterMapper" >
+  <resultMap id="BaseResultMap" type="com.tongzhu.user.model.Monster" >
+    <id column="monster_id" property="monsterId" jdbcType="VARCHAR" />
+    <result column="level_" property="level" jdbcType="INTEGER" />
+    <result column="name_" property="name" jdbcType="VARCHAR" />
+    <result column="head_" property="head" jdbcType="VARCHAR" />
+    <result column="mode_" property="mode" jdbcType="VARCHAR" />
+    <result column="type_" property="type" jdbcType="INTEGER" />
+    <result column="ph_atk" property="phAtk" jdbcType="REAL" />
+    <result column="mf_atk" property="mfAtk" jdbcType="REAL" />
+    <result column="ph_def" property="phDef" jdbcType="REAL" />
+    <result column="mf_def" property="mfDef" jdbcType="REAL" />
+    <result column="hp_" property="hp" jdbcType="REAL" />
+    <result column="accuracy" property="accuracy" jdbcType="REAL" />
+    <result column="miss" property="miss" jdbcType="REAL" />
+    <result column="critical" property="critical" jdbcType="REAL" />
+    <result column="dcritical" property="dcritical" jdbcType="REAL" />
+    <result column="skill1_id" property="skill1Id" jdbcType="INTEGER" />
+    <result column="skill1_lv" property="skill1Lv" jdbcType="INTEGER" />
+    <result column="skill2_id" property="skill2Id" jdbcType="INTEGER" />
+    <result column="skill2_lv" property="skill2Lv" jdbcType="INTEGER" />
+    <result column="skill3_id" property="skill3Id" jdbcType="INTEGER" />
+    <result column="skill3_lv" property="skill3Lv" jdbcType="INTEGER" />
+    <result column="real_hurt" property="realHurt" jdbcType="REAL" />
+    <result column="drop_" property="drop" jdbcType="VARCHAR" />
+    <result column="talk_" property="talk" jdbcType="VARCHAR" />
+    <result column="limit_" property="limit" jdbcType="INTEGER" />
+    <result column="role_type" property="roleType" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    monster_id, level_, name_, head_, mode_, type_, ph_atk, mf_atk, ph_def, mf_def, hp_, 
+    accuracy, miss, critical, dcritical, skill1_id, skill1_lv, skill2_id, skill2_lv, 
+    skill3_id, skill3_lv, real_hurt, drop_, talk_, limit_, role_type
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.tongzhu.user.model.MonsterExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from tz_game_monster
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from tz_game_monster
+    where monster_id = #{monsterId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from tz_game_monster
+    where monster_id = #{monsterId,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.tongzhu.user.model.MonsterExample" >
+    delete from tz_game_monster
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.tongzhu.user.model.Monster" >
+    insert into tz_game_monster (monster_id, level_, name_, 
+      head_, mode_, type_, ph_atk, 
+      mf_atk, ph_def, mf_def, hp_, 
+      accuracy, miss, critical, dcritical, 
+      skill1_id, skill1_lv, skill2_id, 
+      skill2_lv, skill3_id, skill3_lv, 
+      real_hurt, drop_, talk_, 
+      limit_, role_type)
+    values (#{monsterId,jdbcType=VARCHAR}, #{level,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, 
+      #{head,jdbcType=VARCHAR}, #{mode,jdbcType=VARCHAR}, #{type,jdbcType=INTEGER}, #{phAtk,jdbcType=REAL}, 
+      #{mfAtk,jdbcType=REAL}, #{phDef,jdbcType=REAL}, #{mfDef,jdbcType=REAL}, #{hp,jdbcType=REAL}, 
+      #{accuracy,jdbcType=REAL}, #{miss,jdbcType=REAL}, #{critical,jdbcType=REAL}, #{dcritical,jdbcType=REAL}, 
+      #{skill1Id,jdbcType=INTEGER}, #{skill1Lv,jdbcType=INTEGER}, #{skill2Id,jdbcType=INTEGER}, 
+      #{skill2Lv,jdbcType=INTEGER}, #{skill3Id,jdbcType=INTEGER}, #{skill3Lv,jdbcType=INTEGER}, 
+      #{realHurt,jdbcType=REAL}, #{drop,jdbcType=VARCHAR}, #{talk,jdbcType=VARCHAR}, 
+      #{limit,jdbcType=INTEGER}, #{roleType,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.tongzhu.user.model.Monster" >
+    insert into tz_game_monster
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="monsterId != null" >
+        monster_id,
+      </if>
+      <if test="level != null" >
+        level_,
+      </if>
+      <if test="name != null" >
+        name_,
+      </if>
+      <if test="head != null" >
+        head_,
+      </if>
+      <if test="mode != null" >
+        mode_,
+      </if>
+      <if test="type != null" >
+        type_,
+      </if>
+      <if test="phAtk != null" >
+        ph_atk,
+      </if>
+      <if test="mfAtk != null" >
+        mf_atk,
+      </if>
+      <if test="phDef != null" >
+        ph_def,
+      </if>
+      <if test="mfDef != null" >
+        mf_def,
+      </if>
+      <if test="hp != null" >
+        hp_,
+      </if>
+      <if test="accuracy != null" >
+        accuracy,
+      </if>
+      <if test="miss != null" >
+        miss,
+      </if>
+      <if test="critical != null" >
+        critical,
+      </if>
+      <if test="dcritical != null" >
+        dcritical,
+      </if>
+      <if test="skill1Id != null" >
+        skill1_id,
+      </if>
+      <if test="skill1Lv != null" >
+        skill1_lv,
+      </if>
+      <if test="skill2Id != null" >
+        skill2_id,
+      </if>
+      <if test="skill2Lv != null" >
+        skill2_lv,
+      </if>
+      <if test="skill3Id != null" >
+        skill3_id,
+      </if>
+      <if test="skill3Lv != null" >
+        skill3_lv,
+      </if>
+      <if test="realHurt != null" >
+        real_hurt,
+      </if>
+      <if test="drop != null" >
+        drop_,
+      </if>
+      <if test="talk != null" >
+        talk_,
+      </if>
+      <if test="limit != null" >
+        limit_,
+      </if>
+      <if test="roleType != null" >
+        role_type,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="monsterId != null" >
+        #{monsterId,jdbcType=VARCHAR},
+      </if>
+      <if test="level != null" >
+        #{level,jdbcType=INTEGER},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="head != null" >
+        #{head,jdbcType=VARCHAR},
+      </if>
+      <if test="mode != null" >
+        #{mode,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=INTEGER},
+      </if>
+      <if test="phAtk != null" >
+        #{phAtk,jdbcType=REAL},
+      </if>
+      <if test="mfAtk != null" >
+        #{mfAtk,jdbcType=REAL},
+      </if>
+      <if test="phDef != null" >
+        #{phDef,jdbcType=REAL},
+      </if>
+      <if test="mfDef != null" >
+        #{mfDef,jdbcType=REAL},
+      </if>
+      <if test="hp != null" >
+        #{hp,jdbcType=REAL},
+      </if>
+      <if test="accuracy != null" >
+        #{accuracy,jdbcType=REAL},
+      </if>
+      <if test="miss != null" >
+        #{miss,jdbcType=REAL},
+      </if>
+      <if test="critical != null" >
+        #{critical,jdbcType=REAL},
+      </if>
+      <if test="dcritical != null" >
+        #{dcritical,jdbcType=REAL},
+      </if>
+      <if test="skill1Id != null" >
+        #{skill1Id,jdbcType=INTEGER},
+      </if>
+      <if test="skill1Lv != null" >
+        #{skill1Lv,jdbcType=INTEGER},
+      </if>
+      <if test="skill2Id != null" >
+        #{skill2Id,jdbcType=INTEGER},
+      </if>
+      <if test="skill2Lv != null" >
+        #{skill2Lv,jdbcType=INTEGER},
+      </if>
+      <if test="skill3Id != null" >
+        #{skill3Id,jdbcType=INTEGER},
+      </if>
+      <if test="skill3Lv != null" >
+        #{skill3Lv,jdbcType=INTEGER},
+      </if>
+      <if test="realHurt != null" >
+        #{realHurt,jdbcType=REAL},
+      </if>
+      <if test="drop != null" >
+        #{drop,jdbcType=VARCHAR},
+      </if>
+      <if test="talk != null" >
+        #{talk,jdbcType=VARCHAR},
+      </if>
+      <if test="limit != null" >
+        #{limit,jdbcType=INTEGER},
+      </if>
+      <if test="roleType != null" >
+        #{roleType,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.tongzhu.user.model.MonsterExample" resultType="java.lang.Integer" >
+    select count(*) from tz_game_monster
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update tz_game_monster
+    <set >
+      <if test="record.monsterId != null" >
+        monster_id = #{record.monsterId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.level != null" >
+        level_ = #{record.level,jdbcType=INTEGER},
+      </if>
+      <if test="record.name != null" >
+        name_ = #{record.name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.head != null" >
+        head_ = #{record.head,jdbcType=VARCHAR},
+      </if>
+      <if test="record.mode != null" >
+        mode_ = #{record.mode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.type != null" >
+        type_ = #{record.type,jdbcType=INTEGER},
+      </if>
+      <if test="record.phAtk != null" >
+        ph_atk = #{record.phAtk,jdbcType=REAL},
+      </if>
+      <if test="record.mfAtk != null" >
+        mf_atk = #{record.mfAtk,jdbcType=REAL},
+      </if>
+      <if test="record.phDef != null" >
+        ph_def = #{record.phDef,jdbcType=REAL},
+      </if>
+      <if test="record.mfDef != null" >
+        mf_def = #{record.mfDef,jdbcType=REAL},
+      </if>
+      <if test="record.hp != null" >
+        hp_ = #{record.hp,jdbcType=REAL},
+      </if>
+      <if test="record.accuracy != null" >
+        accuracy = #{record.accuracy,jdbcType=REAL},
+      </if>
+      <if test="record.miss != null" >
+        miss = #{record.miss,jdbcType=REAL},
+      </if>
+      <if test="record.critical != null" >
+        critical = #{record.critical,jdbcType=REAL},
+      </if>
+      <if test="record.dcritical != null" >
+        dcritical = #{record.dcritical,jdbcType=REAL},
+      </if>
+      <if test="record.skill1Id != null" >
+        skill1_id = #{record.skill1Id,jdbcType=INTEGER},
+      </if>
+      <if test="record.skill1Lv != null" >
+        skill1_lv = #{record.skill1Lv,jdbcType=INTEGER},
+      </if>
+      <if test="record.skill2Id != null" >
+        skill2_id = #{record.skill2Id,jdbcType=INTEGER},
+      </if>
+      <if test="record.skill2Lv != null" >
+        skill2_lv = #{record.skill2Lv,jdbcType=INTEGER},
+      </if>
+      <if test="record.skill3Id != null" >
+        skill3_id = #{record.skill3Id,jdbcType=INTEGER},
+      </if>
+      <if test="record.skill3Lv != null" >
+        skill3_lv = #{record.skill3Lv,jdbcType=INTEGER},
+      </if>
+      <if test="record.realHurt != null" >
+        real_hurt = #{record.realHurt,jdbcType=REAL},
+      </if>
+      <if test="record.drop != null" >
+        drop_ = #{record.drop,jdbcType=VARCHAR},
+      </if>
+      <if test="record.talk != null" >
+        talk_ = #{record.talk,jdbcType=VARCHAR},
+      </if>
+      <if test="record.limit != null" >
+        limit_ = #{record.limit,jdbcType=INTEGER},
+      </if>
+      <if test="record.roleType != null" >
+        role_type = #{record.roleType,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update tz_game_monster
+    set monster_id = #{record.monsterId,jdbcType=VARCHAR},
+      level_ = #{record.level,jdbcType=INTEGER},
+      name_ = #{record.name,jdbcType=VARCHAR},
+      head_ = #{record.head,jdbcType=VARCHAR},
+      mode_ = #{record.mode,jdbcType=VARCHAR},
+      type_ = #{record.type,jdbcType=INTEGER},
+      ph_atk = #{record.phAtk,jdbcType=REAL},
+      mf_atk = #{record.mfAtk,jdbcType=REAL},
+      ph_def = #{record.phDef,jdbcType=REAL},
+      mf_def = #{record.mfDef,jdbcType=REAL},
+      hp_ = #{record.hp,jdbcType=REAL},
+      accuracy = #{record.accuracy,jdbcType=REAL},
+      miss = #{record.miss,jdbcType=REAL},
+      critical = #{record.critical,jdbcType=REAL},
+      dcritical = #{record.dcritical,jdbcType=REAL},
+      skill1_id = #{record.skill1Id,jdbcType=INTEGER},
+      skill1_lv = #{record.skill1Lv,jdbcType=INTEGER},
+      skill2_id = #{record.skill2Id,jdbcType=INTEGER},
+      skill2_lv = #{record.skill2Lv,jdbcType=INTEGER},
+      skill3_id = #{record.skill3Id,jdbcType=INTEGER},
+      skill3_lv = #{record.skill3Lv,jdbcType=INTEGER},
+      real_hurt = #{record.realHurt,jdbcType=REAL},
+      drop_ = #{record.drop,jdbcType=VARCHAR},
+      talk_ = #{record.talk,jdbcType=VARCHAR},
+      limit_ = #{record.limit,jdbcType=INTEGER},
+      role_type = #{record.roleType,jdbcType=INTEGER}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.tongzhu.user.model.Monster" >
+    update tz_game_monster
+    <set >
+      <if test="level != null" >
+        level_ = #{level,jdbcType=INTEGER},
+      </if>
+      <if test="name != null" >
+        name_ = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="head != null" >
+        head_ = #{head,jdbcType=VARCHAR},
+      </if>
+      <if test="mode != null" >
+        mode_ = #{mode,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        type_ = #{type,jdbcType=INTEGER},
+      </if>
+      <if test="phAtk != null" >
+        ph_atk = #{phAtk,jdbcType=REAL},
+      </if>
+      <if test="mfAtk != null" >
+        mf_atk = #{mfAtk,jdbcType=REAL},
+      </if>
+      <if test="phDef != null" >
+        ph_def = #{phDef,jdbcType=REAL},
+      </if>
+      <if test="mfDef != null" >
+        mf_def = #{mfDef,jdbcType=REAL},
+      </if>
+      <if test="hp != null" >
+        hp_ = #{hp,jdbcType=REAL},
+      </if>
+      <if test="accuracy != null" >
+        accuracy = #{accuracy,jdbcType=REAL},
+      </if>
+      <if test="miss != null" >
+        miss = #{miss,jdbcType=REAL},
+      </if>
+      <if test="critical != null" >
+        critical = #{critical,jdbcType=REAL},
+      </if>
+      <if test="dcritical != null" >
+        dcritical = #{dcritical,jdbcType=REAL},
+      </if>
+      <if test="skill1Id != null" >
+        skill1_id = #{skill1Id,jdbcType=INTEGER},
+      </if>
+      <if test="skill1Lv != null" >
+        skill1_lv = #{skill1Lv,jdbcType=INTEGER},
+      </if>
+      <if test="skill2Id != null" >
+        skill2_id = #{skill2Id,jdbcType=INTEGER},
+      </if>
+      <if test="skill2Lv != null" >
+        skill2_lv = #{skill2Lv,jdbcType=INTEGER},
+      </if>
+      <if test="skill3Id != null" >
+        skill3_id = #{skill3Id,jdbcType=INTEGER},
+      </if>
+      <if test="skill3Lv != null" >
+        skill3_lv = #{skill3Lv,jdbcType=INTEGER},
+      </if>
+      <if test="realHurt != null" >
+        real_hurt = #{realHurt,jdbcType=REAL},
+      </if>
+      <if test="drop != null" >
+        drop_ = #{drop,jdbcType=VARCHAR},
+      </if>
+      <if test="talk != null" >
+        talk_ = #{talk,jdbcType=VARCHAR},
+      </if>
+      <if test="limit != null" >
+        limit_ = #{limit,jdbcType=INTEGER},
+      </if>
+      <if test="roleType != null" >
+        role_type = #{roleType,jdbcType=INTEGER},
+      </if>
+    </set>
+    where monster_id = #{monsterId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.tongzhu.user.model.Monster" >
+    update tz_game_monster
+    set level_ = #{level,jdbcType=INTEGER},
+      name_ = #{name,jdbcType=VARCHAR},
+      head_ = #{head,jdbcType=VARCHAR},
+      mode_ = #{mode,jdbcType=VARCHAR},
+      type_ = #{type,jdbcType=INTEGER},
+      ph_atk = #{phAtk,jdbcType=REAL},
+      mf_atk = #{mfAtk,jdbcType=REAL},
+      ph_def = #{phDef,jdbcType=REAL},
+      mf_def = #{mfDef,jdbcType=REAL},
+      hp_ = #{hp,jdbcType=REAL},
+      accuracy = #{accuracy,jdbcType=REAL},
+      miss = #{miss,jdbcType=REAL},
+      critical = #{critical,jdbcType=REAL},
+      dcritical = #{dcritical,jdbcType=REAL},
+      skill1_id = #{skill1Id,jdbcType=INTEGER},
+      skill1_lv = #{skill1Lv,jdbcType=INTEGER},
+      skill2_id = #{skill2Id,jdbcType=INTEGER},
+      skill2_lv = #{skill2Lv,jdbcType=INTEGER},
+      skill3_id = #{skill3Id,jdbcType=INTEGER},
+      skill3_lv = #{skill3Lv,jdbcType=INTEGER},
+      real_hurt = #{realHurt,jdbcType=REAL},
+      drop_ = #{drop,jdbcType=VARCHAR},
+      talk_ = #{talk,jdbcType=VARCHAR},
+      limit_ = #{limit,jdbcType=INTEGER},
+      role_type = #{roleType,jdbcType=INTEGER}
+    where monster_id = #{monsterId,jdbcType=VARCHAR}
+  </update>
+</mapper>

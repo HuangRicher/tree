@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.tongzhu.user.mapper.ext.AccountExtMapper" >
+  <resultMap id="BaseResultMap" type="com.tongzhu.user.mapper.vo.AccountDO" >
+    <id column="user_id" property="userId" jdbcType="VARCHAR" />
+    <result column="account_" property="account" jdbcType="VARCHAR" />
+    <result column="role_id" property="roleId" jdbcType="INTEGER" />
+    <result column="last_login" property="lastLogin" jdbcType="INTEGER" />
+    <result column="user_name" property="userName" jdbcType="VARCHAR" />
+  </resultMap>
+  <select id="findByAccount" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    SELECT ac.*,us.`user_name` FROM tz_account_user ac
+    LEFT JOIN tz_game_user_role us ON ac.`user_id`=us.`user_id`
+    WHERE ac.`account_`=#{account,jdbcType=VARCHAR}
+  </select>
+
+</mapper>

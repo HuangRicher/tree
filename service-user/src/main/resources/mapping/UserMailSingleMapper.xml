@@ -1,0 +1,323 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.tongzhu.user.mapper.UserMailSingleMapper" >
+  <resultMap id="BaseResultMap" type="com.tongzhu.user.model.UserMailSingle" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="receiver_id" property="receiverId" jdbcType="VARCHAR" />
+    <result column="sender_id" property="senderId" jdbcType="VARCHAR" />
+    <result column="send_time" property="sendTime" jdbcType="TIMESTAMP" />
+    <result column="expire_time" property="expireTime" jdbcType="TIMESTAMP" />
+    <result column="type" property="type" jdbcType="INTEGER" />
+    <result column="title" property="title" jdbcType="VARCHAR" />
+    <result column="content" property="content" jdbcType="VARCHAR" />
+    <result column="accessory" property="accessory" jdbcType="VARCHAR" />
+    <result column="read_" property="read" jdbcType="INTEGER" />
+    <result column="receive" property="receive" jdbcType="INTEGER" />
+    <result column="swift_address" property="swiftAddress" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, receiver_id, sender_id, send_time, expire_time, type, title, content, accessory, 
+    read_, receive, swift_address
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.tongzhu.user.model.UserMailSingleExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from tz_user_mail_single
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from tz_user_mail_single
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from tz_user_mail_single
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.tongzhu.user.model.UserMailSingleExample" >
+    delete from tz_user_mail_single
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.tongzhu.user.model.UserMailSingle" >
+    insert into tz_user_mail_single (id, receiver_id, sender_id, 
+      send_time, expire_time, type, 
+      title, content, accessory, 
+      read_, receive, swift_address
+      )
+    values (#{id,jdbcType=VARCHAR}, #{receiverId,jdbcType=VARCHAR}, #{senderId,jdbcType=VARCHAR}, 
+      #{sendTime,jdbcType=TIMESTAMP}, #{expireTime,jdbcType=TIMESTAMP}, #{type,jdbcType=INTEGER}, 
+      #{title,jdbcType=VARCHAR}, #{content,jdbcType=VARCHAR}, #{accessory,jdbcType=VARCHAR}, 
+      #{read,jdbcType=INTEGER}, #{receive,jdbcType=INTEGER}, #{swiftAddress,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.tongzhu.user.model.UserMailSingle" >
+    insert into tz_user_mail_single
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="receiverId != null" >
+        receiver_id,
+      </if>
+      <if test="senderId != null" >
+        sender_id,
+      </if>
+      <if test="sendTime != null" >
+        send_time,
+      </if>
+      <if test="expireTime != null" >
+        expire_time,
+      </if>
+      <if test="type != null" >
+        type,
+      </if>
+      <if test="title != null" >
+        title,
+      </if>
+      <if test="content != null" >
+        content,
+      </if>
+      <if test="accessory != null" >
+        accessory,
+      </if>
+      <if test="read != null" >
+        read_,
+      </if>
+      <if test="receive != null" >
+        receive,
+      </if>
+      <if test="swiftAddress != null" >
+        swift_address,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="receiverId != null" >
+        #{receiverId,jdbcType=VARCHAR},
+      </if>
+      <if test="senderId != null" >
+        #{senderId,jdbcType=VARCHAR},
+      </if>
+      <if test="sendTime != null" >
+        #{sendTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="expireTime != null" >
+        #{expireTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=INTEGER},
+      </if>
+      <if test="title != null" >
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null" >
+        #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="accessory != null" >
+        #{accessory,jdbcType=VARCHAR},
+      </if>
+      <if test="read != null" >
+        #{read,jdbcType=INTEGER},
+      </if>
+      <if test="receive != null" >
+        #{receive,jdbcType=INTEGER},
+      </if>
+      <if test="swiftAddress != null" >
+        #{swiftAddress,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.tongzhu.user.model.UserMailSingleExample" resultType="java.lang.Integer" >
+    select count(*) from tz_user_mail_single
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update tz_user_mail_single
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=VARCHAR},
+      </if>
+      <if test="record.receiverId != null" >
+        receiver_id = #{record.receiverId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.senderId != null" >
+        sender_id = #{record.senderId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sendTime != null" >
+        send_time = #{record.sendTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.expireTime != null" >
+        expire_time = #{record.expireTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.type != null" >
+        type = #{record.type,jdbcType=INTEGER},
+      </if>
+      <if test="record.title != null" >
+        title = #{record.title,jdbcType=VARCHAR},
+      </if>
+      <if test="record.content != null" >
+        content = #{record.content,jdbcType=VARCHAR},
+      </if>
+      <if test="record.accessory != null" >
+        accessory = #{record.accessory,jdbcType=VARCHAR},
+      </if>
+      <if test="record.read != null" >
+        read_ = #{record.read,jdbcType=INTEGER},
+      </if>
+      <if test="record.receive != null" >
+        receive = #{record.receive,jdbcType=INTEGER},
+      </if>
+      <if test="record.swiftAddress != null" >
+        swift_address = #{record.swiftAddress,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update tz_user_mail_single
+    set id = #{record.id,jdbcType=VARCHAR},
+      receiver_id = #{record.receiverId,jdbcType=VARCHAR},
+      sender_id = #{record.senderId,jdbcType=VARCHAR},
+      send_time = #{record.sendTime,jdbcType=TIMESTAMP},
+      expire_time = #{record.expireTime,jdbcType=TIMESTAMP},
+      type = #{record.type,jdbcType=INTEGER},
+      title = #{record.title,jdbcType=VARCHAR},
+      content = #{record.content,jdbcType=VARCHAR},
+      accessory = #{record.accessory,jdbcType=VARCHAR},
+      read_ = #{record.read,jdbcType=INTEGER},
+      receive = #{record.receive,jdbcType=INTEGER},
+      swift_address = #{record.swiftAddress,jdbcType=INTEGER}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.tongzhu.user.model.UserMailSingle" >
+    update tz_user_mail_single
+    <set >
+      <if test="receiverId != null" >
+        receiver_id = #{receiverId,jdbcType=VARCHAR},
+      </if>
+      <if test="senderId != null" >
+        sender_id = #{senderId,jdbcType=VARCHAR},
+      </if>
+      <if test="sendTime != null" >
+        send_time = #{sendTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="expireTime != null" >
+        expire_time = #{expireTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="type != null" >
+        type = #{type,jdbcType=INTEGER},
+      </if>
+      <if test="title != null" >
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null" >
+        content = #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="accessory != null" >
+        accessory = #{accessory,jdbcType=VARCHAR},
+      </if>
+      <if test="read != null" >
+        read_ = #{read,jdbcType=INTEGER},
+      </if>
+      <if test="receive != null" >
+        receive = #{receive,jdbcType=INTEGER},
+      </if>
+      <if test="swiftAddress != null" >
+        swift_address = #{swiftAddress,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.tongzhu.user.model.UserMailSingle" >
+    update tz_user_mail_single
+    set receiver_id = #{receiverId,jdbcType=VARCHAR},
+      sender_id = #{senderId,jdbcType=VARCHAR},
+      send_time = #{sendTime,jdbcType=TIMESTAMP},
+      expire_time = #{expireTime,jdbcType=TIMESTAMP},
+      type = #{type,jdbcType=INTEGER},
+      title = #{title,jdbcType=VARCHAR},
+      content = #{content,jdbcType=VARCHAR},
+      accessory = #{accessory,jdbcType=VARCHAR},
+      read_ = #{read,jdbcType=INTEGER},
+      receive = #{receive,jdbcType=INTEGER},
+      swift_address = #{swiftAddress,jdbcType=INTEGER}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>
